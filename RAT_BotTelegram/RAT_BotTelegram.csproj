@@ -49,6 +49,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="config.cs" />
     <Compile Include="Lib\CommandsFeatures.cs" />
     <Compile Include="Lib\Features.cs" />
     <Compile Include="Program.cs" />
