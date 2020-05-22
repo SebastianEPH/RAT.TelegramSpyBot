@@ -35,8 +35,6 @@ namespace RAT_BotTelegram.Lib {
                 "\n - BIOSVendor: " + Features.getBIOSVendor() +
 
                 "";
-
-
             return Info;
         }
 

