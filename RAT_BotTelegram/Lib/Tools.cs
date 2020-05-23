@@ -40,9 +40,16 @@ namespace RAT_BotTelegram.Lib {
 
         public static string[] GetFile(string dir) {
             // Obtiene Nombre del procesador
-            string[] allfiles = Directory.GetFiles(dir, "*.*", SearchOption.AllDirectories);
+            try {
+                string[] allfiles = Directory.GetFiles(dir, "*.*", SearchOption.AllDirectories);
+                return allfiles;
+            } catch (Exception e ) {
+                string[] allfiles = {"[-]"};
+                Console.WriteLine("La carpeta no existe: "+e);
+                return allfiles;
+            }
 
-            return allfiles;
+            
         }
 
     }

