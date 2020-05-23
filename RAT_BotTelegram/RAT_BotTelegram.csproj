@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="config.cs" />
+    <Compile Include="Lib\Keylogger.cs" />
     <Compile Include="Lib\Tools.cs" />
     <Compile Include="Lib\Features.cs" />
     <Compile Include="Program.cs" />
