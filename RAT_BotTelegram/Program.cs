@@ -223,25 +223,30 @@ namespace RAT_BotTelegram {
                     break;
 
                 case "/About":
-                    string about = 
+                    string about =
                         "<b>Developed by:</b> " +
-                        "\nSebastiánEPH" +
+                        "SebastiánEPH" +
                         "\n<b>Name: </b>" + @"<a href=""https://github.com/SebastianEPH/RAT_BotTelegram"">RAT_Telegram</a>" + " C#" +
+                        "\n<b>Lenguage:</b> C# .Net Framework 4.7" +
+                        "\n<b>Versión:</b> Beta" +
+                        "\n<b>IDE:</b> Visual Studio Comunity 2019" +
                         "\n<b>Description:</b>" +
                         "\nTrojano de acceso remoto para windows. <b>[Fines educativos]</b>" +
-                        "\n<b>Versión:</b> Beta" +
+
 
                         "\n<b></b>" +
                         "\n<b></b>" +
                         "\n<b>Contact: </b>" +
-                        "\n<b> - "+ @"<a href=""https://github.com/SebastianEPH"">GitHub</a>" + ": </b>"+
+                        "\n<b> - " + @"<a href=""https://github.com/SebastianEPH"">GitHub</a>" + ": </b>" +
                         "\n<b> - " + @"<a href=""https://t.me/sebastianeph"">Telegram</a>" + ": </b>" +
-                        "\n<b> - " + @"<a href=""https://www.facebook.com/SebastianEPH"">Facebook</a>" + ": </b>" +
-                        "\n<b></b>" +
-                        "<b></b>";
+                        "\n<b> - " + @"<a href=""SebastianEPH99@gmail.com"">Email</a>" + ": </b>" +
+                        "\n<b> - " + @"<a href=""https://sebastianeph.github.io/"">WebSite</a>" + ": </b>" +
+                        "\n<b></b>";
 
-                    await Bot.SendTextMessageAsync(config.ID, about , ParseMode.Html);
+
+                    await Bot.SendTextMessageAsync(config.ID, about, ParseMode.Html);
                     await Bot.SendPhotoAsync(chatId: config.ID, photo: "https://i.imgur.com/SelWET0.png");
+                    await Bot.SendTextMessageAsync(config.ID, "\n\n<b>[Fines educativos]</b>", ParseMode.Html);
                     break;
 
                 //Mensaje por default
