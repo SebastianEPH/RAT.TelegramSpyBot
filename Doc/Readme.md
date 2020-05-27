@@ -1,4 +1,5 @@
-# [Clic aquí para leer la documentación en español](Doc/Readme.md)
+[Retur to documentation in English](../README.md)
+
 ````logo
 █▀█ ▄▀█ ▀█▀   █▄▄ █▀█ ▀█▀ ▀█▀ █▀▀ █   █▀▀ █▀▀ █▀█ ▄▀█ █▀▄▀█
 █▀▄ █▀█  █    █▄█ █▄█  █   █  ██▄ █▄▄ ██▄ █▄█ █▀▄ █▀█ █ ▀ █
@@ -20,45 +21,9 @@ Troyano de acceso remoto , con bot de telegram, en C#
 * __Platform:__` Windows 7, 8.1 y 10`
 * __Language:__` C# .Net Framework`
 
-# Main Folder
+# Carpeta Principal
 
 # Features
-
-## Commands and examples :
-
-<img src="https://i.imgur.com/59EsirM.png"
-     alt="Commands List" title="Commands List">
-
-### /Status
-`Show a message only if the infected PC is online`
-
-<img src="https://i.imgur.com/NYBXToL.png"
-     alt="Command /Status " title="Command /Status">
-
-### /Show_Information
-
-`Shows detailed information of the infected PC`
-
-<img src="https://i.imgur.com/BTubIpL.png"
-     alt="Command /Status " title="Command /Status">
-
-
-### /
-### /
-### /
-### /
-### /
-### /
-### /
-### /
-### /About
-_Show creator info._
-
-<img src="https://i.imgur.com/cyhbQzj.png"
-     alt="Command /About "
-     width="355"
-     height="700"
-     title="Command /About">
 
 # Compilation
 
@@ -90,3 +55,6 @@ __Developed:__ by SebastianEPH
 - [Github](https://github.com/SebastianEPH)
 - [Linkedin](https://www.linkedin.com/in/sebastianeph/)
 - [Telegram](https://t.me/sebastianeph)
+
+
+
