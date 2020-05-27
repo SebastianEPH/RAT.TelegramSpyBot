@@ -6,7 +6,7 @@
 
 
 
-# Éste proyecto está en Desarrolló desde el Día `19/05/2020`
+# Éste proyecto está en Alfa, todavía falta desarrollar el proceso de instalación |No instalar, hasta subir la beta.|
 # ¡Por favor! úserla solo para fines educativos y con profesionalidad...
 ## Information
 Troyano de acceso remoto , con bot de telegram, en C# 
@@ -14,9 +14,9 @@ Troyano de acceso remoto , con bot de telegram, en C#
 * __Developed by:__ `SebastianEPH`
 * __Name:__ `RAT Telegram`
 * __Documentation date:__ `27/05/2020`
-* __Version:__ `Beta`
+* __Version:__ `Alfa`
 * __Undetectable:__ `Not Tester`
-* __State:__` Beta`
+* __State:__` Alfa`
 * __Platform:__` Windows 7, 8.1 y 10`
 * __Language:__` C# .Net Framework`
 
@@ -33,17 +33,23 @@ Troyano de acceso remoto , con bot de telegram, en C#
 `Show a message only if the infected PC is online`
 
 <img src="https://i.imgur.com/NYBXToL.png"
-     alt="Command /Status " title="Command /Status">
+     alt="Command /Status " title="Command /Status - Example">
 
 ### /Show_Information
 
 `Shows detailed information of the infected PC`
 
 <img src="https://i.imgur.com/BTubIpL.png"
-     alt="Command /Status " title="Command /Status">
+     alt="Command Show_Information " title="Command Show_Information - Example">
 
 
-### /
+### /Get_FilesAll
+`Obtiene de `
+
+<img src="https://i.imgur.com/5G271Hi.png"
+     alt="Command /Status " title="Command /Status - Example">
+
+
 ### /
 ### /
 ### /
