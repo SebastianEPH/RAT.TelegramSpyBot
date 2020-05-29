@@ -1,0 +1,14 @@
+O:\OneDrive - xKx\SoftwareProyect\C#\[GitHub] RAT_BotTelegram\RAT TelegramSpyBot\bin\Debug\RAT TelegramSpyBot.exe.config
+O:\OneDrive - xKx\SoftwareProyect\C#\[GitHub] RAT_BotTelegram\RAT TelegramSpyBot\bin\Debug\RAT TelegramSpyBot.exe
+O:\OneDrive - xKx\SoftwareProyect\C#\[GitHub] RAT_BotTelegram\RAT TelegramSpyBot\bin\Debug\RAT TelegramSpyBot.pdb
+O:\OneDrive - xKx\SoftwareProyect\C#\[GitHub] RAT_BotTelegram\RAT TelegramSpyBot\bin\Debug\Newtonsoft.Json.dll
+O:\OneDrive - xKx\SoftwareProyect\C#\[GitHub] RAT_BotTelegram\RAT TelegramSpyBot\bin\Debug\Telegram.Bot.dll
+O:\OneDrive - xKx\SoftwareProyect\C#\[GitHub] RAT_BotTelegram\RAT TelegramSpyBot\bin\Debug\Newtonsoft.Json.xml
+O:\OneDrive - xKx\SoftwareProyect\C#\[GitHub] RAT_BotTelegram\RAT TelegramSpyBot\bin\Debug\Telegram.Bot.xml
+O:\OneDrive - xKx\SoftwareProyect\C#\[GitHub] RAT_BotTelegram\RAT TelegramSpyBot\obj\Debug\RAT TelegramSpyBot.csprojAssemblyReference.cache
+O:\OneDrive - xKx\SoftwareProyect\C#\[GitHub] RAT_BotTelegram\RAT TelegramSpyBot\obj\Debug\RAT_BotTelegram.Properties.Resources.resources
+O:\OneDrive - xKx\SoftwareProyect\C#\[GitHub] RAT_BotTelegram\RAT TelegramSpyBot\obj\Debug\RAT TelegramSpyBot.csproj.GenerateResource.cache
+O:\OneDrive - xKx\SoftwareProyect\C#\[GitHub] RAT_BotTelegram\RAT TelegramSpyBot\obj\Debug\RAT TelegramSpyBot.csproj.CoreCompileInputs.cache
+O:\OneDrive - xKx\SoftwareProyect\C#\[GitHub] RAT_BotTelegram\RAT TelegramSpyBot\obj\Debug\RAT TelegramSpyBot.csproj.CopyComplete
+O:\OneDrive - xKx\SoftwareProyect\C#\[GitHub] RAT_BotTelegram\RAT TelegramSpyBot\obj\Debug\RAT TelegramSpyBot.exe
+O:\OneDrive - xKx\SoftwareProyect\C#\[GitHub] RAT_BotTelegram\RAT TelegramSpyBot\obj\Debug\RAT TelegramSpyBot.pdb
