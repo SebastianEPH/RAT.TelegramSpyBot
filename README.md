@@ -1,4 +1,4 @@
-# [Clic aquí para leer la documentación en español](Doc/Readme.md)
+<!-- # [Clic aquí para leer la documentación en español](Doc/Readme.md)-->
 ````logo
 █▀▀█  █▀▀█ ▀▀█▀▀ 　 
 █▄▄▀  █▄▄█   █   　 
@@ -8,7 +8,7 @@
   █   █▀▀ █   █▀▀ █ ▀█ █▄▄▀ █▄▄█ █ ▀ █  ▀▀▀▄▄ █  █ █▄▄█  █▀▀▄ █  █   █ 
   █   ▀▀▀ ▀▀▀ ▀▀▀ ▀▀▀▀ ▀ ▀▀ ▀  ▀ ▀   ▀  █▄▄▄█ █▀▀▀ ▄▄▄█  █▄▄█ ▀▀▀▀   ▀
 ````
-# ¡Por favor! úserla solo para fines educativos y con profesionalidad...
+# Please! use it only for educational and professional purposes...
 ## Information
 * __Developed by:__ `SebastianEPH`
 * __Product name:__ `RAT Telegram Spy Bot`
@@ -24,10 +24,8 @@
 * __IDE or text editor:__ `Visual Studio Comunity 2019`
 * __Documentation date:__ `30/05/2020`
 * __Description:__ `Remote access Trojan, spies and obtains information from the infected pc, controlled by telegram commands. `
-# Main Folder
 
 # Features
-
 ## `Commands and examples:`
 
 <img src="https://i.imgur.com/59EsirM.png"
@@ -71,16 +69,36 @@ __NOTE:__ `Do not enclose path in double or single quotes`
 
 ![sad](https://i.imgur.com/7RnOe6p.png)
 ### `/Dir <Path>`
-List of files in the folder and subfolders of the selected path
+Only list subfolders of a drive
 
 __Example:__ __`/Dir`__  `C:\User\Photos and videos`
 
-![/Dir](https://i.imgur.com/6drHgrW.png)
+![/Dir](https://i.imgur.com/hMddo0N.png)
 
-### `/`
-### `/`
-### `/`
-### `/`
+__NOTE:__ `Do not enclose path in double or single quotes`
+
+![/Dir <Path>](https://i.imgur.com/8UkVGKH.png)
+
+It will show all files folders and subfolders within the specified path, plus each file found is detailed.
+
+### `/Dir_FolderDisk` |Menu|
+As the previous command only lists specific folders but does not list a complete drive, this command fulfills that function. It would only be enough to select the drive, and if the drive exists it will list all the directories, otherwise it will display a message that the drive does not exist, it becomes a complete of __`/Dir`__
+
+![](https://i.imgur.com/mSttp2m.png)
+
+### `/Keylogger`
+Developing...
+### `/Delete_OnlyFile <Path> `
+
+![Delete File](https://i.imgur.com/46NFjiv.png)
+### `/Delete_Folder <Path> `
+
+![Delete Folder](https://i.imgur.com/2VDCWKm.png)
+### `/Help`
+
+<img src="https://i.imgur.com/59EsirM.png"
+     alt="Commands List" title="Commands List">
+
 ### `/About`
 _Show creator info._
 
@@ -92,29 +110,30 @@ _Show creator info._
 
 # Compilation
 
+![](https://i.imgur.com/SHf4GIi.png)
+
+Path : `[GitHub] RAT_BotTelegram\RAT TelegramSpyBot\bin\Debug`
+
 # Infection method
-___¿Cómo infecto a la victima?___
+___How do I infect the victim?___
 
-![Final files](https://i.imgur.com/TlBEAaS.png)
+__Note:__ Do not rename the file `RAT TelegramSpyBot.exe`, sIf you change the name, the RAT will be obsolete.
+- You save the files on a USB.
+- It will connect the __USB__ to the __ [PC] __ to infect.
+- It is recommended to disable the antivirus or add an exclusion in the following path: `"C:\Users\Public"`.
+- Next is to run the `RAT TelegramSpyBot.exe` file on the USB, the RAT will be replicated in the following path: `"C:\Users\Public\RAT_Telegram"`, It is recommended not to remove the USB instantly as the `RAT Telegram` will be replicating on the specified path.
 
+__Note:__ When executing the file, it will automatically modify the windows registry so that it always starts when you turn on the computer.
 
-__Nota:__ No cambiar de nombre al archivo `WindowsDefender.exe`, si usted le cambia el nombre, el Keylogger quedará obsoleto.
-- Usten guardará el archivo en un USB.
-- Conectará el __USB__ a la __[PC]__ a infectar.
-- Se recomienda desactivar el antivirus o agregar una exclusión en al siguiente ruta: `"C:\Users\Public\Security\Windows Defender"`.
-- Lo siguiente es ejecutar el archivo `WindowsDefender.exe` en el USB, el Keylogger se replicará en la siguiente ruta `"C:\Users\Public\Security\Windows Defender"`, Se recomienda no sacar el USB al instante ya que el `Keylogger` se estará replicando en la ruta.
+The RAT will modify the following registry path`"HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run"` therefore you will need administrator permissions, therefore it is recommended that the first execution be carried out with administrator permissions, in case you do not execute it with administrator permissions, the RAT will modify the following path`"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run"`
 
-__NOTA:__ Al ejecutar el archivó, ésta automaticamente modificará el registro de windows para que se inicie siempre al prender la computadora.
-
-El Keylogger tKeyloggerará de modificar la siguiente ruta del registro `"HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run"` por lo cual necesitará permisos de administrador, por ende se recomienda que la primera ejecución se realice con permisos de administrador, en caso de que no lo ejecute con permisos de administrador, el Keylogger modificará la siguiente ruta `"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run"`
-
-__Explicación:__ 
-* `HKEY_LOCAL_MACHINE:` El Keylogger se ejecutará en todos los usuarios exitentes y los nuevos usuarios de la computadora
-* `HKEY_CURRENT_USER:` El Keylogger solo se ejecutará en el usuario actual, si se llegará a crear otro usuario, el Keylogger Solo funcionará en el usuario principal
+__Explanation:__ 
+* `HKEY_LOCAL_MACHINE:` the RAT will run on all existing users and new computer users.
+* `HKEY_CURRENT_USER:` the RAT will only run on the current user, if another user will be created, the RAT will only work on the main user
 <!-- Creador  -->
 ---
 ## Contact:
-__Nota:__ Contacteme solo si encontró un bug o desea aportar al repositorio, gracias.
+__Note:__ Contact me only if you found a bug or want to contribute to the repository, thanks.
 
 __Developed:__ by SebastianEPH
 - [Website](https://sebastianeph.github.io/)
