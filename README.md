@@ -1,63 +1,87 @@
 # [Clic aquí para leer la documentación en español](Doc/Readme.md)
 ````logo
-█▀█ ▄▀█ ▀█▀   █▄▄ █▀█ ▀█▀ ▀█▀ █▀▀ █   █▀▀ █▀▀ █▀█ ▄▀█ █▀▄▀█
-█▀▄ █▀█  █    █▄█ █▄█  █   █  ██▄ █▄▄ ██▄ █▄█ █▀▄ █▀█ █ ▀ █
+█▀▀█  █▀▀█ ▀▀█▀▀ 　 
+█▄▄▀  █▄▄█   █   　 
+█  █  █  █   █   　 
+
+▀▀█▀▀ █▀▀ █   █▀▀ █▀▀▀ █▀▀█ █▀▀█ █▀▄▀█  █▀▀▀█ █▀▀█ █  █  █▀▀█ █▀▀█ ▀▀█▀▀ 
+  █   █▀▀ █   █▀▀ █ ▀█ █▄▄▀ █▄▄█ █ ▀ █  ▀▀▀▄▄ █  █ █▄▄█  █▀▀▄ █  █   █ 
+  █   ▀▀▀ ▀▀▀ ▀▀▀ ▀▀▀▀ ▀ ▀▀ ▀  ▀ ▀   ▀  █▄▄▄█ █▀▀▀ ▄▄▄█  █▄▄█ ▀▀▀▀   ▀
 ````
-
-
-
-# Éste proyecto está en Alfa, todavía falta desarrollar el proceso de instalación |No instalar, hasta subir la beta.|
 # ¡Por favor! úserla solo para fines educativos y con profesionalidad...
 ## Information
-Troyano de acceso remoto , con bot de telegram, en C# 
-
 * __Developed by:__ `SebastianEPH`
-* __Name:__ `RAT Telegram`
-* __Documentation date:__ `27/05/2020`
-* __Version:__ `Alfa`
+* __Product name:__ `RAT Telegram Spy Bot`
+* __Type software:__ `Remote Administration Tool`
+* __File version:__ `0.1.0`
+* __Architecture:__ `x86 bits || x64 bits`
+* __State:__ `Beta`
+* __Size:__ `400KB aprox`
 * __Undetectable:__ `Not Tester`
-* __State:__` Alfa`
-* __Platform:__` Windows 7, 8.1 y 10`
-* __Language:__` C# .Net Framework`
-
+* __Plataform:__ `Windows 7, 8.1, 10`
+* __Programming language:__ `C#.net Framework - Console`
+* __Licence:__ `MIT`
+* __IDE or text editor:__ `Visual Studio Comunity 2019`
+* __Documentation date:__ `30/05/2020`
+* __Description:__ `Remote access Trojan, spies and obtains information from the infected pc, controlled by telegram commands. `
 # Main Folder
 
 # Features
 
-## Commands and examples :
+## `Commands and examples:`
 
 <img src="https://i.imgur.com/59EsirM.png"
      alt="Commands List" title="Commands List">
 
-### /Status
-`Show a message only if the infected PC is online`
+### `/Status`
+Show a message only if the infected PC is online
 
 <img src="https://i.imgur.com/NYBXToL.png"
      alt="Command /Status " title="Command /Status - Example">
 
-### /Show_Information
-
-`Shows detailed information of the infected PC`
+### `/Show_Information`
+Shows detailed information of the infected PC
 
 <img src="https://i.imgur.com/BTubIpL.png"
      alt="Command Show_Information " title="Command Show_Information - Example">
 
 
-### /Get_FilesAll
-`Obtiene de `
+### `/Get_FilesAll`
+It shows default system folders where there can be: [Images] [Photos] [Documents] [Music] and gets them, the process can take many minutes
+
+In case you can't find the folder, show a message a controlled exception
 
 <img src="https://i.imgur.com/5G271Hi.png"
      alt="Command /Status " title="Command /Status - Example">
 
 
-### /
-### /
-### /
-### /
-### /
-### /
-### /
-### /About
+### `/Get_OnlyFile <Path>`
+- Write the command plus the file path with extension.
+- The accepted file extensions are as follows, the file must not exceed 50MB
+     ````csharp
+     string[] video = { "gif", "mp4", "avi", "div", "m4v", "mov", "mpg", "mpeg", "qt", "wmv", "webm", "flv", "3gp" };
+     string[] audio = { "midi", "mp1", "mp2", "mp3", "wma", "ogg", "au", "m4a" };
+     string[] doc = { "doc", "docx", "txt", "log", "ppt", "pptx", "pdf" };
+     string[] imagen = { "jpg", "jpeg", "png", "bmp", "ico", "jpe", "jpe" };
+     string[] system = { "ani", "bat", "bfc", "bkf", "blg", "cat", "cer", "cfg", "chm", "chk", "clp", "cmd", "cnf", "com", "cpl", "crl", "crt", "cur", "dat", "db", "der", "dll", "drv", "ds", "dsn" , "dun","exe","fnd","fng","fon","grp","hlp","ht","inf","ini","ins","isp","job","key","lnk","msi","msp","msstyles", "nfo","ocx","otf","p7c","pfm","pif","pko","pma","pmc","pml","pmr","pmw","pnf","psw","qds","rdp","reg","scf","scr","sct","shb","shs","sys","theme", "tmp","ttc","ttf","udl","vxd","wab","wmdb","wme","wsc","wsf","wsh","zap"};
+     ````
+__NOTE:__ `Do not enclose path in double or single quotes`
+
+![/Get_OnlyFile](https://i.imgur.com/4zT3BAb.png)
+
+![sad](https://i.imgur.com/7RnOe6p.png)
+### `/Dir <Path>`
+List of files in the folder and subfolders of the selected path
+
+__Example:__ __`/Dir`__  `C:\User\Photos and videos`
+
+![/Dir](https://i.imgur.com/6drHgrW.png)
+
+### `/`
+### `/`
+### `/`
+### `/`
+### `/About`
 _Show creator info._
 
 <img src="https://i.imgur.com/cyhbQzj.png"
@@ -72,6 +96,7 @@ _Show creator info._
 ___¿Cómo infecto a la victima?___
 
 ![Final files](https://i.imgur.com/TlBEAaS.png)
+
 
 __Nota:__ No cambiar de nombre al archivo `WindowsDefender.exe`, si usted le cambia el nombre, el Keylogger quedará obsoleto.
 - Usten guardará el archivo en un USB.

