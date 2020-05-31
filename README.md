@@ -108,11 +108,51 @@ _Show creator info._
      height="700"
      title="Command /About">
 
+# Bot creation
+1. We head to the following address >[BotFather](https://telegram.me/)<
+
+     ![](https://i.imgur.com/1dtdBO6.png)
+2. Create our new bot. 
+
+     ![](https://i.imgur.com/oRYutuu.png)
+3. We look for our Bot, and we start it.
+
+     ![](https://i.imgur.com/2IA7ec8.png)
+     ![](https://i.imgur.com/1r9F2IU.png)
+
+3. Now we get our Chat ID, this is done so that only the keylog reaches us and not anyone who finds the bot.
+
+4. We look for the Bot called Chat ID and we get our Chat ID
+
+     ![](https://i.imgur.com/tJttP3i.png)
+5. At the end we will have our Bot Token and our Chat ID
+
+# Preparation
+1. In [Visual Studio](https://visualstudio.microsoft.com/es/vs/community/)open the project and go to the archive `config.cs`
+
+     ![](https://i.imgur.com/FlDERd3.png)
+
+2. Within this file we will replace the `Chat ID` and the `Bot Token`
+
+     ![](https://i.imgur.com/yye3MLm.png)
+
+3. We compiled and observed that in our telegram bot, we received a message from `==>>    Computer: sebas is online    <<==`
+
+     ![](https://i.imgur.com/VsrdcK1.png)
+__NOTE:__ In this case it shows a console, just because I have Debug mode enabled, you should not get that console.
+
 # Compilation
+The compiled files are found within the project, in the following path
 
 ![](https://i.imgur.com/SHf4GIi.png)
 
 Path : `[GitHub] RAT_BotTelegram\RAT TelegramSpyBot\bin\Debug`
+
+The main file is `RAT TelegramSpyBot`
+
+![](https://i.imgur.com/0DmWUO5.png)
+
+__NOTE:__ When you run the main file, it will replicate to the system and modify the system boot record, but all the files in the image are important, the RAT will not work if it is not with its plugins
 
 # Infection method
 ___How do I infect the victim?___

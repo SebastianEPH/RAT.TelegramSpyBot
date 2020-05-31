@@ -1,22 +1,22 @@
 |>Solo fines educativos<|
  C#.net - versión Beta
-Troyano de acceso remoto vía telegram
+Troyano de acceso remoto, espía y obtiene información de la PC infectada, controlada mediante comandos de telegram.
 
  https://github.com/SebastianEPH/RAT_BotTelegram.git
 
 [+] Keylogger [En proceso :'( ]
 [+] Commands:
-	* /Status | Muestra si la PC está en linea
-	* /Get_Information | Muestra información detallada acerca de la PC
-	* /Get_FilesAll| Menú para obtener [Documentos,Fotos,Videos,Música]
-	* /Get_File <Path+File>| Obtiene un archivo especifico 
-	* /Dir <Path>| Muestra la lista de archivos de una carpeta especifica
-	* /Dir_DirectoryDisk | Menú - Muestra lista de carpetas de distintas unidades
-	* /Dir_FilesDisk | Muestra lista de Archivos de una carpeta especifica
-	* /Keylogger | En proceso...
-	* /Delete_File <Path> | Elimina un archivo especifico
-	* /Delete_Folder <Path> | Elimina una carpeta
-	* /Status |
+* /Status | Muestra si la PC está en linea
+* /Get_Information | Muestra información detallada acerca de la PC
+* /Get_FilesAll| Menú para obtener [Documentos,Fotos,Videos,Música]
+* /Get_File <Path+File>| Obtiene un archivo especifico 
+* /Dir <Path>| Muestra la lista de archivos de una carpeta especifica
+* /Dir_DirectoryDisk | Menú - Muestra lista de carpetas de distintas unidades
+* /Dir_FilesDisk | Muestra lista de Archivos de una carpeta especifica
+* /Keylogger | En proceso...
+* /Delete_File <Path> | Elimina un archivo especifico
+* /Delete_Folder <Path> | Elimina una carpeta
+* /Status |
 [-] Por restricciones de la API de Telegram, solo se pueden subir archivos no mayor a 50MB 
 [-] No termux ni linux 
 
