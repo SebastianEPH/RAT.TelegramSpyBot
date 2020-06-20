@@ -222,16 +222,20 @@ namespace RAT_BotTelegram {
 
                 case "/About":
                     string about =
-                        "<b>Developed by:</b> " +
-                        "SebastiánEPH" +
-                        "\n<b>Name: </b>" + @"<a href=""https://github.com/SebastianEPH/RAT_BotTelegram"">RAT_Telegram</a>" + " C#" +
-                        "\n<b>Lenguage:</b> C# .Net Framework 4.7" +
-                        "\n<b>Versión:</b> Beta" +
+                        "<b>Developed by:</b> <code>SebastianEPH</code>" +
+                        "\n<b>Product Name: </b>" + @"<a href=""https://github.com/SebastianEPH/RAT_BotTelegram"">RAT_Telegram</a>" + " C#" +
+                        "\n<b>Type Software:</b> <code>Remote Administration tool</code>" +
+                        "\n<b>Versión:</b> <code>1.0</code>" +
+                        "\n<b>State:</b> <code>Final</code> [Posibles Fallos]" +
+                        "\n<b>Architecture:</b> <code>x86 bits</code> || <code>x64 bits</code>" +
+                        "\n<b>Size:</b> <code>400KB aprox</code>" +
+                        "\n<b>Undetectable:</b> <code>Not Tester</code>" +
+                        "\n<b>Plataform:</b> <code>Windows 7, 8.1 and 10</code>" +
+                        "\n<b>Programming Lenguage:</b> <code>C# .Net Framework 4.7</code>" +
+                        "\n<b>Licence:</b> <code>MIT</code>" +
                         "\n<b>IDE:</b> Visual Studio Comunity 2019" +
                         "\n<b>Description:</b>" +
-                        "\nTrojano de acceso remoto para windows. <b>[Fines educativos]</b>" +
-
-
+                        "\nRemote access Trojan, spies and obtains information from the infected pc, controlled by telegram commands.  <b>[Fines educativos]</b>" +
                         "\n<b></b>" +
                         "\n<b></b>" +
                         "\n<b>Contact: </b>" +
@@ -239,7 +243,10 @@ namespace RAT_BotTelegram {
                         "\n<b> - " + @"<a href=""https://t.me/sebastianeph"">Telegram</a>" + ": </b>" +
                         "\n<b> - " + @"<a href=""SebastianEPH99@gmail.com"">Email</a>" + ": </b>" +
                         "\n<b> - " + @"<a href=""https://sebastianeph.github.io/"">WebSite</a>" + ": </b>" +
+                        "\n<b></b>" +
+                        "\n<b>You can read the documentation at the following link >></b>" + 
                         "\n<b></b>";
+
 
 
                     await Bot.SendTextMessageAsync(config.ID, about, ParseMode.Html);
