@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RAT_BotTelegram {
+﻿namespace RAT_BotTelegram {
     internal sealed class config {
 
         //          |>Solo fines educativos<|
