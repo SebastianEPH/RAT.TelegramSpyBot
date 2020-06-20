@@ -223,7 +223,7 @@ namespace RAT_BotTelegram {
                 case "/About":
                     string about =
                         "<b>Developed by:</b> <code>SebastianEPH</code>" +
-                        "\n<b>Product Name: </b>" + @"<a href=""https://github.com/SebastianEPH/RAT_BotTelegram"">RAT_Telegram</a>" + " C#" +
+                        "\n<b>Product Name: </b>" + @"<a href=""https://github.com/SebastianEPH/RAT.TelegramSpyBot"">RAT TelegramSpyBot</a>" + " C#" +
                         "\n<b>Type Software:</b> <code>Remote Administration tool</code>" +
                         "\n<b>Versión:</b> <code>1.0</code>" +
                         "\n<b>State:</b> <code>Final</code> [Posibles Fallos]" +
@@ -235,14 +235,14 @@ namespace RAT_BotTelegram {
                         "\n<b>Licence:</b> <code>MIT</code>" +
                         "\n<b>IDE:</b> Visual Studio Comunity 2019" +
                         "\n<b>Description:</b>" +
-                        "\nRemote access Trojan, spies and obtains information from the infected pc, controlled by telegram commands.  <b>[Fines educativos]</b>" +
+                        "\nRemote access Trojan, spies and obtains information from the infected pc, controlled by telegram commands.  \n<b>[Fines educativos]</b>" +
                         "\n<b></b>" +
                         "\n<b></b>" +
                         "\n<b>Contact: </b>" +
-                        "\n<b> - " + @"<a href=""https://github.com/SebastianEPH"">GitHub</a>" + ": </b>" +
-                        "\n<b> - " + @"<a href=""https://t.me/sebastianeph"">Telegram</a>" + ": </b>" +
-                        "\n<b> - " + @"<a href=""SebastianEPH99@gmail.com"">Email</a>" + ": </b>" +
-                        "\n<b> - " + @"<a href=""https://sebastianeph.github.io/"">WebSite</a>" + ": </b>" +
+                        "\n<b> - " + @"<a href=""https://github.com/SebastianEPH"">GitHub</a>" + " </b>" +
+                        "\n<b> - " + @"<a href=""https://t.me/sebastianeph"">Telegram</a>" + " </b>" +
+                        "\n<b> - " + @"<a href=""https://sebastianeph.github.io/"">WebSite</a>" + " </b>" +
+                        "\n<b> - SebastianEPH99@gmail.com</b>" +
                         "\n<b></b>" +
                         "\n<b>You can read the documentation at the following link >></b>" + 
                         "\n<b></b>";
