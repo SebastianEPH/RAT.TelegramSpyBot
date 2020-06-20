@@ -13,16 +13,16 @@
 * __Developed by:__ `SebastianEPH`
 * __Product name:__ `RAT Telegram Spy Bot`
 * __Type software:__ `Remote Administration Tool`
-* __File version:__ `0.1.0`
+* __File version:__ `1.0`
 * __Architecture:__ `x86 bits || x64 bits`
-* __State:__ `Beta`
+* __State:__ `No verificado [Posible Fallos]`
 * __Size:__ `400KB aprox`
-* __Undetectable:__ `Not Tester`
+* __Undetectable:__ `Not Tester` << No Verificado
 * __Plataform:__ `Windows 7, 8.1, 10`
 * __Programming language:__ `C#.net Framework - Console`
 * __Licence:__ `MIT`
 * __IDE or text editor:__ `Visual Studio Comunity 2019`
-* __Documentation date:__ `30/05/2020`
+* __Documentation date:__ `20/05/2020`
 * __Description:__ `Remote access Trojan, spies and obtains information from the infected pc, controlled by telegram commands. `
 
 # Features
@@ -87,11 +87,17 @@ As the previous command only lists specific folders but does not list a complete
 ![](https://i.imgur.com/mSttp2m.png)
 
 ### `/Keylogger`
-Developing...
+Developing... [No habilitado]
 ### `/Delete_OnlyFile <Path> `
 
 ![Delete File](https://i.imgur.com/46NFjiv.png)
 ### `/Delete_Folder <Path> `
+
+![Delete Folder](https://i.imgur.com/2VDCWKm.png)
+
+### `/DeleteRAT`
+
+// Elimina el RAT 
 
 ![Delete Folder](https://i.imgur.com/2VDCWKm.png)
 ### `/Help`
