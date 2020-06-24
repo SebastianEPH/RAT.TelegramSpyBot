@@ -54,7 +54,7 @@ namespace RATTelegramSpyBot.Lib {
                     allfiles[n] = folder;
 
                     //Console.WriteLine("{0}{1}", new string(' ', indent), Path.GetFileName(folder));
-                    //GetDirectoryAll(folder, indent + 2);
+                    //GetFoldersAll(folder, indent + 2);
                 }
             } catch (UnauthorizedAccessException) {
             }
