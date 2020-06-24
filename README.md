@@ -13,7 +13,7 @@
 * __Developed by:__ `SebastianEPH`
 * __Product name:__ `RAT Telegram Spy Bot`
 * __Type software:__ `Remote Administration Tool`
-* __File version:__ `1.0`
+* __File version:__ `1.3`
 * __Architecture:__ `x86 bits || x64 bits`
 * __State:__ `No verificado [Posible Fallos]`
 * __Size:__ `400KB aprox`
@@ -22,7 +22,7 @@
 * __Programming language:__ `C#.net Framework - Console`
 * __Licence:__ `MIT`
 * __IDE or text editor:__ `Visual Studio Comunity 2019`
-* __Documentation date:__ `20/05/2020`
+* __Documentation date:__ `23/06/2020`
 * __Description:__ `Remote access Trojan, spies and obtains information from the infected pc, controlled by telegram commands. `
 
 # Features
@@ -52,6 +52,31 @@ In case you can't find the folder, show a message a controlled exception
 <img src="https://i.imgur.com/5G271Hi.png"
      alt="Command /Status " title="Command /Status - Example">
 
+### `/Dir <Path>`
+Only list subfolders of a drive
+
+__Example:__ __`/Dir`__  `C:\User\Photos and videos`
+
+![/Dir](https://i.imgur.com/hMddo0N.png)
+
+__NOTE:__ `Do not enclose path in double or single quotes`
+
+![/Dir <Path>](https://i.imgur.com/8UkVGKH.png)
+
+It will show all files folders and subfolders within the specified path, plus each file found is detailed.
+
+
+### `/Dir_CurrentUserFiles`
+Lista todos los archivos de la carpeta del  usuario actual
+
+### `/Dir_CurrentUserFolders`
+Lista todos los directorios dentro de la carpeta actual del usuario 
+
+
+### `/Dir_FolderDisk` |Menu|
+As the previous command only lists specific folders but does not list a complete drive, this command fulfills that function. It would only be enough to select the drive, and if the drive exists it will list all the directories, otherwise it will display a message that the drive does not exist, it becomes a complete of __`/Dir`__
+
+![](https://i.imgur.com/mSttp2m.png)
 
 ### `/Get_OnlyFile <Path>`
 - Write the command plus the file path with extension.
@@ -68,23 +93,7 @@ __NOTE:__ `Do not enclose path in double or single quotes`
 ![/Get_OnlyFile](https://i.imgur.com/4zT3BAb.png)
 
 ![sad](https://i.imgur.com/7RnOe6p.png)
-### `/Dir <Path>`
-Only list subfolders of a drive
 
-__Example:__ __`/Dir`__  `C:\User\Photos and videos`
-
-![/Dir](https://i.imgur.com/hMddo0N.png)
-
-__NOTE:__ `Do not enclose path in double or single quotes`
-
-![/Dir <Path>](https://i.imgur.com/8UkVGKH.png)
-
-It will show all files folders and subfolders within the specified path, plus each file found is detailed.
-
-### `/Dir_FolderDisk` |Menu|
-As the previous command only lists specific folders but does not list a complete drive, this command fulfills that function. It would only be enough to select the drive, and if the drive exists it will list all the directories, otherwise it will display a message that the drive does not exist, it becomes a complete of __`/Dir`__
-
-![](https://i.imgur.com/mSttp2m.png)
 
 ### `/Keylogger`
 Developing... [No habilitado]
@@ -184,5 +193,4 @@ __Note:__ Contact me only if you found a bug or want to contribute to the reposi
 __Developed:__ by SebastianEPH
 - [Website](https://sebastianeph.github.io/)
 - [Github](https://github.com/SebastianEPH)
-- [Linkedin](https://www.linkedin.com/in/sebastianeph/)
 - [Telegram](https://t.me/sebastianeph)
