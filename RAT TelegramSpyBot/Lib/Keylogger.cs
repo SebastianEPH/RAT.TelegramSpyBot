@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RAT_BotTelegram.Lib {
+namespace RATTelegramSpyBot.Lib {
     class Keylogger {
 
     }

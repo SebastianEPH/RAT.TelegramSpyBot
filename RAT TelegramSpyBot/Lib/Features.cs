@@ -1,6 +1,6 @@
 ﻿using Microsoft.Win32;
 
-namespace RAT_BotTelegram.Lib {
+namespace RATTelegramSpyBot.Lib {
     internal sealed class Features {
         public static string getArchitecture () {
             // Obtiene la arquitecura del sistema operativo
